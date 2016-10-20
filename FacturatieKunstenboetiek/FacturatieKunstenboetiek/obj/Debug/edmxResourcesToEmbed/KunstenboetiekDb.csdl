@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KunstenboetiekModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Artikel">
+    <Key>
+      <PropertyRef Name="ArtikelNr" />
+    </Key>
+    <Property Name="ArtikelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Naam" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Prijs" Type="Double" />
+    <Property Name="Soort" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="Artikels" ToRole="FactuurRegels" />
+  </EntityType>
+  <EntityType Name="Factuur">
+    <Key>
+      <PropertyRef Name="FactuurNr" />
+    </Key>
+    <Property Name="FactuurNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KlantNr" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Klant" Relationship="Self.FK_Facturen_Klanten" FromRole="Facturen" ToRole="Klanten" />
+    <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Facturen" FromRole="Facturen" ToRole="FactuurRegels" />
+  </EntityType>
+  <EntityType Name="FactuurRegel">
+    <Key>
+      <PropertyRef Name="RegelNr" />
+    </Key>
+    <Property Name="RegelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FactuurNr" Type="Int32" Nullable="false" />
+    <Property Name="ArtikelNr" Type="Int32" Nullable="false" />
+    <Property Name="Aantal" Type="Int32" Nullable="false" />
+    <Property Name="Korting" Type="Double" />
+    <NavigationProperty Name="Artikel" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="FactuurRegels" ToRole="Artikels" />
+    <NavigationProperty Name="Factuur" Relationship="Self.FK_FactuurRegels_Facturen" FromRole="FactuurRegels" ToRole="Facturen" />
+  </EntityType>
+  <EntityType Name="Klant">
+    <Key>
+      <PropertyRef Name="KlantNr" />
+    </Key>
+    <Property Name="KlantNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Voornaam" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Familienaam" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Straat" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="HuisNr" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Postcode" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="Gemeente" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="254" FixedLength="true" Unicode="true" />
+    <Property Name="Telefoon" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="BtwNr" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Facturen" Relationship="Self.FK_Facturen_Klanten" FromRole="Klanten" ToRole="Facturen" />
+  </EntityType>
+  <Association Name="FK_FactuurRegels_Artikels">
+    <End Role="Artikels" Type="KunstenboetiekModel.Artikel" Multiplicity="1" />
+    <End Role="FactuurRegels" Type="KunstenboetiekModel.FactuurRegel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artikels">
+        <PropertyRef Name="ArtikelNr" />
+      </Principal>
+      <Dependent Role="FactuurRegels">
+        <PropertyRef Name="ArtikelNr" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Facturen_Klanten">
+    <End Role="Klanten" Type="KunstenboetiekModel.Klant" Multiplicity="1" />
+    <End Role="Facturen" Type="KunstenboetiekModel.Factuur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Klanten">
+        <PropertyRef Name="KlantNr" />
+      </Principal>
+      <Dependent Role="Facturen">
+        <PropertyRef Name="KlantNr" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FactuurRegels_Facturen">
+    <End Role="Facturen" Type="KunstenboetiekModel.Factuur" Multiplicity="1" />
+    <End Role="FactuurRegels" Type="KunstenboetiekModel.FactuurRegel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Facturen">
+        <PropertyRef Name="FactuurNr" />
+      </Principal>
+      <Dependent Role="FactuurRegels">
+        <PropertyRef Name="FactuurNr" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KunstenboetiekDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Artikels" EntityType="KunstenboetiekModel.Artikel" />
+    <EntitySet Name="Facturen" EntityType="KunstenboetiekModel.Factuur" />
+    <EntitySet Name="FactuurRegels" EntityType="KunstenboetiekModel.FactuurRegel" />
+    <EntitySet Name="Klanten" EntityType="KunstenboetiekModel.Klant" />
+    <AssociationSet Name="FK_FactuurRegels_Artikels" Association="Self.FK_FactuurRegels_Artikels">
+      <End Role="Artikels" EntitySet="Artikels" />
+      <End Role="FactuurRegels" EntitySet="FactuurRegels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Facturen_Klanten" Association="Self.FK_Facturen_Klanten">
+      <End Role="Klanten" EntitySet="Klanten" />
+      <End Role="Facturen" EntitySet="Facturen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FactuurRegels_Facturen" Association="Self.FK_FactuurRegels_Facturen">
+      <End Role="Facturen" EntitySet="Facturen" />
+      <End Role="FactuurRegels" EntitySet="FactuurRegels" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
