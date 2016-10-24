@@ -13,5 +13,7 @@ namespace FacturatieKunstenboetiek
     /// </summary>
     public partial class App : Application
     {
+        public bool? Openen;
+        public Klant teOpenenKlant;
     }
 }

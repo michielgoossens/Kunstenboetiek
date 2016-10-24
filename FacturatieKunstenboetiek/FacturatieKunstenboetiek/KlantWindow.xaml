@@ -34,7 +34,7 @@
     <DockPanel>
         <Menu Name="menuHoofdmenu" DockPanel.Dock="Top">
             <MenuItem Name="menuItemNieuw" Header="Nieuw" Command="New"/>
-            <MenuItem Name="menuItemOpen" Header="Open"/>
+            <MenuItem Name="menuItemOpen" Header="Open" Click="menuItemOpen_Click"/>
             <MenuItem Name="menuItemOpslaan" Header="Opslaan" Command="Save"/>
         </Menu>
         <Grid x:Name="grid" Margin="25">

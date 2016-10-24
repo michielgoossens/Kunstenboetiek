@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Data.SqlClient;
 
 namespace FacturatieKunstenboetiek
 {
@@ -20,39 +21,49 @@ namespace FacturatieKunstenboetiek
     /// </summary>
     public partial class KlantWindow : Window
     {
-        private int _noOfErorsOnScreen = 0;
+        private int _noOfErrorsOnScreen = 0;
         private Klant _klant = new Klant();
+        private int padding = 3;
         public KlantWindow()
         {
             InitializeComponent();
             grid.DataContext = _klant;
             setId();
+            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
             fillLandCombobox();
         }
 
         private void Validation_Error(object sender, ValidationErrorEventArgs e)
         {
             if (e.Action == ValidationErrorEventAction.Added)
-                _noOfErorsOnScreen++;
+                _noOfErrorsOnScreen++;
             else
-                _noOfErorsOnScreen--;
+                _noOfErrorsOnScreen--;
         }
 
         private void AddKlant_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = _noOfErorsOnScreen == 0;
+            e.CanExecute = _noOfErrorsOnScreen == 0;
             e.Handled = true;
         }
 
         private void AddKlant_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Klant klant = grid.DataContext as Klant;
-            // write code here to add Customer
+            if (MessageBox.Show("Ben je zeker dat je de klant wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                Klant klant = grid.DataContext as Klant;
 
-            // reset UI
-            NewKlant_Executed(sender, e);
-            e.Handled = true;
+                using (var dbEntities = new KunstenboetiekDbEntities())
+                {
+                    dbEntities.Klanten.Add(klant);
+                    dbEntities.SaveChanges();
+                }
 
+                _klant = new Klant();
+                grid.DataContext = _klant;
+                setId();
+                (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+            }
         }
 
         private void NewKlant_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -63,25 +74,22 @@ namespace FacturatieKunstenboetiek
 
         private void NewKlant_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            _klant = new Klant();
-            grid.DataContext = _klant;
-            setId();
+            if (MessageBox.Show("Ben je zeker dat je een nieuwe klant wilt starten?", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                _klant = new Klant();
+                grid.DataContext = _klant;
+                setId();
+                (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+            }
         }
 
         private void setId()
         {
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                var LaatsteKlant = ((from klant in dbEntities.Klanten
-                                    select klant).ToList()).LastOrDefault();
-                if (LaatsteKlant != null)
-                {
-                    textBlockKlantNr.Text = (LaatsteKlant.KlantNr + 1).ToString();
-                }
-                else
-                {
-                    textBlockKlantNr.Text = "001";
-                }
+                int maxKlantId = Convert.ToInt32(dbEntities.Database.SqlQuery<decimal>("Select IDENT_CURRENT ('Klanten')", new object[0]).FirstOrDefault());
+
+                textBlockKlantNr.Text = (maxKlantId + 1).ToString().PadLeft(padding, '0');
             }
         }
 
@@ -125,6 +133,30 @@ namespace FacturatieKunstenboetiek
             {
                 tbLand.Items.Add(land);
             }
+        }
+
+        private void menuItemOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow window = new OpenWindow("klant");
+            window.ShowDialog();
+
+            if ((Application.Current as FacturatieKunstenboetiek.App).Openen == true)
+            {
+                _klant = (Application.Current as FacturatieKunstenboetiek.App).teOpenenKlant;
+                if (_klant == null)
+                {
+                    MessageBox.Show("De klant die je probeert te laden bestaat niet.", "Openen", MessageBoxButton.OK, MessageBoxImage.Information);
+                    menuItemOpen_Click(sender, e);
+                }
+                else
+                {
+                    grid.DataContext = _klant;
+                    textBlockKlantNr.Text = _klant.KlantNr.ToString().PadLeft(padding, '0');
+                }
+            }
+
+
+            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
         }
     }
 }

@@ -275,7 +275,7 @@ namespace FacturatieKunstenboetiek
                                         string checkAlfanumeriek1 = BtwNr.Substring(2, 1);
                                         string checkAlfanumeriek2 = BtwNr.Substring(10, 1);
 
-                                        if (LandCode.ToLower() != "es" || !Int64.TryParse(checkCijfers, out test) || (Int64.TryParse(checkAlfanumeriek1, out test) && Int64.TryParse(checkAlfanumeriek2, out test)))
+                                        if (LandCode.ToLower() != "es" || !Int64.TryParse(checkCijfers, out test) || ((checkAlfanumeriek1.Any(x => !char.IsLetter(x)) && checkAlfanumeriek2.Any(x => !char.IsLetter(x))) || (!Int64.TryParse(checkAlfanumeriek1, out test) && checkAlfanumeriek2.Any(x => !char.IsLetter(x))) && (checkAlfanumeriek1.Any(x => !char.IsLetter(x)) && !Int64.TryParse(checkAlfanumeriek2, out test))))
                                         {
                                             result = "Btw-nummer is niet correct. (ESx*********x) | * = cijfer, x = alfanumeriek, niet beiden numeriek";
                                         }
@@ -411,11 +411,206 @@ namespace FacturatieKunstenboetiek
                                     {
                                         string LandCode = BtwNr.Substring(0, 2);
                                         string checkCijfer = BtwNr.Substring(2, 1);
+                                        string checkSpecial = BtwNr.Substring(3, 1);
                                         string checkCijfers = BtwNr.Substring(4,5);
                                         string checkLetter = BtwNr.Substring(9);
-                                        if (LandCode.ToLower() != "ie" || !Int64.TryParse(checkCijfer, out test) || !Int64.TryParse(checkCijfers, out test) || Int64.TryParse(checkLetter, out test))
+                                        if (LandCode.ToLower() != "ie" || !Int64.TryParse(checkCijfer, out test) || (!Int64.TryParse(checkSpecial, out test) && checkSpecial.Any(x => !char.IsLetter(x)) && checkSpecial != "+" && checkSpecial!= "*")  || !Int64.TryParse(checkCijfers, out test) || Int64.TryParse(checkLetter, out test))
                                         {
                                             result = "Btw-nummer is niet correct. (IE*s*****l) | * = cijfer, s = cijfer, letter, + of *, l = letter";
+                                        }
+                                    }
+                                }
+                                if (Land == "Italië")
+                                {
+                                    if (BtwNr.Length != 13)
+                                    {
+                                        result = "Btw-nummer moet uit 13 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "it" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (IT***********) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Litouwen")
+                                {
+                                    if (BtwNr.Length != 11 && BtwNr.Length != 14)
+                                    {
+                                        result = "Btw-nummer moet uit 11 of 14 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "lt" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (LT********* of LT************) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Luxemburg")
+                                {
+                                    if (BtwNr.Length != 10)
+                                    {
+                                        result = "Btw-nummer moet uit 10 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "lu" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (LU********) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Letland")
+                                {
+                                    if (BtwNr.Length != 13)
+                                    {
+                                        result = "Btw-nummer moet uit 13 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "lv" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (LV***********) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Malta")
+                                {
+                                    if (BtwNr.Length != 10)
+                                    {
+                                        result = "Btw-nummer moet uit 10 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "mt" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (MT********) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Nederland")
+                                {
+                                    if (BtwNr.Length != 13)
+                                    {
+                                        result = "Btw-nummer moet uit 13 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfergroep1 = BtwNr.Substring(2, 9);
+                                        string checkLetterB = BtwNr.Substring(11, 1);
+                                        string checkCijfergroep2 = BtwNr.Substring(12, 2);
+                                        if (LandCode.ToLower() != "nl" || !Int64.TryParse(checkCijfergroep1, out test) || checkLetterB.ToLower() != "b")
+                                        {
+                                            result = "Btw-nummer is niet correct. (NL*********B**) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Polen")
+                                {
+                                    if (BtwNr.Length != 12)
+                                    {
+                                        result = "Btw-nummer moet uit 12 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "pl" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (PL**********) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Portugal")
+                                {
+                                    if (BtwNr.Length != 11)
+                                    {
+                                        result = "Btw-nummer moet uit 11 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "pt" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (PT*********) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Roemenië")
+                                {
+                                    if (BtwNr.Length < 4 || BtwNr.Length > 12)
+                                    {
+                                        result = "Btw-nummer moet tussen 4 en 12 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "ro" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (min. RO** of max. RO**********) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Zweden")
+                                {
+                                    if (BtwNr.Length != 14)
+                                    {
+                                        result = "Btw-nummer moet uit 14 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "se" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (SE************) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Slovenië")
+                                {
+                                    if (BtwNr.Length != 10)
+                                    {
+                                        result = "Btw-nummer moet uit 10 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "sl" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (SL********) | * = cijfer";
+                                        }
+                                    }
+                                }
+                                if (Land == "Slowakije")
+                                {
+                                    if (BtwNr.Length != 12)
+                                    {
+                                        result = "Btw-nummer moet uit 12 tekens bestaan.";
+                                    }
+                                    else
+                                    {
+                                        string LandCode = BtwNr.Substring(0, 2);
+                                        string checkCijfers = BtwNr.Substring(2);
+                                        if (LandCode.ToLower() != "sk" || !Int64.TryParse(checkCijfers, out test))
+                                        {
+                                            result = "Btw-nummer is niet correct. (SK**********) | * = cijfer";
                                         }
                                     }
                                 }
