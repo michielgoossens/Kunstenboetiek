@@ -31,6 +31,7 @@ namespace FacturatieKunstenboetiek
             setId();
             (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
             fillLandCombobox();
+            tbVoornaam.Focus();
         }
 
         private void Validation_Error(object sender, ValidationErrorEventArgs e)
@@ -49,26 +50,48 @@ namespace FacturatieKunstenboetiek
 
         private void AddKlant_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (MessageBox.Show("Ben je zeker dat je de klant wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                Klant klant = grid.DataContext as Klant;
-
-                using (var dbEntities = new KunstenboetiekDbEntities())
+                var k = dbEntities.Klanten.Find(int.Parse(textBlockKlantNr.Text));
+                if (k == null && MessageBox.Show("Ben je zeker dat je de klant wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
+                    Klant klant = grid.DataContext as Klant;
                     dbEntities.Klanten.Add(klant);
                     dbEntities.SaveChanges();
-                }
 
-                _klant = new Klant();
-                grid.DataContext = _klant;
-                setId();
-                (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+                    _klant = new Klant();
+                    grid.DataContext = _klant;
+                    setId();
+                    (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+                }
+                else
+                {
+                    if (MessageBox.Show("Ben je zeker dat je de klant wilt overschrijven?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                    {
+                        k.Voornaam = tbVoornaam.Text;
+                        k.Familienaam = tbFamilienaam.Text;
+                        k.Straat = tbStraat.Text;
+                        k.HuisNr = tbHuisNr.Text;
+                        k.Postcode = tbPostcode.Text;
+                        k.Gemeente = tbGemeente.Text;
+                        k.Land = tbLand.Text;
+                        k.Telefoon = tbTelefoon.Text;
+                        k.Email = tbEmail.Text;
+                        k.BtwNr = tbBtwNr.Text;
+                        dbEntities.SaveChanges();
+
+                        _klant = new Klant();
+                        grid.DataContext = _klant;
+                        setId();
+                        (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+                    }
+                }
             }
         }
 
         private void NewKlant_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = tbFamilienaam.Text != "" || tbVoornaam.Text != "" || tbStraat.Text != "" || tbHuisNr.Text != "" || tbPostcode.Text != "" || tbGemeente.Text != "";
+            e.CanExecute = tbFamilienaam.Text != "" || tbVoornaam.Text != "" || tbStraat.Text != "" || tbHuisNr.Text != "" || tbPostcode.Text != "" || tbGemeente.Text != "" || tbLand.SelectedValue != null || tbTelefoon.Text != "" || tbEmail.Text != "" || tbBtwNr.Text != "";
             e.Handled = true;
         }
 
@@ -87,8 +110,15 @@ namespace FacturatieKunstenboetiek
         {
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                int maxKlantId = Convert.ToInt32(dbEntities.Database.SqlQuery<decimal>("Select IDENT_CURRENT ('Klanten')", new object[0]).FirstOrDefault());
-
+                int maxKlantId;
+                if (dbEntities.Klanten.Any())
+                {
+                    maxKlantId = Convert.ToInt32(dbEntities.Database.SqlQuery<decimal>("Select IDENT_CURRENT ('Klanten')", new object[0]).FirstOrDefault());
+                }
+                else
+                {
+                    maxKlantId = 0;
+                }
                 textBlockKlantNr.Text = (maxKlantId + 1).ToString().PadLeft(padding, '0');
             }
         }
@@ -145,12 +175,25 @@ namespace FacturatieKunstenboetiek
                 _klant = (Application.Current as FacturatieKunstenboetiek.App).teOpenenKlant;
                 if (_klant == null)
                 {
-                    MessageBox.Show("De klant die je probeert te laden bestaat niet.", "Openen", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("De klant die je probeert te openen bestaat niet.", "Openen", MessageBoxButton.OK, MessageBoxImage.Information);
                     menuItemOpen_Click(sender, e);
                 }
                 else
                 {
                     grid.DataContext = _klant;
+                    tbVoornaam.Text = tbVoornaam.Text.Trim();
+                    tbFamilienaam.Text = tbFamilienaam.Text.Trim();
+                    tbStraat.Text = tbStraat.Text.Trim();
+                    tbHuisNr.Text = tbHuisNr.Text.Trim();
+                    tbPostcode.Text = tbPostcode.Text.Trim();
+                    tbGemeente.Text = tbGemeente.Text.Trim();
+                    if (tbLand.Text != null)
+                    {
+                        tbLand.Text = tbLand.Text.Trim();
+                    }
+                    tbTelefoon.Text = tbTelefoon.Text.Trim();
+                    tbEmail.Text = tbEmail.Text.Trim();
+                    tbBtwNr.Text = tbBtwNr.Text.Trim();
                     textBlockKlantNr.Text = _klant.KlantNr.ToString().PadLeft(padding, '0');
                 }
             }

@@ -1,0 +1,84 @@
+﻿<Window x:Class="FacturatieKunstenboetiek.ArtikelWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FacturatieKunstenboetiek"
+        mc:Ignorable="d"
+        Title="Kunstenboetiek - Artikels" Height="350" Width="320">
+    <Window.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top">
+                                <TextBlock Foreground="Red" Text="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" HorizontalAlignment="Right" Margin="-85 0 0 2"></TextBlock>
+                            </StackPanel>
+                            <AdornedElementPlaceholder Name="customAdorner">
+                                <Border BorderBrush="Red" BorderThickness="1" Width="{Binding ElementName=customAdorner, Mode=OneWay, Path=AdornedElement.ActualWidth}" HorizontalAlignment="Left"/>
+                            </AdornedElementPlaceholder>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <Menu Name="menuHoofdmenu" DockPanel.Dock="Top">
+            <MenuItem Name="menuItemNieuw" Header="Nieuw" Command="New"/>
+            <MenuItem Name="menuItemOpen" Header="Open" Click="menuItemOpen_Click"/>
+            <MenuItem Name="menuItemOpslaan" Header="Opslaan" Command="Save"/>
+        </Menu>
+        <Grid x:Name="grid" Margin="25">
+            <Grid.CommandBindings>
+                <CommandBinding Command="New" CanExecute="NewArtikel_CanExecute" Executed="NewArtikel_Executed"/>
+                <CommandBinding Command="Save" CanExecute="AddArtikel_CanExecute" Executed="AddArtikel_Executed"/>
+            </Grid.CommandBindings>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="150"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Name="labelArtikelNr" Grid.Column="0" Grid.Row="0">Artikel nr.:</Label>
+
+            <TextBlock Name="textBlockArtikelNr" Padding="5" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+            <Label Target="{Binding ElementName=tbNaam}" Content="Naam:" Grid.Column="0" Grid.Row="1"/>
+            <TextBox x:Name="tbNaam" Grid.Row="1" Grid.Column="1" Validation.Error="Validation_Error"
+                 Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Naam,
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150"/>
+
+            <Label Target="{Binding ElementName=tbKleur}" Content="Kleur:" Grid.Column="0" Grid.Row="2"/>
+            <TextBox x:Name="tbKleur" Grid.Row="2" Grid.Column="1" Validation.Error="Validation_Error"
+                 Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Kleur,
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150"/>
+
+            <Label Target="{Binding ElementName=tbSoort}" Content="Soort:" Grid.Column="0" Grid.Row="3"/>
+            <ComboBox x:Name="tbSoort" Grid.Row="3" Grid.Column="1" Validation.Error="Validation_Error"
+                 Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Soort,
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="150"/>
+
+            <Label Target="{Binding ElementName=tbPrijs}" Content="Prijs:" Grid.Column="0" Grid.Row="4"/>
+            <TextBox x:Name="tbPrijs" Grid.Row="4" Grid.Column="1" Validation.Error="Validation_Error"
+                 Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Prijs,
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150" TextChanged="tbPrijs_TextChanged"/>
+            <TextBox Grid.Column="9" Grid.Row="9" Margin="500"></TextBox>
+        </Grid>
+    </DockPanel>
+</Window>

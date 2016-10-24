@@ -15,5 +15,6 @@ namespace FacturatieKunstenboetiek
     {
         public bool? Openen;
         public Klant teOpenenKlant;
+        public Artikel teOpenenArtikel;
     }
 }

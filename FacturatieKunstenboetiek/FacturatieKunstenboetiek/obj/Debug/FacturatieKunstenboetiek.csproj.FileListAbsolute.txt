@@ -40,9 +40,11 @@ D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenb
 D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.g.resources
 D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.Properties.Resources.resources
 D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csproj.GenerateResource.Cache
-D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csprojResolveAssemblyReference.cache
 D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\OpenWindow.g.cs
 D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\OpenWindow.baml
 D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\bin\Debug\System.Windows.Controls.Input.Toolkit.dll
 D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\bin\Debug\System.Windows.Controls.Layout.Toolkit.dll
 D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\bin\Debug\WPFToolkit.dll
+D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csprojResolveAssemblyReference.cache
+D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\ArtikelWindow.g.cs
+D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\ArtikelWindow.baml

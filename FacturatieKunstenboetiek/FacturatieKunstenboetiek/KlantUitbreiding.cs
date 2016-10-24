@@ -10,6 +10,7 @@ namespace FacturatieKunstenboetiek
 {
     public partial class Klant : IDataErrorInfo
     {
+        public string zoekKlant { get {return Voornaam + Familienaam + KlantNr.ToString(); } }
         public string Error
         {
             get { throw new NotImplementedException(); }

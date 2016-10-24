@@ -87,6 +87,10 @@
     <Compile Include="Artikel.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
+    <Compile Include="ArtikelUitbreiding.cs" />
+    <Compile Include="ArtikelWindow.xaml.cs">
+      <DependentUpon>ArtikelWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Factuur.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
@@ -102,6 +106,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
+    <Page Include="ArtikelWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="KlantWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
