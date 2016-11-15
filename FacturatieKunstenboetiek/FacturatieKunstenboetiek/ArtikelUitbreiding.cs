@@ -4,12 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Windows;
 
 namespace FacturatieKunstenboetiek
 {
     public partial class Artikel : IDataErrorInfo
     {
-        public string zoekArtikel { get { return Naam + ArtikelNr.ToString(); } }
+        public double prijsInclBtw {
+            get { return (Prijs * 1.06); }
+            set { }
+        }
+        public string zoekArtikel { get { return Naam + " " + ArtikelNr.ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0'); } }
         public string Error
         {
             get { throw new NotImplementedException(); }
@@ -48,7 +53,9 @@ namespace FacturatieKunstenboetiek
                 }
                 if (columnName == "Prijs")
                 {
-                    if (!string.IsNullOrEmpty(Prijs.ToString()))
+                    if (string.IsNullOrEmpty(Prijs.ToString()))
+                        result = "Prijs is verplicht!";
+                    else
                     {
                         if (Prijs < 0)
                         {
@@ -61,3 +68,4 @@ namespace FacturatieKunstenboetiek
         }
     }
 }
+

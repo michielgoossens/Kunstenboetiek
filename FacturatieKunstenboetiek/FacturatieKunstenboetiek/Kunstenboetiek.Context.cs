@@ -26,6 +26,7 @@ namespace FacturatieKunstenboetiek
         }
     
         public virtual DbSet<Artikel> Artikels { get; set; }
+        public virtual DbSet<ArtikelAfbeelding> ArtikelsAfbeeldingen { get; set; }
         public virtual DbSet<Factuur> Facturen { get; set; }
         public virtual DbSet<FactuurRegel> FactuurRegels { get; set; }
         public virtual DbSet<Klant> Klanten { get; set; }

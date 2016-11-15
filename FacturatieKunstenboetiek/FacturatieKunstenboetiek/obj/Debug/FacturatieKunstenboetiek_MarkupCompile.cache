@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\
+D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\
 FacturatieKunstenboetiek
 none
 false
 DEBUG;TRACE
-D:\git\kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\App.xaml
-4-1167214477
+D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\App.xaml
+5-1847407443
 2-408570997
-171696687548
-221468265574
-ArtikelWindow.xaml;KlantWindow.xaml;MainWindow.xaml;OpenWindow.xaml;
+20914384738
+231173837681
+ArtikelWindow.xaml;FactuurWindow.xaml;KlantWindow.xaml;MainWindow.xaml;OpenWindow.xaml;
 
 False
 

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Interop;
 
 namespace FacturatieKunstenboetiek
 {
@@ -20,14 +21,11 @@ namespace FacturatieKunstenboetiek
     public partial class ArtikelWindow : Window
     {
         private int _noOfErrorsOnScreen = 0;
-        private Artikel _artikel = new Artikel();
-        private int padding = 3;
+        private Artikel _artikel;
         public ArtikelWindow()
         {
             InitializeComponent();
-            grid.DataContext = _artikel;
-            setId();
-            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+            startUp();
             fillSoortCombobox();
             tbNaam.Focus();
         }
@@ -38,6 +36,15 @@ namespace FacturatieKunstenboetiek
                 _noOfErrorsOnScreen++;
             else
                 _noOfErrorsOnScreen--;
+        }
+
+        private void startUp()
+        {
+            _artikel = new Artikel();
+            grid.DataContext = _artikel;
+            setId();
+            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+            (Application.Current as FacturatieKunstenboetiek.App).Opgeslagen = null;
         }
 
         private void setId()
@@ -53,7 +60,7 @@ namespace FacturatieKunstenboetiek
                 {
                     maxArtikelId = 0;
                 }
-                textBlockArtikelNr.Text = (maxArtikelId + 1).ToString().PadLeft(padding, '0');
+                textBlockArtikelNr.Text = (maxArtikelId + 1).ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');
 
             }
         }
@@ -80,7 +87,7 @@ namespace FacturatieKunstenboetiek
         }
 
         private void NewArtikel_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+        { 
             e.CanExecute = tbNaam.Text != "" || tbKleur.Text != "" || tbSoort.SelectedValue != null || tbPrijs.Text != "";
             e.Handled = true;
         }
@@ -89,10 +96,7 @@ namespace FacturatieKunstenboetiek
         {
             if (MessageBox.Show("Ben je zeker dat je een nieuw artikel wilt starten?", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
-                _artikel = new Artikel();
-                grid.DataContext = _artikel;
-                setId();
-                (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+                startUp();
             }
         }
         private void AddArtikel_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -106,16 +110,15 @@ namespace FacturatieKunstenboetiek
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
                 var a = dbEntities.Artikels.Find(int.Parse(textBlockArtikelNr.Text));
-                if (a == null && MessageBox.Show("Ben je zeker dat je het artikel wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                if (a == null)
                 {
-                    Artikel artikel = grid.DataContext as Artikel;
-                    dbEntities.Artikels.Add(artikel);
-                    dbEntities.SaveChanges();
-
-                    _artikel = new Artikel();
-                    grid.DataContext = _artikel;
-                    setId();
-                    (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+                    if (MessageBox.Show("Ben je zeker dat je het artikel wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                    {
+                        Artikel artikel = grid.DataContext as Artikel;
+                        dbEntities.Artikels.Add(artikel);
+                        dbEntities.SaveChanges();
+                        startUp();
+                    }
                 }
                 else
                 {
@@ -126,11 +129,7 @@ namespace FacturatieKunstenboetiek
                         a.Soort = tbSoort.Text;
                         a.Prijs = double.Parse(tbPrijs.Text);
                         dbEntities.SaveChanges();
-
-                        _artikel = new Artikel();
-                        grid.DataContext = _artikel;
-                        setId();
-                        (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+                        startUp();
                     }
                 }
             }
@@ -143,25 +142,25 @@ namespace FacturatieKunstenboetiek
             if ((Application.Current as FacturatieKunstenboetiek.App).Openen == true)
             {
                 _artikel = (Application.Current as FacturatieKunstenboetiek.App).teOpenenArtikel;
-
                 grid.DataContext = _artikel;
-                tbNaam.Text = tbNaam.Text.Trim();
-                tbKleur.Text = tbKleur.Text.Trim();
-                if (tbSoort.Text != null)
-                {
-                    tbSoort.Text = tbSoort.Text.Trim();
-                }
-                tbPrijs.Text = tbPrijs.Text.Trim();
-                if (tbPrijs.Text == "")
-                {
-                    tbPrijs.Text = null;
-                }
-
-                textBlockArtikelNr.Text = _artikel.ArtikelNr.ToString().PadLeft(padding, '0');
+                textBlockArtikelNr.Text = _artikel.ArtikelNr.ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');
             }
 
-
             (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Ben je zeker dat je het venster wil sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Window main = new MainWindow();
+            main.Show();
         }
     }
 }

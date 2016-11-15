@@ -19,6 +19,21 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -62,6 +77,7 @@
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -87,6 +103,9 @@
     <Compile Include="Artikel.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
+    <Compile Include="ArtikelAfbeelding.cs">
+      <DependentUpon>Kunstenboetiek.tt</DependentUpon>
+    </Compile>
     <Compile Include="ArtikelUitbreiding.cs" />
     <Compile Include="ArtikelWindow.xaml.cs">
       <DependentUpon>ArtikelWindow.xaml</DependentUpon>
@@ -97,16 +116,19 @@
     <Compile Include="FactuurRegel.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
+    <Compile Include="FactuurUitbreiding.cs" />
+    <Compile Include="FactuurWindow.xaml.cs">
+      <DependentUpon>FactuurWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Klant.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
     <Compile Include="KlantUitbreiding.cs" />
-    <Compile Include="Kunstenboetiek.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Kunstenboetiek.tt</DependentUpon>
-    </Compile>
     <Page Include="ArtikelWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FactuurWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -129,6 +151,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Kunstenboetiek.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Kunstenboetiek.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
     <Compile Include="Kunstenboetiek.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -196,6 +223,18 @@
       <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
       <LastGenOutput>Kunstenboetiek.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Data.SqlClient;
+using System.Windows.Interop;
 
 namespace FacturatieKunstenboetiek
 {
@@ -22,18 +23,21 @@ namespace FacturatieKunstenboetiek
     public partial class KlantWindow : Window
     {
         private int _noOfErrorsOnScreen = 0;
-        private Klant _klant = new Klant();
-        private int padding = 3;
+        private Klant _klant;
         public KlantWindow()
         {
             InitializeComponent();
-            grid.DataContext = _klant;
-            setId();
-            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+            startUp();
             fillLandCombobox();
             tbVoornaam.Focus();
         }
-
+        public void startUp()
+        {
+            _klant = new Klant();
+            grid.DataContext = _klant;
+            setId();
+            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+        }
         private void Validation_Error(object sender, ValidationErrorEventArgs e)
         {
             if (e.Action == ValidationErrorEventAction.Added)
@@ -53,16 +57,16 @@ namespace FacturatieKunstenboetiek
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
                 var k = dbEntities.Klanten.Find(int.Parse(textBlockKlantNr.Text));
-                if (k == null && MessageBox.Show("Ben je zeker dat je de klant wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                if (k == null)
                 {
-                    Klant klant = grid.DataContext as Klant;
-                    dbEntities.Klanten.Add(klant);
-                    dbEntities.SaveChanges();
+                    if (MessageBox.Show("Ben je zeker dat je de klant wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                    {
+                        Klant klant = grid.DataContext as Klant;
+                        dbEntities.Klanten.Add(klant);
+                        dbEntities.SaveChanges();
 
-                    _klant = new Klant();
-                    grid.DataContext = _klant;
-                    setId();
-                    (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+                        startUp();
+                    }
                 }
                 else
                 {
@@ -80,10 +84,7 @@ namespace FacturatieKunstenboetiek
                         k.BtwNr = tbBtwNr.Text;
                         dbEntities.SaveChanges();
 
-                        _klant = new Klant();
-                        grid.DataContext = _klant;
-                        setId();
-                        (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+                        startUp();
                     }
                 }
             }
@@ -99,10 +100,7 @@ namespace FacturatieKunstenboetiek
         {
             if (MessageBox.Show("Ben je zeker dat je een nieuwe klant wilt starten?", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
-                _klant = new Klant();
-                grid.DataContext = _klant;
-                setId();
-                (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+                startUp();
             }
         }
 
@@ -119,7 +117,7 @@ namespace FacturatieKunstenboetiek
                 {
                     maxKlantId = 0;
                 }
-                textBlockKlantNr.Text = (maxKlantId + 1).ToString().PadLeft(padding, '0');
+                textBlockKlantNr.Text = (maxKlantId + 1).ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');
             }
         }
 
@@ -173,33 +171,26 @@ namespace FacturatieKunstenboetiek
             if ((Application.Current as FacturatieKunstenboetiek.App).Openen == true)
             {
                 _klant = (Application.Current as FacturatieKunstenboetiek.App).teOpenenKlant;
-                if (_klant == null)
-                {
-                    MessageBox.Show("De klant die je probeert te openen bestaat niet.", "Openen", MessageBoxButton.OK, MessageBoxImage.Information);
-                    menuItemOpen_Click(sender, e);
-                }
-                else
-                {
-                    grid.DataContext = _klant;
-                    tbVoornaam.Text = tbVoornaam.Text.Trim();
-                    tbFamilienaam.Text = tbFamilienaam.Text.Trim();
-                    tbStraat.Text = tbStraat.Text.Trim();
-                    tbHuisNr.Text = tbHuisNr.Text.Trim();
-                    tbPostcode.Text = tbPostcode.Text.Trim();
-                    tbGemeente.Text = tbGemeente.Text.Trim();
-                    if (tbLand.Text != null)
-                    {
-                        tbLand.Text = tbLand.Text.Trim();
-                    }
-                    tbTelefoon.Text = tbTelefoon.Text.Trim();
-                    tbEmail.Text = tbEmail.Text.Trim();
-                    tbBtwNr.Text = tbBtwNr.Text.Trim();
-                    textBlockKlantNr.Text = _klant.KlantNr.ToString().PadLeft(padding, '0');
-                }
+
+                grid.DataContext = _klant;
+                textBlockKlantNr.Text = _klant.KlantNr.ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');
             }
 
 
             (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+            (Application.Current as FacturatieKunstenboetiek.App).teOpenenKlant = null;
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Ben je zeker dat je het venster wil sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Window main = new MainWindow();
+            main.Show();
         }
     }
 }

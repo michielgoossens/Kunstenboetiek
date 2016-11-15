@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net;
 
 namespace FacturatieKunstenboetiek
 {
@@ -23,6 +24,61 @@ namespace FacturatieKunstenboetiek
         public MainWindow()
         {
             InitializeComponent();
+            Initialize();
+        }
+
+        public void Initialize()
+        {
+            if (!CheckForInternetConnection())
+            {
+                if (MessageBox.Show("Gelieve te verbinden met het internet.", "Kunstenboetiek", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK)
+                {
+                    Initialize();
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
+        }
+
+        public bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    using (var stream = client.OpenRead("http://www.google.com"))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void buttonFactuur_Click(object sender, RoutedEventArgs e)
+        {
+            Window factuur = new FactuurWindow();
+            factuur.Show();
+            this.Close();
+        }
+
+        private void buttonKlant_Click(object sender, RoutedEventArgs e)
+        {
+            Window klant = new KlantWindow();
+            klant.Show();
+            this.Close();
+        }
+
+        private void buttonArtikel_Click(object sender, RoutedEventArgs e)
+        {
+            Window artikel = new ArtikelWindow();
+            artikel.Show();
+            this.Close();
         }
     }
 }

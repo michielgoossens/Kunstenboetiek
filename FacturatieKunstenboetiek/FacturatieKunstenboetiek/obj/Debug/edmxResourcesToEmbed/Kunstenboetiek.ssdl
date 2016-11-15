@@ -5,10 +5,18 @@
       <PropertyRef Name="ArtikelNr" />
     </Key>
     <Property Name="ArtikelNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Naam" Type="nchar" MaxLength="100" Nullable="false" />
+    <Property Name="Naam" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Kleur" Type="nvarchar" MaxLength="25" />
+    <Property Name="Soort" Type="nvarchar" MaxLength="15" />
     <Property Name="Prijs" Type="float" />
-    <Property Name="Soort" Type="nchar" MaxLength="10" />
-    <Property Name="Kleur" Type="nchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="ArtikelsAfbeeldingen">
+    <Key>
+      <PropertyRef Name="AfbeeldingNr" />
+    </Key>
+    <Property Name="AfbeeldingNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ArtikelNr" Type="int" Nullable="false" />
+    <Property Name="AfbeeldingLink" Type="nvarchar" MaxLength="200" Nullable="false" />
   </EntityType>
   <EntityType Name="Facturen">
     <Key>
@@ -16,7 +24,7 @@
     </Key>
     <Property Name="FactuurNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="KlantNr" Type="int" Nullable="false" />
-    <Property Name="Datum" Type="date" Nullable="false" />
+    <Property Name="Datum" Type="varchar" MaxLength="10" Nullable="false" />
   </EntityType>
   <EntityType Name="FactuurRegels">
     <Key>
@@ -33,17 +41,29 @@
       <PropertyRef Name="KlantNr" />
     </Key>
     <Property Name="KlantNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Voornaam" Type="nchar" MaxLength="50" Nullable="false" />
-    <Property Name="Familienaam" Type="nchar" MaxLength="50" />
-    <Property Name="Straat" Type="nchar" MaxLength="50" />
-    <Property Name="HuisNr" Type="nchar" MaxLength="10" />
-    <Property Name="Postcode" Type="nchar" MaxLength="15" />
-    <Property Name="Gemeente" Type="nchar" MaxLength="50" />
-    <Property Name="Land" Type="nchar" MaxLength="20" />
-    <Property Name="Email" Type="nchar" MaxLength="254" />
-    <Property Name="Telefoon" Type="nchar" MaxLength="50" />
-    <Property Name="BtwNr" Type="nchar" MaxLength="20" />
+    <Property Name="Voornaam" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Familienaam" Type="nvarchar" MaxLength="40" />
+    <Property Name="Straat" Type="nvarchar" MaxLength="50" />
+    <Property Name="HuisNr" Type="nvarchar" MaxLength="5" />
+    <Property Name="Postcode" Type="nvarchar" MaxLength="10" />
+    <Property Name="Gemeente" Type="nvarchar" MaxLength="50" />
+    <Property Name="Land" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="254" />
+    <Property Name="Telefoon" Type="nvarchar" MaxLength="50" />
+    <Property Name="BtwNr" Type="nvarchar" MaxLength="17" />
   </EntityType>
+  <Association Name="FK_ArtikelsAfbeeldingen_Artikels">
+    <End Role="Artikels" Type="Self.Artikels" Multiplicity="1" />
+    <End Role="ArtikelsAfbeeldingen" Type="Self.ArtikelsAfbeeldingen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artikels">
+        <PropertyRef Name="ArtikelNr" />
+      </Principal>
+      <Dependent Role="ArtikelsAfbeeldingen">
+        <PropertyRef Name="ArtikelNr" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Facturen_Klanten">
     <End Role="Klanten" Type="Self.Klanten" Multiplicity="1" />
     <End Role="Facturen" Type="Self.Facturen" Multiplicity="*" />
@@ -82,9 +102,14 @@
   </Association>
   <EntityContainer Name="KunstenboetiekModelStoreContainer">
     <EntitySet Name="Artikels" EntityType="Self.Artikels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArtikelsAfbeeldingen" EntityType="Self.ArtikelsAfbeeldingen" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Facturen" EntityType="Self.Facturen" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FactuurRegels" EntityType="Self.FactuurRegels" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Klanten" EntityType="Self.Klanten" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ArtikelsAfbeeldingen_Artikels" Association="Self.FK_ArtikelsAfbeeldingen_Artikels">
+      <End Role="Artikels" EntitySet="Artikels" />
+      <End Role="ArtikelsAfbeeldingen" EntitySet="ArtikelsAfbeeldingen" />
+    </AssociationSet>
     <AssociationSet Name="FK_Facturen_Klanten" Association="Self.FK_Facturen_Klanten">
       <End Role="Klanten" EntitySet="Klanten" />
       <End Role="Facturen" EntitySet="Facturen" />

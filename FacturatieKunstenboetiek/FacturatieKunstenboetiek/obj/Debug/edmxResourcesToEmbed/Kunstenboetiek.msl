@@ -6,9 +6,18 @@
         <MappingFragment StoreEntitySet="Artikels">
           <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
           <ScalarProperty Name="Naam" ColumnName="Naam" />
-          <ScalarProperty Name="Prijs" ColumnName="Prijs" />
-          <ScalarProperty Name="Soort" ColumnName="Soort" />
           <ScalarProperty Name="Kleur" ColumnName="Kleur" />
+          <ScalarProperty Name="Soort" ColumnName="Soort" />
+          <ScalarProperty Name="Prijs" ColumnName="Prijs" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArtikelsAfbeeldingen">
+      <EntityTypeMapping TypeName="KunstenboetiekModel.ArtikelAfbeelding">
+        <MappingFragment StoreEntitySet="ArtikelsAfbeeldingen">
+          <ScalarProperty Name="AfbeeldingNr" ColumnName="AfbeeldingNr" />
+          <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
+          <ScalarProperty Name="AfbeeldingLink" ColumnName="AfbeeldingLink" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

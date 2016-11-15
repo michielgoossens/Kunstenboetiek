@@ -9,9 +9,9 @@
     <StackPanel Margin="10">
         <TextBlock HorizontalAlignment="Center" Margin="10" FontSize="24">Kunstenboetiek</TextBlock>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button Width="100" Height="40" Margin="10">Factuur</Button>
-        <Button Width="100" Height="40" Margin="10">Klant</Button>
-        <Button Width="100" Height="40" Margin="10">Artikel</Button>
+        <Button Name="buttonFactuur" Width="100" Height="40" Margin="10" Click="buttonFactuur_Click">Factuur</Button>
+            <Button Name="buttonKlant" Width="100" Height="40" Margin="10" Click="buttonKlant_Click">Klant</Button>
+            <Button Name="buttonArtikel" Width="100" Height="40" Margin="10" Click="buttonArtikel_Click">Artikel</Button>
     </StackPanel>
     </StackPanel>
 </Window>

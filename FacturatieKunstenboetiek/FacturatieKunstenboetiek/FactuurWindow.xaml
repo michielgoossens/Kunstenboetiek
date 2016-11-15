@@ -1,0 +1,129 @@
+﻿<Window x:Class="FacturatieKunstenboetiek.FactuurWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FacturatieKunstenboetiek"
+        mc:Ignorable="d"
+        Title="FactuurWindow" Height="500" Width="560" Closed="Window_Closed" Closing="Window_Closing">
+    <Window.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style x:Key="Validation" TargetType="{x:Type Control}">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top">
+                                <TextBlock Foreground="Red" Text="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" HorizontalAlignment="Right" Margin="-85 0 0 2"></TextBlock>
+                            </StackPanel>
+                            <AdornedElementPlaceholder Name="customAdorner">
+                                <Border BorderBrush="Red" BorderThickness="1" Width="{Binding ElementName=customAdorner, Mode=OneWay, Path=AdornedElement.ActualWidth}" HorizontalAlignment="Left"/>
+                            </AdornedElementPlaceholder>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <Menu Name="menuHoofdmenu" DockPanel.Dock="Top">
+            <MenuItem Name="menuItemNieuw" Header="Nieuw" Command="New"/>
+            <MenuItem Name="menuItemOpen" Header="Open"/>
+            <MenuItem Name="menuItemOpslaan" Header="Opslaan" Command="Save"/>
+            <MenuItem Name="menuItemAfdrukken" Header="Afdrukken" Command="Print"/>
+        </Menu>
+        <Grid x:Name="grid" Margin="25">
+            <Grid.CommandBindings>
+                <CommandBinding Command="Save"/>
+                <CommandBinding Command="New"/>
+            </Grid.CommandBindings>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="210"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="110"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="1.3*"/>
+                <RowDefinition/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Label Name="labelFactuurNr" Grid.Column="0" Grid.Row="0">Factuur nr.:</Label>
+
+            <TextBlock Name="textBlockFactuurNr" Padding="5" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+            <Label Target="{Binding ElementName=tbKlant}" Content="Klant:" Grid.Column="0" Grid.Row="1"/>
+            <toolkit:AutoCompleteBox Style="{StaticResource Validation}" x:Name="tbKlant" Grid.Row="1" Grid.Column="1" Validation.Error="Validation_Error"
+                 Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Klant,
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="200"/>
+
+            <Label Target="{Binding ElementName=tbDatum}" Content="Datum:" Grid.Column="2" Grid.Row="1"/>
+            <TextBox Style="{StaticResource Validation}" x:Name="tbDatum" Grid.Row="1" Grid.Column="3" Validation.Error="Validation_Error"
+                 Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Datum,
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="100"/>
+
+            <Label Target="{Binding ElementName=tbArtikel}" Content="Artikel:" Grid.Column="0" Grid.Row="2"/>
+            <toolkit:AutoCompleteBox Style="{StaticResource Validation}" x:Name="tbArtikel" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Validation.Error="Validation_Error"
+                 Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Artikel,
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="400"/>
+            <StackPanel Grid.Row="3" Grid.Column="0">
+                <Button x:Name="buttonToevoegen" Content="Toevoegen ->" Margin="5" Click="buttonToevoegen_Click"/>
+                <Button x:Name="buttonVerwijderen" Content="&lt;- Verwijderen" Margin="5" Click="buttonVerwijderen_Click"/>
+            </StackPanel>
+            <ListBox x:Name="tbFactuurRegels" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Width="400" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1">
+
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="True">
+                            <Grid DockPanel.Dock="Top" Height="30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="235"></ColumnDefinition>
+                                    <ColumnDefinition Width="85"></ColumnDefinition>
+                                    <ColumnDefinition Width="80"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0">Naam</Label>
+                                <Label Grid.Column="1">Prijs Excl BTW</Label>
+                                <Label Grid.Column="2">Prijs incl BTW</Label>
+                            </Grid>
+                            <ItemsPresenter></ItemsPresenter>
+                        </DockPanel>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="235"></ColumnDefinition>
+                                <ColumnDefinition Width="85"></ColumnDefinition>
+                                <ColumnDefinition Width="80"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Naam}"></TextBlock>
+                            <TextBlock Text="{Binding Prijs, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="1"></TextBlock>
+                            <TextBlock Text="{Binding prijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal">
+                <Label Width="110" Content="Totaal Excl BTW:"/>
+                    <Label Name="labelExclBtw" Content="{Binding StringFormat=c, ConverterCulture=be-BE}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="110" Content="Totaal Incl BTW:"/>
+                    <Label Name="labelInclBtw" Content="{Binding StringFormat=c, ConverterCulture=be-BE}"></Label>
+            </StackPanel>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</Window>

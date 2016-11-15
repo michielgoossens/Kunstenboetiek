@@ -10,10 +10,18 @@
             <PropertyRef Name="ArtikelNr" />
           </Key>
           <Property Name="ArtikelNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Naam" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Naam" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Kleur" Type="nvarchar" MaxLength="25" />
+          <Property Name="Soort" Type="nvarchar" MaxLength="15" />
           <Property Name="Prijs" Type="float" />
-          <Property Name="Soort" Type="nchar" MaxLength="10" />
-          <Property Name="Kleur" Type="nchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="ArtikelsAfbeeldingen">
+          <Key>
+            <PropertyRef Name="AfbeeldingNr" />
+          </Key>
+          <Property Name="AfbeeldingNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArtikelNr" Type="int" Nullable="false" />
+          <Property Name="AfbeeldingLink" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="Facturen">
           <Key>
@@ -21,7 +29,7 @@
           </Key>
           <Property Name="FactuurNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="KlantNr" Type="int" Nullable="false" />
-          <Property Name="Datum" Type="date" Nullable="false" />
+          <Property Name="Datum" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="FactuurRegels">
           <Key>
@@ -38,17 +46,29 @@
             <PropertyRef Name="KlantNr" />
           </Key>
           <Property Name="KlantNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Voornaam" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="Familienaam" Type="nchar" MaxLength="50" />
-          <Property Name="Straat" Type="nchar" MaxLength="50" />
-          <Property Name="HuisNr" Type="nchar" MaxLength="10" />
-          <Property Name="Postcode" Type="nchar" MaxLength="15" />
-          <Property Name="Gemeente" Type="nchar" MaxLength="50" />
-          <Property Name="Land" Type="nchar" MaxLength="20" />
-          <Property Name="Email" Type="nchar" MaxLength="254" />
-          <Property Name="Telefoon" Type="nchar" MaxLength="50" />
-          <Property Name="BtwNr" Type="nchar" MaxLength="20" />
+          <Property Name="Voornaam" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Familienaam" Type="nvarchar" MaxLength="40" />
+          <Property Name="Straat" Type="nvarchar" MaxLength="50" />
+          <Property Name="HuisNr" Type="nvarchar" MaxLength="5" />
+          <Property Name="Postcode" Type="nvarchar" MaxLength="10" />
+          <Property Name="Gemeente" Type="nvarchar" MaxLength="50" />
+          <Property Name="Land" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="254" />
+          <Property Name="Telefoon" Type="nvarchar" MaxLength="50" />
+          <Property Name="BtwNr" Type="nvarchar" MaxLength="17" />
         </EntityType>
+        <Association Name="FK_ArtikelsAfbeeldingen_Artikels">
+          <End Role="Artikels" Type="Self.Artikels" Multiplicity="1" />
+          <End Role="ArtikelsAfbeeldingen" Type="Self.ArtikelsAfbeeldingen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikels">
+              <PropertyRef Name="ArtikelNr" />
+            </Principal>
+            <Dependent Role="ArtikelsAfbeeldingen">
+              <PropertyRef Name="ArtikelNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Facturen_Klanten">
           <End Role="Klanten" Type="Self.Klanten" Multiplicity="1" />
           <End Role="Facturen" Type="Self.Facturen" Multiplicity="*" />
@@ -87,9 +107,14 @@
         </Association>
         <EntityContainer Name="KunstenboetiekModelStoreContainer">
           <EntitySet Name="Artikels" EntityType="Self.Artikels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArtikelsAfbeeldingen" EntityType="Self.ArtikelsAfbeeldingen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Facturen" EntityType="Self.Facturen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FactuurRegels" EntityType="Self.FactuurRegels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Klanten" EntityType="Self.Klanten" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ArtikelsAfbeeldingen_Artikels" Association="Self.FK_ArtikelsAfbeeldingen_Artikels">
+            <End Role="Artikels" EntitySet="Artikels" />
+            <End Role="ArtikelsAfbeeldingen" EntitySet="ArtikelsAfbeeldingen" />
+          </AssociationSet>
           <AssociationSet Name="FK_Facturen_Klanten" Association="Self.FK_Facturen_Klanten">
             <End Role="Klanten" EntitySet="Klanten" />
             <End Role="Facturen" EntitySet="Facturen" />
@@ -113,11 +138,21 @@
             <PropertyRef Name="ArtikelNr" />
           </Key>
           <Property Name="ArtikelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Naam" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Kleur" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Soort" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Prijs" Type="Double" />
-          <Property Name="Soort" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Kleur" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="ArtikelAfbeeldingen" Relationship="Self.FK_ArtikelsAfbeeldingen_Artikels" FromRole="Artikels" ToRole="ArtikelsAfbeeldingen" />
           <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="Artikels" ToRole="FactuurRegels" />
+        </EntityType>
+        <EntityType Name="ArtikelAfbeelding">
+          <Key>
+            <PropertyRef Name="AfbeeldingNr" />
+          </Key>
+          <Property Name="AfbeeldingNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArtikelNr" Type="Int32" Nullable="false" />
+          <Property Name="AfbeeldingLink" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Artikel" Relationship="Self.FK_ArtikelsAfbeeldingen_Artikels" FromRole="ArtikelsAfbeeldingen" ToRole="Artikels" />
         </EntityType>
         <EntityType Name="Factuur">
           <Key>
@@ -125,7 +160,7 @@
           </Key>
           <Property Name="FactuurNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="KlantNr" Type="Int32" Nullable="false" />
-          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Datum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Klant" Relationship="Self.FK_Facturen_Klanten" FromRole="Facturen" ToRole="Klanten" />
           <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Facturen" FromRole="Facturen" ToRole="FactuurRegels" />
         </EntityType>
@@ -146,18 +181,30 @@
             <PropertyRef Name="KlantNr" />
           </Key>
           <Property Name="KlantNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Voornaam" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Familienaam" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Straat" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="HuisNr" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Postcode" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Gemeente" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Land" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="254" FixedLength="true" Unicode="true" />
-          <Property Name="Telefoon" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="BtwNr" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Voornaam" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Familienaam" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Straat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HuisNr" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Gemeente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Land" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="Telefoon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BtwNr" Type="String" MaxLength="17" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Facturen" Relationship="Self.FK_Facturen_Klanten" FromRole="Klanten" ToRole="Facturen" />
         </EntityType>
+        <Association Name="FK_ArtikelsAfbeeldingen_Artikels">
+          <End Role="Artikels" Type="KunstenboetiekModel.Artikel" Multiplicity="1" />
+          <End Role="ArtikelsAfbeeldingen" Type="KunstenboetiekModel.ArtikelAfbeelding" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikels">
+              <PropertyRef Name="ArtikelNr" />
+            </Principal>
+            <Dependent Role="ArtikelsAfbeeldingen">
+              <PropertyRef Name="ArtikelNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FactuurRegels_Artikels">
           <End Role="Artikels" Type="KunstenboetiekModel.Artikel" Multiplicity="1" />
           <End Role="FactuurRegels" Type="KunstenboetiekModel.FactuurRegel" Multiplicity="*" />
@@ -196,9 +243,14 @@
         </Association>
         <EntityContainer Name="KunstenboetiekDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Artikels" EntityType="KunstenboetiekModel.Artikel" />
+          <EntitySet Name="ArtikelsAfbeeldingen" EntityType="KunstenboetiekModel.ArtikelAfbeelding" />
           <EntitySet Name="Facturen" EntityType="KunstenboetiekModel.Factuur" />
           <EntitySet Name="FactuurRegels" EntityType="KunstenboetiekModel.FactuurRegel" />
           <EntitySet Name="Klanten" EntityType="KunstenboetiekModel.Klant" />
+          <AssociationSet Name="FK_ArtikelsAfbeeldingen_Artikels" Association="Self.FK_ArtikelsAfbeeldingen_Artikels">
+            <End Role="Artikels" EntitySet="Artikels" />
+            <End Role="ArtikelsAfbeeldingen" EntitySet="ArtikelsAfbeeldingen" />
+          </AssociationSet>
           <AssociationSet Name="FK_FactuurRegels_Artikels" Association="Self.FK_FactuurRegels_Artikels">
             <End Role="Artikels" EntitySet="Artikels" />
             <End Role="FactuurRegels" EntitySet="FactuurRegels" />
@@ -223,9 +275,18 @@
               <MappingFragment StoreEntitySet="Artikels">
                 <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
                 <ScalarProperty Name="Naam" ColumnName="Naam" />
-                <ScalarProperty Name="Prijs" ColumnName="Prijs" />
-                <ScalarProperty Name="Soort" ColumnName="Soort" />
                 <ScalarProperty Name="Kleur" ColumnName="Kleur" />
+                <ScalarProperty Name="Soort" ColumnName="Soort" />
+                <ScalarProperty Name="Prijs" ColumnName="Prijs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArtikelsAfbeeldingen">
+            <EntityTypeMapping TypeName="KunstenboetiekModel.ArtikelAfbeelding">
+              <MappingFragment StoreEntitySet="ArtikelsAfbeeldingen">
+                <ScalarProperty Name="AfbeeldingNr" ColumnName="AfbeeldingNr" />
+                <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
+                <ScalarProperty Name="AfbeeldingLink" ColumnName="AfbeeldingLink" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

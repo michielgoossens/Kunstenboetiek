@@ -22,7 +22,7 @@ namespace FacturatieKunstenboetiek
     
         public int FactuurNr { get; set; }
         public int KlantNr { get; set; }
-        public System.DateTime Datum { get; set; }
+        public string Datum { get; set; }
     
         public virtual Klant Klant { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

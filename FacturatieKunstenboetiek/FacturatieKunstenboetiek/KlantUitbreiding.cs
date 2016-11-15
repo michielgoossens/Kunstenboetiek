@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Net.Mail;
+using System.Windows;
 
 namespace FacturatieKunstenboetiek
 {
     public partial class Klant : IDataErrorInfo
     {
-        public string zoekKlant { get {return Voornaam + Familienaam + KlantNr.ToString(); } }
+        public string zoekKlant { get { return Voornaam + Familienaam + " " + KlantNr.ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');} }
         public string Error
         {
             get { throw new NotImplementedException(); }
@@ -27,16 +28,16 @@ namespace FacturatieKunstenboetiek
                         result = "Voornaam is verplicht!";
                     else
                     {
-                        if (Voornaam.Length > 50)
-                            result = "Max. 50 tekens.";
+                        if (Voornaam.Length > 40)
+                            result = "Max. 40 tekens.";
                     }
                 }
                 if (columnName == "Familienaam")
                 {
                     if (!string.IsNullOrEmpty(Familienaam))
                     {
-                        if (Familienaam.Length > 50)
-                            result = "Max. 50 tekens.";
+                        if (Familienaam.Length > 40)
+                            result = "Max. 40 tekens.";
                     }
                 }
                 if (columnName == "Straat")
@@ -51,16 +52,16 @@ namespace FacturatieKunstenboetiek
                 {
                     if (!string.IsNullOrEmpty(HuisNr))
                     {
-                        if (HuisNr.Length > 10)
-                            result = "Max. 10 tekens.";
+                        if (HuisNr.Length > 5)
+                            result = "Max. 5 tekens.";
                     }
                 }
                 if (columnName == "Postcode")
                 {
                     if (!string.IsNullOrEmpty(Postcode))
                     {
-                        if (Postcode.Length > 15)
-                            result = "Max. 15 tekens";
+                        if (Postcode.Length > 10)
+                            result = "Max. 10 tekens";
                     }
                 }
                 if (columnName == "Gemeente")
@@ -75,8 +76,8 @@ namespace FacturatieKunstenboetiek
                 {
                     if (!string.IsNullOrEmpty(Telefoon))
                     {
-                        if (Telefoon.Length > 50)
-                            result = "Max. 50 tekens.";
+                        if (Telefoon.Length > 30)
+                            result = "Max. 30 tekens.";
                     }
                 }
                 if (columnName == "Email")
@@ -104,8 +105,8 @@ namespace FacturatieKunstenboetiek
                 {
                     if (!string.IsNullOrEmpty(BtwNr))
                     {
-                        if (BtwNr.Length > 20)
-                            result = "Max. 20 tekens.";
+                        if (BtwNr.Length > 17)
+                            result = "Max. 17 tekens.";
                         else
                         {
                             if (!string.IsNullOrEmpty(Land))

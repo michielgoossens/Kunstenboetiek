@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         mc:Ignorable="d"
-        Title="Kunstenboetiek - Artikels" Height="350" Width="320">
+        Title="Kunstenboetiek - Artikels" Height="350" Width="320" Closed="Window_Closed" Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="{x:Type Label}">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Top" />
         </Style>
-        <Style TargetType="{x:Type TextBox}">
+        <Style x:Key="Validation" TargetType="{x:Type Control}">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="Padding" Value="5"/>
@@ -60,25 +60,24 @@
             <TextBlock Name="textBlockArtikelNr" Padding="5" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
             <Label Target="{Binding ElementName=tbNaam}" Content="Naam:" Grid.Column="0" Grid.Row="1"/>
-            <TextBox x:Name="tbNaam" Grid.Row="1" Grid.Column="1" Validation.Error="Validation_Error"
+            <TextBox Style="{StaticResource Validation}" x:Name="tbNaam" Grid.Row="1" Grid.Column="1" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Naam,
                         ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150"/>
 
             <Label Target="{Binding ElementName=tbKleur}" Content="Kleur:" Grid.Column="0" Grid.Row="2"/>
-            <TextBox x:Name="tbKleur" Grid.Row="2" Grid.Column="1" Validation.Error="Validation_Error"
+            <TextBox Style="{StaticResource Validation}" x:Name="tbKleur" Grid.Row="2" Grid.Column="1" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Kleur,
                         ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150"/>
 
             <Label Target="{Binding ElementName=tbSoort}" Content="Soort:" Grid.Column="0" Grid.Row="3"/>
-            <ComboBox x:Name="tbSoort" Grid.Row="3" Grid.Column="1" Validation.Error="Validation_Error"
-                 Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Soort,
-                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="150"/>
+            <ComboBox Style="{StaticResource Validation}" x:Name="tbSoort" Grid.Row="3" Grid.Column="1" Validation.Error="Validation_Error" 
+                      Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Soort,
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150"/>
 
-            <Label Target="{Binding ElementName=tbPrijs}" Content="Prijs:" Grid.Column="0" Grid.Row="4"/>
-            <TextBox x:Name="tbPrijs" Grid.Row="4" Grid.Column="1" Validation.Error="Validation_Error"
+            <Label Target="{Binding ElementName=tbPrijs}" Content="Prijs excl BTW:" Grid.Column="0" Grid.Row="4"/>
+            <TextBox Style="{StaticResource Validation}" x:Name="tbPrijs" Grid.Row="4" Grid.Column="1" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Prijs,
-                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150" TextChanged="tbPrijs_TextChanged"/>
-            <TextBox Grid.Column="9" Grid.Row="9" Margin="500"></TextBox>
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true, StringFormat=c, ConverterCulture=be-BE}" Width="150" TextChanged="tbPrijs_TextChanged"/>
         </Grid>
     </DockPanel>
 </Window>
