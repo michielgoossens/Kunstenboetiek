@@ -43,7 +43,7 @@ namespace FacturatieKunstenboetiek
                     autoCompleteBox.ItemsSource = autoCompleteKlant;
                     autoCompleteBox.ValueMemberPath = "zoekKlant";
                     autoCompleteBox.FilterMode = AutoCompleteFilterMode.Contains;
-                    autoCompleteBox.ItemTemplate = (Application.Current as FacturatieKunstenboetiek.App).klantLayout();
+                    autoCompleteBox.ItemTemplate = Overal.ZoekLayout("klant");
 
                 }
                 else if (TeOpenen == "artikel")
@@ -56,13 +56,28 @@ namespace FacturatieKunstenboetiek
                     autoCompleteBox.ItemsSource = autoCompleteArtikel;
                     autoCompleteBox.ValueMemberPath = "zoekArtikel";
                     autoCompleteBox.FilterMode = AutoCompleteFilterMode.Contains;
-                    autoCompleteBox.ItemTemplate = (Application.Current as FacturatieKunstenboetiek.App).ArtikelLayout();
+                    autoCompleteBox.ItemTemplate = Overal.ZoekLayout("artikel");
+                }
+                else if (TeOpenen == "factuur")
+                {
+                    List<Factuur> autoCompleteFactuur = new List<Factuur>();
+                    foreach (var f in dbEntities.Facturen)
+                    {
+                        Klant klant = dbEntities.Klanten.Find(f.KlantNr);
+                        dbEntities.Klanten.Attach(klant);
+                        autoCompleteFactuur.Add(f);
+
+                    }
+                    autoCompleteBox.ItemsSource = autoCompleteFactuur;
+                    autoCompleteBox.ValueMemberPath = "zoekFactuur";
+                    autoCompleteBox.FilterMode = AutoCompleteFilterMode.Contains;
+                    autoCompleteBox.ItemTemplate = Overal.ZoekLayout("factuur");
                 }
             }
         }
         private void ButtonAnnuleren_Click(object sender, RoutedEventArgs e)
         {
-            (Application.Current as FacturatieKunstenboetiek.App).Openen = false;
+            Overal.Openen = false;
             this.Close();
         }
 
@@ -73,8 +88,8 @@ namespace FacturatieKunstenboetiek
                 Klant klant = (Klant)autoCompleteBox.SelectedItem;
                 if (klant != null)
                 {
-                    (Application.Current as FacturatieKunstenboetiek.App).Openen = true;
-                    (Application.Current as FacturatieKunstenboetiek.App).teOpenenKlant = klant;
+                    Overal.Openen = true;
+                    Overal.teOpenenKlant = klant;
                     this.Close();
                 }
                 else { MessageBox.Show("De klant die je probeert te openen bestaat niet.", "Openen", MessageBoxButton.OK, MessageBoxImage.Information); }
@@ -84,11 +99,22 @@ namespace FacturatieKunstenboetiek
                 Artikel artikel = (Artikel)autoCompleteBox.SelectedItem;
                 if (artikel != null)
                 {
-                    (Application.Current as FacturatieKunstenboetiek.App).Openen = true;
-                    (Application.Current as FacturatieKunstenboetiek.App).teOpenenArtikel = artikel;
+                    Overal.Openen = true;
+                    Overal.teOpenenArtikel = artikel;
                     this.Close();
                 }
                 else { MessageBox.Show("Het artikel dat je probeert te openen bestaat niet.", "Openen", MessageBoxButton.OK, MessageBoxImage.Information); }
+            }
+            if (TeOpenen == "factuur")
+            {
+                Factuur factuur = (Factuur)autoCompleteBox.SelectedItem;
+                if (factuur != null)
+                {
+                    Overal.Openen = true;
+                    Overal.teOpenenFactuur = factuur;
+                    this.Close();
+                }
+                else { MessageBox.Show("Het factuur dat je probeert te openen bestaat niet.", "Openen", MessageBoxButton.OK, MessageBoxImage.Information); }
             }
         }
 

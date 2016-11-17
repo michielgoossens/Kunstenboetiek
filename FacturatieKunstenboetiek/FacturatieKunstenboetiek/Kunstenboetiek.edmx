@@ -11,9 +11,9 @@
           </Key>
           <Property Name="ArtikelNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Naam" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Prijs" Type="float" Nullable="false" />
+          <Property Name="Soort" Type="nvarchar" MaxLength="50" />
           <Property Name="Kleur" Type="nvarchar" MaxLength="25" />
-          <Property Name="Soort" Type="nvarchar" MaxLength="15" />
-          <Property Name="Prijs" Type="float" />
         </EntityType>
         <EntityType Name="ArtikelsAfbeeldingen">
           <Key>
@@ -29,7 +29,7 @@
           </Key>
           <Property Name="FactuurNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="KlantNr" Type="int" Nullable="false" />
-          <Property Name="Datum" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Datum" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="FactuurRegels">
           <Key>
@@ -38,24 +38,22 @@
           <Property Name="RegelNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FactuurNr" Type="int" Nullable="false" />
           <Property Name="ArtikelNr" Type="int" Nullable="false" />
-          <Property Name="Aantal" Type="int" Nullable="false" />
-          <Property Name="Korting" Type="float" />
         </EntityType>
         <EntityType Name="Klanten">
           <Key>
             <PropertyRef Name="KlantNr" />
           </Key>
           <Property Name="KlantNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Voornaam" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="Familienaam" Type="nvarchar" MaxLength="40" />
+          <Property Name="Voornaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Familienaam" Type="nvarchar" MaxLength="50" />
           <Property Name="Straat" Type="nvarchar" MaxLength="50" />
-          <Property Name="HuisNr" Type="nvarchar" MaxLength="5" />
-          <Property Name="Postcode" Type="nvarchar" MaxLength="10" />
+          <Property Name="HuisNr" Type="nvarchar" MaxLength="50" />
+          <Property Name="Postcode" Type="nvarchar" MaxLength="50" />
           <Property Name="Gemeente" Type="nvarchar" MaxLength="50" />
           <Property Name="Land" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="254" />
           <Property Name="Telefoon" Type="nvarchar" MaxLength="50" />
-          <Property Name="BtwNr" Type="nvarchar" MaxLength="17" />
+          <Property Name="BtwNr" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_ArtikelsAfbeeldingen_Artikels">
           <End Role="Artikels" Type="Self.Artikels" Multiplicity="1" />
@@ -139,9 +137,9 @@
           </Key>
           <Property Name="ArtikelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prijs" Type="Double" Nullable="false" />
+          <Property Name="Soort" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Kleur" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Soort" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Prijs" Type="Double" />
           <NavigationProperty Name="ArtikelAfbeeldingen" Relationship="Self.FK_ArtikelsAfbeeldingen_Artikels" FromRole="Artikels" ToRole="ArtikelsAfbeeldingen" />
           <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="Artikels" ToRole="FactuurRegels" />
         </EntityType>
@@ -160,7 +158,7 @@
           </Key>
           <Property Name="FactuurNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="KlantNr" Type="Int32" Nullable="false" />
-          <Property Name="Datum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Datum" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Klant" Relationship="Self.FK_Facturen_Klanten" FromRole="Facturen" ToRole="Klanten" />
           <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Facturen" FromRole="Facturen" ToRole="FactuurRegels" />
         </EntityType>
@@ -171,8 +169,6 @@
           <Property Name="RegelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FactuurNr" Type="Int32" Nullable="false" />
           <Property Name="ArtikelNr" Type="Int32" Nullable="false" />
-          <Property Name="Aantal" Type="Int32" Nullable="false" />
-          <Property Name="Korting" Type="Double" />
           <NavigationProperty Name="Artikel" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="FactuurRegels" ToRole="Artikels" />
           <NavigationProperty Name="Factuur" Relationship="Self.FK_FactuurRegels_Facturen" FromRole="FactuurRegels" ToRole="Facturen" />
         </EntityType>
@@ -181,16 +177,16 @@
             <PropertyRef Name="KlantNr" />
           </Key>
           <Property Name="KlantNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Voornaam" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Familienaam" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Voornaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Familienaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Straat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="HuisNr" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="Postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="HuisNr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Postcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Gemeente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Land" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="Telefoon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BtwNr" Type="String" MaxLength="17" FixedLength="false" Unicode="true" />
+          <Property Name="BtwNr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Facturen" Relationship="Self.FK_Facturen_Klanten" FromRole="Klanten" ToRole="Facturen" />
         </EntityType>
         <Association Name="FK_ArtikelsAfbeeldingen_Artikels">
@@ -275,9 +271,9 @@
               <MappingFragment StoreEntitySet="Artikels">
                 <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
                 <ScalarProperty Name="Naam" ColumnName="Naam" />
-                <ScalarProperty Name="Kleur" ColumnName="Kleur" />
-                <ScalarProperty Name="Soort" ColumnName="Soort" />
                 <ScalarProperty Name="Prijs" ColumnName="Prijs" />
+                <ScalarProperty Name="Soort" ColumnName="Soort" />
+                <ScalarProperty Name="Kleur" ColumnName="Kleur" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -305,8 +301,6 @@
                 <ScalarProperty Name="RegelNr" ColumnName="RegelNr" />
                 <ScalarProperty Name="FactuurNr" ColumnName="FactuurNr" />
                 <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
-                <ScalarProperty Name="Aantal" ColumnName="Aantal" />
-                <ScalarProperty Name="Korting" ColumnName="Korting" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

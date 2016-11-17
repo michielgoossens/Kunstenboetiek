@@ -6,9 +6,9 @@
     </Key>
     <Property Name="ArtikelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Prijs" Type="Double" Nullable="false" />
+    <Property Name="Soort" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Kleur" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-    <Property Name="Soort" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-    <Property Name="Prijs" Type="Double" />
     <NavigationProperty Name="ArtikelAfbeeldingen" Relationship="Self.FK_ArtikelsAfbeeldingen_Artikels" FromRole="Artikels" ToRole="ArtikelsAfbeeldingen" />
     <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="Artikels" ToRole="FactuurRegels" />
   </EntityType>
@@ -27,7 +27,7 @@
     </Key>
     <Property Name="FactuurNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="KlantNr" Type="Int32" Nullable="false" />
-    <Property Name="Datum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Datum" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Klant" Relationship="Self.FK_Facturen_Klanten" FromRole="Facturen" ToRole="Klanten" />
     <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Facturen" FromRole="Facturen" ToRole="FactuurRegels" />
   </EntityType>
@@ -38,8 +38,6 @@
     <Property Name="RegelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FactuurNr" Type="Int32" Nullable="false" />
     <Property Name="ArtikelNr" Type="Int32" Nullable="false" />
-    <Property Name="Aantal" Type="Int32" Nullable="false" />
-    <Property Name="Korting" Type="Double" />
     <NavigationProperty Name="Artikel" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="FactuurRegels" ToRole="Artikels" />
     <NavigationProperty Name="Factuur" Relationship="Self.FK_FactuurRegels_Facturen" FromRole="FactuurRegels" ToRole="Facturen" />
   </EntityType>
@@ -48,16 +46,16 @@
       <PropertyRef Name="KlantNr" />
     </Key>
     <Property Name="KlantNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Voornaam" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Familienaam" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="Voornaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Familienaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Straat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="HuisNr" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="Postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="HuisNr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Postcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Gemeente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Land" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="Telefoon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="BtwNr" Type="String" MaxLength="17" FixedLength="false" Unicode="true" />
+    <Property Name="BtwNr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Facturen" Relationship="Self.FK_Facturen_Klanten" FromRole="Klanten" ToRole="Facturen" />
   </EntityType>
   <Association Name="FK_ArtikelsAfbeeldingen_Artikels">

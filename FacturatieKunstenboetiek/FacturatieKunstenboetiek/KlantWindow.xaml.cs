@@ -29,14 +29,14 @@ namespace FacturatieKunstenboetiek
             InitializeComponent();
             startUp();
             fillLandCombobox();
-            tbVoornaam.Focus();
         }
         public void startUp()
         {
             _klant = new Klant();
             grid.DataContext = _klant;
             setId();
-            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+            Overal.Openen = null;
+            tbVoornaam.Focus();
         }
         private void Validation_Error(object sender, ValidationErrorEventArgs e)
         {
@@ -117,7 +117,7 @@ namespace FacturatieKunstenboetiek
                 {
                     maxKlantId = 0;
                 }
-                textBlockKlantNr.Text = (maxKlantId + 1).ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');
+                textBlockKlantNr.Text = (maxKlantId + 1).ToString().PadLeft(Overal.padLeft, '0');
             }
         }
 
@@ -168,27 +168,29 @@ namespace FacturatieKunstenboetiek
             OpenWindow window = new OpenWindow("klant");
             window.ShowDialog();
 
-            if ((Application.Current as FacturatieKunstenboetiek.App).Openen == true)
+            if (Overal.Openen == true)
             {
-                _klant = (Application.Current as FacturatieKunstenboetiek.App).teOpenenKlant;
+                _klant = Overal.teOpenenKlant;
 
                 grid.DataContext = _klant;
-                textBlockKlantNr.Text = _klant.KlantNr.ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');
+                textBlockKlantNr.Text = _klant.KlantNr.ToString().PadLeft(Overal.padLeft, '0');
             }
 
 
-            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
-            (Application.Current as FacturatieKunstenboetiek.App).teOpenenKlant = null;
+            Overal.Openen = null;
+            Overal.teOpenenKlant = null;
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Ben je zeker dat je het venster wil sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (MessageBox.Show("Ben je zeker dat je het venster wilt sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 e.Cancel = true;
             }
         }
         private void Window_Closed(object sender, EventArgs e)
         {
+            Overal.teOpenenKlant = null;
+            Overal.Openen = null;
             Window main = new MainWindow();
             main.Show();
         }

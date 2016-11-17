@@ -124,6 +124,7 @@
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
     <Compile Include="KlantUitbreiding.cs" />
+    <Compile Include="Overal.cs" />
     <Page Include="ArtikelWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,18 +214,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Kunstenboetiek.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
-      <LastGenOutput>Kunstenboetiek.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Kunstenboetiek.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
-      <LastGenOutput>Kunstenboetiek.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
@@ -235,6 +224,18 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Kunstenboetiek.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
+      <LastGenOutput>Kunstenboetiek.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Kunstenboetiek.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
+      <LastGenOutput>Kunstenboetiek.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

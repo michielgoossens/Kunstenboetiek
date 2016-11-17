@@ -17,8 +17,6 @@ namespace FacturatieKunstenboetiek
         public int RegelNr { get; set; }
         public int FactuurNr { get; set; }
         public int ArtikelNr { get; set; }
-        public int Aantal { get; set; }
-        public Nullable<double> Korting { get; set; }
     
         public virtual Artikel Artikel { get; set; }
         public virtual Factuur Factuur { get; set; }

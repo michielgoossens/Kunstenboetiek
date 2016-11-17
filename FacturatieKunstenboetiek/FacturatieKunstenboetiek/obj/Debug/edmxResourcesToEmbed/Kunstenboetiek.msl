@@ -6,9 +6,9 @@
         <MappingFragment StoreEntitySet="Artikels">
           <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
           <ScalarProperty Name="Naam" ColumnName="Naam" />
-          <ScalarProperty Name="Kleur" ColumnName="Kleur" />
-          <ScalarProperty Name="Soort" ColumnName="Soort" />
           <ScalarProperty Name="Prijs" ColumnName="Prijs" />
+          <ScalarProperty Name="Soort" ColumnName="Soort" />
+          <ScalarProperty Name="Kleur" ColumnName="Kleur" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -36,8 +36,6 @@
           <ScalarProperty Name="RegelNr" ColumnName="RegelNr" />
           <ScalarProperty Name="FactuurNr" ColumnName="FactuurNr" />
           <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
-          <ScalarProperty Name="Aantal" ColumnName="Aantal" />
-          <ScalarProperty Name="Korting" ColumnName="Korting" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

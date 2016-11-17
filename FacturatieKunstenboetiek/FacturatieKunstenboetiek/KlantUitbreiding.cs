@@ -11,7 +11,21 @@ namespace FacturatieKunstenboetiek
 {
     public partial class Klant : IDataErrorInfo
     {
-        public string zoekKlant { get { return Voornaam + Familienaam + " " + KlantNr.ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');} }
+        public string zoekKlant { get { return Naam + " " + KlantNr.ToString().PadLeft(Overal.padLeft, '0');} }
+        public string Naam
+        {
+            get
+            {
+                if (Familienaam != null)
+                {
+                    return Voornaam + " " + Familienaam;
+                }
+                else
+                {
+                    return Voornaam;
+                }
+            }
+        }
         public string Error
         {
             get { throw new NotImplementedException(); }

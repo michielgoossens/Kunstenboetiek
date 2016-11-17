@@ -5,13 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows;
+using System.Globalization;
 
 namespace FacturatieKunstenboetiek
 {
     public partial class Factuur : IDataErrorInfo
     {
-        private double totaal = 0;
-        public string zoekFactuur { get { return Klant.Voornaam + Klant.Familienaam + " " + FactuurNr.ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0'); } }
+        public string zoekFactuur { get { return Naam + " " + FactuurNr.ToString().PadLeft(Overal.padLeft, '0'); } }
+
+        public string Naam { get
+            {
+                if (Klant.Familienaam != null)
+                {
+                    return Klant.Voornaam + " " + Klant.Familienaam;
+                }
+                else
+                {
+                    return Klant.Voornaam;
+                }
+            }
+        }
 
         public string Error
         {
@@ -26,7 +39,9 @@ namespace FacturatieKunstenboetiek
                 if (columnName == "Klant")
                 {
                     if (Klant == null)
+                    {
                         result = "Klant is verplicht!";
+                    }
                 }
                 if (columnName == "Datum")
                 {
@@ -35,7 +50,7 @@ namespace FacturatieKunstenboetiek
                     else
                     {
                         DateTime dDatum;
-                        if (!DateTime.TryParse(Datum, out dDatum))
+                        if (!DateTime.TryParseExact(Datum, "dd-mm-yyyy", null, DateTimeStyles.None, out dDatum))
                         {
                             result = "Datum moet dd-mm-yyyy zijn.";
                         }

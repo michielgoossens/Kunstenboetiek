@@ -14,7 +14,7 @@ namespace FacturatieKunstenboetiek
             get { return (Prijs * 1.06); }
             set { }
         }
-        public string zoekArtikel { get { return Naam + " " + ArtikelNr.ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0'); } }
+        public string zoekArtikel { get { return Naam + " " + ArtikelNr.ToString().PadLeft(Overal.padLeft, '0'); } }
         public string Error
         {
             get { throw new NotImplementedException(); }
@@ -57,7 +57,7 @@ namespace FacturatieKunstenboetiek
                         result = "Prijs is verplicht!";
                     else
                     {
-                        if (Prijs < 0)
+                        if (Prijs <= 0)
                         {
                             result = "Prijs moet een positief getal zijn";
                         }

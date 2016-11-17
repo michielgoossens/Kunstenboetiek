@@ -21,18 +21,16 @@ namespace FacturatieKunstenboetiek
     {
         private int _noOfErrorsOnScreen = 0;
         private Factuur _factuur;
-        private double totaalExclBtw = 0;
-        private double totaalInclBtw = 0;
+        private double totaalExclBtw;
+        private double totaalInclBtw;
+        private bool opgeslagen;
 
         public FactuurWindow()
         {
             InitializeComponent();
             startUp();
-            labelExclBtw.Content = totaalExclBtw;
-            labelInclBtw.Content = totaalInclBtw;
             fillKlantAutoCompleteBox();
             fillArtikelAutoCompleteBox();
-            tbKlant.Focus();
         }
         private void fillKlantAutoCompleteBox()
         {
@@ -46,7 +44,7 @@ namespace FacturatieKunstenboetiek
                 tbKlant.ItemsSource = autoCompleteKlant;
                 tbKlant.ValueMemberPath = "zoekKlant";
                 tbKlant.FilterMode = AutoCompleteFilterMode.Contains;
-                tbKlant.ItemTemplate = (Application.Current as FacturatieKunstenboetiek.App).klantLayout();
+                tbKlant.ItemTemplate = Overal.ZoekLayout("klant");
             }
         }
         private void fillArtikelAutoCompleteBox()
@@ -61,7 +59,7 @@ namespace FacturatieKunstenboetiek
                 tbArtikel.ItemsSource = autoCompleteArtikel;
                 tbArtikel.ValueMemberPath = "zoekArtikel";
                 tbArtikel.FilterMode = AutoCompleteFilterMode.Contains;
-                tbArtikel.ItemTemplate = (Application.Current as FacturatieKunstenboetiek.App).ArtikelLayout();
+                tbArtikel.ItemTemplate = Overal.ZoekLayout("artikel");
             }
         }
         private void Validation_Error(object sender, ValidationErrorEventArgs e)
@@ -76,8 +74,15 @@ namespace FacturatieKunstenboetiek
             _factuur = new Factuur();
             grid.DataContext = _factuur;
             setId();
-            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
-            (Application.Current as FacturatieKunstenboetiek.App).Opgeslagen = null;
+            tbKlant.Text = string.Empty;
+            tbFactuurRegels.Items.Clear();
+            totaalExclBtw = 0;
+            totaalInclBtw = 0;
+            labelExclBtw.Content = totaalExclBtw;
+            labelInclBtw.Content = totaalInclBtw;
+            Overal.Openen = null;
+            opgeslagen = false;
+            tbKlant.Focus();
         }
         private void setId()
         {
@@ -92,7 +97,7 @@ namespace FacturatieKunstenboetiek
                 {
                     maxFactuurId = 0;
                 }
-                textBlockFactuurNr.Text = (maxFactuurId + 1).ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');
+                textBlockFactuurNr.Text = (maxFactuurId + 1).ToString().PadLeft(Overal.padLeft, '0');
             }
         }
 
@@ -115,9 +120,9 @@ namespace FacturatieKunstenboetiek
                     {
                         tbFactuurRegels.Items.Add(artikel);
                         totaalExclBtw += artikel.Prijs;
-                        labelExclBtw.Content = "€ " + totaalExclBtw;
+                        labelExclBtw.Content = totaalExclBtw + " €";
                         totaalInclBtw += artikel.prijsInclBtw;
-                        labelInclBtw.Content = "€ " + totaalInclBtw;
+                        labelInclBtw.Content = totaalInclBtw + " €";
                         tbArtikel.Text = string.Empty;
 
                     }
@@ -127,7 +132,12 @@ namespace FacturatieKunstenboetiek
 
         private void buttonVerwijderen_Click(object sender, RoutedEventArgs e)
         {
+            Artikel artikel = tbFactuurRegels.SelectedItem as Artikel;
+            totaalExclBtw -= artikel.Prijs;
+            totaalInclBtw = totaalExclBtw * 1.06;
             tbFactuurRegels.Items.Remove(tbFactuurRegels.SelectedItem);
+            labelExclBtw.Content = totaalExclBtw;
+            labelInclBtw.Content = totaalInclBtw;
         }
         public DataTemplate klantLayout()
         {
@@ -165,7 +175,7 @@ namespace FacturatieKunstenboetiek
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Ben je zeker dat je het venster wil sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (MessageBox.Show("Ben je zeker dat je het venster wilt sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 e.Cancel = true;
             }
@@ -174,6 +184,125 @@ namespace FacturatieKunstenboetiek
         {
             Window main = new MainWindow();
             main.Show();
+        }
+
+        private void AddFactuur_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _noOfErrorsOnScreen == 0;
+            e.Handled = true;
+        }
+
+        private void AddFactuur_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            using (var dbEntities = new KunstenboetiekDbEntities())
+            {
+                var f = dbEntities.Facturen.Find(int.Parse(textBlockFactuurNr.Text));
+                Klant klant = tbKlant.SelectedItem as Klant;
+                if (f == null)
+                {
+                    if (MessageBox.Show("Ben je zeker dat je het factuur wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                    {
+                        Factuur factuur = new Factuur();
+                        dbEntities.Klanten.Attach(klant);
+                        factuur.Klant = klant;
+                        factuur.Datum = tbDatum.Text;
+
+                        foreach (var regel in tbFactuurRegels.Items)
+                         {
+                             FactuurRegel fRegel = new FactuurRegel();
+                             Artikel artikel = regel as Artikel;
+                             if (artikel != null)
+                             {
+                                dbEntities.Artikels.Attach(artikel);
+                                 fRegel.Artikel = artikel;
+                             }
+                             factuur.FactuurRegels.Add(fRegel);
+                         }
+                        dbEntities.Facturen.Add(factuur);
+                        dbEntities.SaveChanges();
+                        opgeslagen = true;
+                        MessageBox.Show("Het factuur is goed opgeslagen", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+                else
+                {
+                    f.Klant = klant;
+                    f.Datum = tbDatum.Text;
+
+                    //oude regels verwijderen en nieuwe toevoegen
+
+                    dbEntities.SaveChanges();
+                    opgeslagen = true;
+                    MessageBox.Show("Het factuur is goed opgeslagen", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+        }
+
+        private void NewFactuur_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = tbKlant.Text != string.Empty  || tbDatum.Text != string.Empty || tbFactuurRegels.Items.Count != 0;
+            e.Handled = true;
+        }
+
+        private void NewFactuur_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (MessageBox.Show("Ben je zeker dat je een nieuw formuleer wilt starten?", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                startUp();
+            }
+        }
+
+        private void PrintFactuur_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = tbKlant.Text != string.Empty && tbDatum.Text != string.Empty;
+        }
+
+        private void PrintFactuur_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (opgeslagen == true)
+            {
+                //print window openen
+            }
+            else
+            {
+                if (MessageBox.Show("Gelieve het factuur eerst op te slagen voor dat je gaat printen.", "Printen",MessageBoxButton.OKCancel, MessageBoxImage.Information, MessageBoxResult.OK) == MessageBoxResult.OK)
+                {
+                    AddFactuur_Executed(sender, e);
+                }
+            }
+        }
+
+        private void menuItemOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow window = new OpenWindow("factuur");
+            window.ShowDialog();
+
+            if (Overal.Openen == true)
+            {
+                _factuur = Overal.teOpenenFactuur;
+                grid.DataContext = _factuur;
+                textBlockFactuurNr.Text = _factuur.FactuurNr.ToString().PadLeft(Overal.padLeft, '0');
+                using (var dbEntities = new KunstenboetiekDbEntities())
+                {
+                    Artikel artikel = new Artikel();
+                    List<FactuurRegel> factuurregels = (from regel in dbEntities.FactuurRegels
+                                                        where regel.FactuurNr == _factuur.FactuurNr
+                                                        select regel).ToList();
+                    foreach (var regel in factuurregels)
+                    {
+                        artikel = dbEntities.Artikels.Find(regel.ArtikelNr);
+                        totaalExclBtw += artikel.Prijs;
+                        tbFactuurRegels.Items.Add(artikel);
+                    }
+                    totaalInclBtw = totaalExclBtw * 1.06;
+                }
+                labelExclBtw.Content = totaalExclBtw;
+                labelInclBtw.Content = totaalInclBtw;
+                opgeslagen = true;
+            }
+
+            Overal.teOpenenFactuur = null;
+            Overal.Openen = null;
         }
     }
 }

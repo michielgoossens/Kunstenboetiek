@@ -27,7 +27,6 @@ namespace FacturatieKunstenboetiek
             InitializeComponent();
             startUp();
             fillSoortCombobox();
-            tbNaam.Focus();
         }
 
         private void Validation_Error(object sender, ValidationErrorEventArgs e)
@@ -43,8 +42,8 @@ namespace FacturatieKunstenboetiek
             _artikel = new Artikel();
             grid.DataContext = _artikel;
             setId();
-            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
-            (Application.Current as FacturatieKunstenboetiek.App).Opgeslagen = null;
+            Overal.Openen = null;
+            tbNaam.Focus();
         }
 
         private void setId()
@@ -60,7 +59,7 @@ namespace FacturatieKunstenboetiek
                 {
                     maxArtikelId = 0;
                 }
-                textBlockArtikelNr.Text = (maxArtikelId + 1).ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');
+                textBlockArtikelNr.Text = (maxArtikelId + 1).ToString().PadLeft(Overal.padLeft, '0');
 
             }
         }
@@ -88,7 +87,7 @@ namespace FacturatieKunstenboetiek
 
         private void NewArtikel_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         { 
-            e.CanExecute = tbNaam.Text != "" || tbKleur.Text != "" || tbSoort.SelectedValue != null || tbPrijs.Text != "";
+            e.CanExecute = tbNaam.Text != "" || tbKleur.Text != "" || tbSoort.SelectedValue != null || double.Parse(tbPrijs.Text.Substring(0, tbPrijs.Text.Length - 2)) > 0;
             e.Handled = true;
         }
 
@@ -139,19 +138,20 @@ namespace FacturatieKunstenboetiek
             OpenWindow window = new OpenWindow("artikel");
             window.ShowDialog();
 
-            if ((Application.Current as FacturatieKunstenboetiek.App).Openen == true)
+            if (Overal.Openen == true)
             {
-                _artikel = (Application.Current as FacturatieKunstenboetiek.App).teOpenenArtikel;
+                _artikel = Overal.teOpenenArtikel;
                 grid.DataContext = _artikel;
-                textBlockArtikelNr.Text = _artikel.ArtikelNr.ToString().PadLeft((Application.Current as FacturatieKunstenboetiek.App).padLeft, '0');
+                textBlockArtikelNr.Text = _artikel.ArtikelNr.ToString().PadLeft(Overal.padLeft, '0');
             }
 
-            (Application.Current as FacturatieKunstenboetiek.App).Openen = null;
+            Overal.teOpenenArtikel = null;
+            Overal.Openen = null; 
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Ben je zeker dat je het venster wil sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (MessageBox.Show("Ben je zeker dat je het venster wilt sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 e.Cancel = true;
             }
@@ -159,6 +159,8 @@ namespace FacturatieKunstenboetiek
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            Overal.teOpenenArtikel = null;
+            Overal.Openen = null;
             Window main = new MainWindow();
             main.Show();
         }

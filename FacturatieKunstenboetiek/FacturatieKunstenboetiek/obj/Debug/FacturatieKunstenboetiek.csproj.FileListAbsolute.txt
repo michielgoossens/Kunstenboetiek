@@ -60,7 +60,6 @@ D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\Facturatie
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\bin\Debug\WPFToolkit.dll
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\bin\Debug\EntityFramework.xml
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\bin\Debug\EntityFramework.SqlServer.xml
-D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csprojResolveAssemblyReference.cache
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\ArtikelWindow.g.cs
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\KlantWindow.g.cs
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\MainWindow.g.cs
@@ -78,3 +77,4 @@ D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\Facturatie
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csproj.GenerateResource.Cache
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FactuurWindow.g.cs
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FactuurWindow.baml
+D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csprojResolveAssemblyReference.cache

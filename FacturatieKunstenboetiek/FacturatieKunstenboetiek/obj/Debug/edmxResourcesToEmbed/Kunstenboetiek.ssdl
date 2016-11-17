@@ -6,9 +6,9 @@
     </Key>
     <Property Name="ArtikelNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Naam" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Prijs" Type="float" Nullable="false" />
+    <Property Name="Soort" Type="nvarchar" MaxLength="50" />
     <Property Name="Kleur" Type="nvarchar" MaxLength="25" />
-    <Property Name="Soort" Type="nvarchar" MaxLength="15" />
-    <Property Name="Prijs" Type="float" />
   </EntityType>
   <EntityType Name="ArtikelsAfbeeldingen">
     <Key>
@@ -24,7 +24,7 @@
     </Key>
     <Property Name="FactuurNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="KlantNr" Type="int" Nullable="false" />
-    <Property Name="Datum" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Datum" Type="nvarchar" MaxLength="10" Nullable="false" />
   </EntityType>
   <EntityType Name="FactuurRegels">
     <Key>
@@ -33,24 +33,22 @@
     <Property Name="RegelNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FactuurNr" Type="int" Nullable="false" />
     <Property Name="ArtikelNr" Type="int" Nullable="false" />
-    <Property Name="Aantal" Type="int" Nullable="false" />
-    <Property Name="Korting" Type="float" />
   </EntityType>
   <EntityType Name="Klanten">
     <Key>
       <PropertyRef Name="KlantNr" />
     </Key>
     <Property Name="KlantNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Voornaam" Type="nvarchar" MaxLength="40" Nullable="false" />
-    <Property Name="Familienaam" Type="nvarchar" MaxLength="40" />
+    <Property Name="Voornaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Familienaam" Type="nvarchar" MaxLength="50" />
     <Property Name="Straat" Type="nvarchar" MaxLength="50" />
-    <Property Name="HuisNr" Type="nvarchar" MaxLength="5" />
-    <Property Name="Postcode" Type="nvarchar" MaxLength="10" />
+    <Property Name="HuisNr" Type="nvarchar" MaxLength="50" />
+    <Property Name="Postcode" Type="nvarchar" MaxLength="50" />
     <Property Name="Gemeente" Type="nvarchar" MaxLength="50" />
     <Property Name="Land" Type="nvarchar" MaxLength="50" />
     <Property Name="Email" Type="nvarchar" MaxLength="254" />
     <Property Name="Telefoon" Type="nvarchar" MaxLength="50" />
-    <Property Name="BtwNr" Type="nvarchar" MaxLength="17" />
+    <Property Name="BtwNr" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK_ArtikelsAfbeeldingen_Artikels">
     <End Role="Artikels" Type="Self.Artikels" Multiplicity="1" />
