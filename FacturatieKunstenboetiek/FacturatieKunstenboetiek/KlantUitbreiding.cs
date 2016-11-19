@@ -26,6 +26,9 @@ namespace FacturatieKunstenboetiek
                 }
             }
         }
+
+        public string Adres { get { return Straat + " " + HuisNr; } }
+        public string Woonplaats { get { return Postcode + " " + Gemeente; } }
         public string Error
         {
             get { throw new NotImplementedException(); }
@@ -123,8 +126,6 @@ namespace FacturatieKunstenboetiek
                             result = "Max. 17 tekens.";
                         else
                         {
-                            if (!string.IsNullOrEmpty(Land))
-                            {
                                 if (Land == "België")
                                 {
                                     if (BtwNr.Length != 12)
@@ -630,11 +631,6 @@ namespace FacturatieKunstenboetiek
                                         }
                                     }
                                 }
-                            }
-                            else
-                            {
-                                result = "Gelieve eerst een land te selecteren.";
-                            }
                         }
                     }
                 }
