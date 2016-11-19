@@ -197,7 +197,56 @@ namespace FacturatieKunstenboetiek
 
         private void AddFactuur_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            // save method
+            using (var dbEntities = new KunstenboetiekDbEntities())
+            {
+                Factuur factuur = dbEntities.Facturen.Find(int.Parse(textBlockFactuurNr.Text));
+                if (factuur != null)
+                {
+                    if (MessageBox.Show("Ben je zeker dat je het factuur wilt overschrijven?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                    {
+                        factuur.KlantNr = (tbKlant.SelectedItem as Klant).KlantNr;
+                        factuur.Datum = tbDatum.Text;
+
+                        List<FactuurRegel> factuurRegels = (from r in dbEntities.FactuurRegels
+                                                            where r.FactuurNr == factuur.FactuurNr
+                                                            select r).ToList();
+
+                        foreach (var regel in factuurRegels)
+                        {
+                            dbEntities.FactuurRegels.Remove(regel);
+                        }
+                        foreach (var artikel in tbFactuurRegels.Items)
+                        {
+                            FactuurRegel r = new FactuurRegel();
+                            Artikel a = artikel as Artikel;
+                            r.ArtikelNr = a.ArtikelNr;
+                            factuur.FactuurRegels.Add(r);
+                        }
+                        dbEntities.SaveChanges();
+                        MessageBox.Show("Het factuur is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+                else
+                {
+                    if (MessageBox.Show("Ben je zeker dat je het factuur wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                    {
+                        Factuur f = new Factuur();
+                        f.KlantNr = (tbKlant.SelectedItem as Klant).KlantNr;
+                        f.Datum = tbDatum.Text;
+
+                        foreach (var artikel in tbFactuurRegels.Items)
+                        {
+                            FactuurRegel r = new FactuurRegel();
+                            Artikel a = artikel as Artikel;
+                            r.ArtikelNr = a.ArtikelNr;
+                            f.FactuurRegels.Add(r);
+                        }
+                        dbEntities.Facturen.Add(f);
+                        dbEntities.SaveChanges();
+                        MessageBox.Show("Het factuur is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+            }
         }
 
 
