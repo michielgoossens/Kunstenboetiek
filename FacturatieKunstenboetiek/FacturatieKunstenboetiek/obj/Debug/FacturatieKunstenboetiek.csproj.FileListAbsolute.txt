@@ -80,3 +80,5 @@ D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\Facturatie
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csprojResolveAssemblyReference.cache
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\PrintWindow.g.cs
 D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\PrintWindow.baml
+D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\OverzichtWindow.g.cs
+D:\Users\Michiel\Downloads\Programmeren\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\OverzichtWindow.baml

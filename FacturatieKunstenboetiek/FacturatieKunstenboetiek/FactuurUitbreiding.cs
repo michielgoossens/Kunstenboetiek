@@ -26,6 +26,27 @@ namespace FacturatieKunstenboetiek
             }
         }
 
+        public double PrijsExclBtw
+        {
+            get
+            {
+                double prijs = 0;
+                using (var dbEntities = new KunstenboetiekDbEntities())
+                {
+                    List<FactuurRegel> regels = (from r in dbEntities.FactuurRegels
+                                                 where r.FactuurNr == FactuurNr
+                                                 select r).ToList();
+
+                    foreach (var regel in regels)
+                    {
+                        prijs += regel.Artikel.Prijs;
+                    }
+                }
+                return prijs;
+            }
+        }
+        public double PrijsInclBtw { get { return PrijsExclBtw * 1.06; } }
+
         public string Error
         {
             get { throw new NotImplementedException(); }

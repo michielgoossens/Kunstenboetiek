@@ -21,10 +21,12 @@ namespace FacturatieKunstenboetiek
     /// </summary>
     public partial class MainWindow : Window
     {
+        OverzichtWindow window = new OverzichtWindow();
         public MainWindow()
         {
             InitializeComponent();
             Initialize();
+            window.Show();
         }
 
         public void Initialize()
@@ -79,6 +81,14 @@ namespace FacturatieKunstenboetiek
             Window artikel = new ArtikelWindow();
             artikel.Show();
             this.Close();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (window != null)
+            {
+                window.Close();
+            }
         }
     }
 }

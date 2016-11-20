@@ -171,6 +171,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="OverzichtWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PrintWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -179,6 +183,9 @@
   <ItemGroup>
     <Compile Include="OpenWindow.xaml.cs">
       <DependentUpon>OpenWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OverzichtWindow.xaml.cs">
+      <DependentUpon>OverzichtWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="PrintWindow.xaml.cs">
       <DependentUpon>PrintWindow.xaml</DependentUpon>

@@ -1,0 +1,140 @@
+﻿<Window x:Class="FacturatieKunstenboetiek.OverzichtWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FacturatieKunstenboetiek"
+        mc:Ignorable="d"
+        Title="OverzichtWindow" Height="450" Width="625" WindowStartupLocation="Manual" Left="25" Top="25" WindowStyle="None">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Klanten">
+                <ListBox x:Name="tbKlanten" Width="600">
+
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <DockPanel LastChildFill="True">
+                                <Grid DockPanel.Dock="Top" Height="30" ShowGridLines="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"></ColumnDefinition>
+                                        <ColumnDefinition Width="184"></ColumnDefinition>
+                                        <ColumnDefinition Width="183"></ColumnDefinition>
+                                        <ColumnDefinition Width="183"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0">Nr</Label>
+                                    <Label Grid.Column="1">Klant</Label>
+                                    <Label Grid.Column="2">Adres</Label>
+                                    <Label Grid.Column="3">Woonplaats</Label>
+                                </Grid>
+                                <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                                    <ItemsPresenter></ItemsPresenter>
+                                </ScrollViewer>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                    <ColumnDefinition Width="184"></ColumnDefinition>
+                                    <ColumnDefinition Width="183"></ColumnDefinition>
+                                    <ColumnDefinition Width="183"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding KlantNr, StringFormat={}{0:000}}" Grid.Column="0"></TextBlock>
+                                <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis"></TextBlock>
+                                <TextBlock Text="{Binding Adres}" Grid.Column="2"></TextBlock>
+                                <TextBlock Text="{Binding Woonplaats}" Grid.Column="3"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+            <TabItem Header="Artikels">
+                <ListBox x:Name="tbArtikels" Width="600">
+
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <DockPanel LastChildFill="True">
+                                <Grid DockPanel.Dock="Top" Height="30" ShowGridLines="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"></ColumnDefinition>
+                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0">Nr</Label>
+                                    <Label Grid.Column="1">Klant</Label>
+                                    <Label Grid.Column="2">Prijs Excl BTW</Label>
+                                    <Label Grid.Column="3">Prijs incl BTW</Label>
+                                </Grid>
+                                <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                                    <ItemsPresenter></ItemsPresenter>
+                                </ScrollViewer>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                    <ColumnDefinition Width="350"></ColumnDefinition>
+                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding ArtikelNr, StringFormat={}{0:000}}" Grid.Column="0"></TextBlock>
+                                <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis"></TextBlock>
+                                <TextBlock Text="{Binding Prijs, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2"></TextBlock>
+                                <TextBlock Text="{Binding prijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+            <TabItem Header="Facturen">
+                <ListBox x:Name="tbFacturen" Width="600">
+
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <DockPanel LastChildFill="True">
+                                <Grid DockPanel.Dock="Top" Height="30" ShowGridLines="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"></ColumnDefinition>
+                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0">Nr</Label>
+                                    <Label Grid.Column="1">Klant</Label>
+                                    <Label Grid.Column="2">Prijs Excl BTW</Label>
+                                    <Label Grid.Column="3">Prijs incl BTW</Label>
+                                </Grid>
+                                <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                                    <ItemsPresenter></ItemsPresenter>
+                                </ScrollViewer>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                    <ColumnDefinition Width="350"></ColumnDefinition>
+                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding FactuurNr, StringFormat={}{0:000}}" Grid.Column="0"></TextBlock>
+                                <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis"></TextBlock>
+                                <TextBlock Text="{Binding PrijsExclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2"></TextBlock>
+                                <TextBlock Text="{Binding PrijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
