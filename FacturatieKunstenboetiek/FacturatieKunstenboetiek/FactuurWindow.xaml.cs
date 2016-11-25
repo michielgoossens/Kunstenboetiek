@@ -125,6 +125,7 @@ namespace FacturatieKunstenboetiek
                         labelInclBtw.Content = totaalInclBtw + " €";
                         tbArtikel.Text = string.Empty;
 
+                        opgeslagen = false;
                     }
                 }
             }
@@ -140,6 +141,8 @@ namespace FacturatieKunstenboetiek
                 tbFactuurRegels.Items.Remove(tbFactuurRegels.SelectedItem);
                 labelExclBtw.Content = totaalExclBtw;
                 labelInclBtw.Content = totaalInclBtw;
+
+                opgeslagen = false;
             }
         }
         public DataTemplate klantLayout()
@@ -223,6 +226,7 @@ namespace FacturatieKunstenboetiek
                             factuur.FactuurRegels.Add(r);
                         }
                         dbEntities.SaveChanges();
+                        opgeslagen = true;
                         MessageBox.Show("Het factuur is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
@@ -243,6 +247,7 @@ namespace FacturatieKunstenboetiek
                         }
                         dbEntities.Facturen.Add(f);
                         dbEntities.SaveChanges();
+                        opgeslagen = true;
                         MessageBox.Show("Het factuur is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
@@ -550,7 +555,7 @@ namespace FacturatieKunstenboetiek
             Grid.SetColumn(labelNaam, 1);
             artikels.Children.Add(labelNaam);
             border = new Border();
-            border.BorderThickness = new Thickness(1);
+            border.BorderThickness = new Thickness(0, 1, 1, 1);
             border.BorderBrush = Brushes.Black;
             Grid.SetRow(border, 0);
             Grid.SetColumn(border, 1);
@@ -563,7 +568,7 @@ namespace FacturatieKunstenboetiek
             Grid.SetColumn(labelExclBtw, 2);
             artikels.Children.Add(labelExclBtw);
             border = new Border();
-            border.BorderThickness = new Thickness(1);
+            border.BorderThickness = new Thickness(0, 1, 1, 1);
             border.BorderBrush = Brushes.Black;
             Grid.SetRow(border, 0);
             Grid.SetColumn(border, 2);
@@ -576,7 +581,7 @@ namespace FacturatieKunstenboetiek
             Grid.SetColumn(labelInclBtw, 3);
             artikels.Children.Add(labelInclBtw);
             border = new Border();
-            border.BorderThickness = new Thickness(1);
+            border.BorderThickness = new Thickness(0, 1, 1, 1);
             border.BorderBrush = Brushes.Black;
             Grid.SetRow(border, 0);
             Grid.SetColumn(border, 3);
@@ -626,7 +631,7 @@ namespace FacturatieKunstenboetiek
             for (var teller = 0; teller <= 3; teller++)
             {
                 border = new Border();
-                border.BorderThickness = new Thickness(1);
+                border.BorderThickness = new Thickness(1, 0, 1, 1);
                 border.BorderBrush = Brushes.Black;
                 Grid.SetRow(border, 1);
                 Grid.SetColumn(border, teller);
@@ -643,7 +648,7 @@ namespace FacturatieKunstenboetiek
             Grid.SetColumn(labelTotaalExclBtw, 2);
             artikels.Children.Add(labelTotaalExclBtw);
             border = new Border();
-            border.BorderThickness = new Thickness(1);
+            border.BorderThickness = new Thickness(1, 0, 0, 1);
             border.BorderBrush = Brushes.Black;
             Grid.SetRow(border, aantal + 1);
             Grid.SetColumn(border, 2);
@@ -658,7 +663,7 @@ namespace FacturatieKunstenboetiek
             Grid.SetColumn(TotaalExclBtw, 3);
             artikels.Children.Add(TotaalExclBtw);
             border = new Border();
-            border.BorderThickness = new Thickness(1);
+            border.BorderThickness = new Thickness(1,0,1,1);
             border.BorderBrush = Brushes.Black;
             Grid.SetRow(border, aantal + 1);
             Grid.SetColumn(border, 3);
