@@ -45,6 +45,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="160"/>
                 <ColumnDefinition Width="150"/>
 
             </Grid.ColumnDefinitions>
@@ -62,7 +63,7 @@
             <Label Target="{Binding ElementName=tbNaam}" Content="Naam:" Grid.Column="0" Grid.Row="1"/>
             <TextBox Style="{StaticResource Validation}" x:Name="tbNaam" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Naam,
-                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Grid.Row="1" Grid.Column="1" Width="150" HorizontalAlignment="Right"/>
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Grid.Row="1" Grid.Column="1" Width="150"/>
 
             <Label Target="{Binding ElementName=tbKleur}" Content="Kleur:" Grid.Column="0" Grid.Row="2"/>
             <TextBox Style="{StaticResource Validation}" x:Name="tbKleur" Grid.Row="2" Grid.Column="1" Validation.Error="Validation_Error"

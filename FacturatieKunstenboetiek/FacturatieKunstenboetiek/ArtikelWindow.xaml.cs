@@ -20,15 +20,17 @@ namespace FacturatieKunstenboetiek
     /// </summary>
     public partial class ArtikelWindow : Window
     {
-        private int _noOfErrorsOnScreen = 0;
-        private Artikel _artikel;
+        private int _noOfErrorsOnScreen = 0; //declare count of errors on screen
+        private Artikel _artikel;//declare object for artikel
+        private int artikelNr;//declare int for artikelNr
         public ArtikelWindow()
         {
             InitializeComponent();
-            startUp();
-            fillSoortCombobox();
+            resetArtikel(); //clear grid with new artikel
+            fillSoortCombobox(); //fill combobox with all possible types
         }
 
+        //Count errors on screen
         private void Validation_Error(object sender, ValidationErrorEventArgs e)
         {
             if (e.Action == ValidationErrorEventAction.Added)
@@ -37,39 +39,43 @@ namespace FacturatieKunstenboetiek
                 _noOfErrorsOnScreen--;
         }
 
-        private void startUp()
+        //new empty artikel to fill grid
+        private void resetArtikel()
         {
             _artikel = new Artikel();
-            grid.DataContext = _artikel;
-            setId();
-            Overal.Openen = null;
-            tbNaam.Focus();
+            grid.DataContext = _artikel; //fill grid with new artikel
+            resetId(); //reset id with next AI
+            tbNaam.Focus(); //focus textblock naam to start validation
         }
 
-        private void setId()
+        //reset textblock for id
+        private void resetId()
         {
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                int maxArtikelId;
+                //if allready artikels in db use the next AI for artikelNr
                 if (dbEntities.Artikels.Any())
                 {
-                    maxArtikelId = Convert.ToInt32(dbEntities.Database.SqlQuery<decimal>("Select IDENT_CURRENT ('Artikels')", new object[0]).FirstOrDefault());
+                    artikelNr = dbEntities.Artikels.Max(a => a.ArtikelNr) + 1;
                 }
+                //else use 1 as artikelNr
                 else
                 {
-                    maxArtikelId = 0;
+                    artikelNr = 1;
                 }
-                textBlockArtikelNr.Text = (maxArtikelId + 1).ToString().PadLeft(Overal.padLeft, '0');
+                textBlockArtikelNr.Text = artikelNr.ToString().PadLeft(Overal.padLeft, '0');
 
             }
         }
 
+        //fill combobox with all posible types
         private void fillSoortCombobox()
         {
             List<string> Soorten = new List<string>()
             {
                 "Urne",
-                "Mini-urne",
+                "Mini urne",
+                "Dieren urne",
                 "Andere werken"
             };
 
@@ -79,36 +85,40 @@ namespace FacturatieKunstenboetiek
             }
         }
 
+        //if text in tb prijs changes to "", reset the tb
         private void tbPrijs_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (tbPrijs.Text == "")
                 tbPrijs.Text = null;
         }
 
+        //check if possible to start new artikel
         private void NewArtikel_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         { 
             e.CanExecute = tbNaam.Text != "" || tbKleur.Text != "" || tbSoort.SelectedValue != null || double.Parse(tbPrijs.Text.Substring(0, tbPrijs.Text.Length - 2)) > 0;
             e.Handled = true;
         }
 
+        //start new artikel
         private void NewArtikel_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (MessageBox.Show("Ben je zeker dat je een nieuw artikel wilt starten?", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
-                startUp();
+                resetArtikel();
             }
         }
+        //check if it is possible to save artikel
         private void AddArtikel_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = _noOfErrorsOnScreen == 0;
             e.Handled = true;
         }
-
+        //save the artikel
         private void AddArtikel_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                var a = dbEntities.Artikels.Find(int.Parse(textBlockArtikelNr.Text));
+                var a = dbEntities.Artikels.Find(artikelNr);
                 if (a == null)
                 {
                     if (MessageBox.Show("Ben je zeker dat je het artikel wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
@@ -116,7 +126,7 @@ namespace FacturatieKunstenboetiek
                         Artikel artikel = grid.DataContext as Artikel;
                         dbEntities.Artikels.Add(artikel);
                         dbEntities.SaveChanges();
-                        startUp();
+                        resetArtikel();
                     }
                 }
                 else
@@ -128,11 +138,12 @@ namespace FacturatieKunstenboetiek
                         a.Soort = tbSoort.Text;
                         a.Prijs = double.Parse(tbPrijs.Text);
                         dbEntities.SaveChanges();
-                        startUp();
+                        resetArtikel();
                     }
                 }
             }
         }
+        //open an existing artikel
         private void menuItemOpen_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow window = new OpenWindow("artikel");
@@ -141,14 +152,15 @@ namespace FacturatieKunstenboetiek
             if (Overal.Openen == true)
             {
                 _artikel = Overal.teOpenenArtikel;
+                artikelNr = Overal.teOpenenArtikel.ArtikelNr;
                 grid.DataContext = _artikel;
-                textBlockArtikelNr.Text = _artikel.ArtikelNr.ToString().PadLeft(Overal.padLeft, '0');
+                textBlockArtikelNr.Text = artikelNr.ToString().PadLeft(Overal.padLeft, '0');
             }
 
             Overal.teOpenenArtikel = null;
             Overal.Openen = null; 
         }
-
+        //ask if its ok to close the window
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (MessageBox.Show("Ben je zeker dat je het venster wilt sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
@@ -156,11 +168,9 @@ namespace FacturatieKunstenboetiek
                 e.Cancel = true;
             }
         }
-
+        //close the window and open mainwindow
         private void Window_Closed(object sender, EventArgs e)
         {
-            Overal.teOpenenArtikel = null;
-            Overal.Openen = null;
             Window main = new MainWindow();
             main.Show();
         }

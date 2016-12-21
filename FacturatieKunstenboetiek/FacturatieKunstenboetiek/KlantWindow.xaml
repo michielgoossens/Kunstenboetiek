@@ -66,12 +66,12 @@
             <Label Target="{Binding ElementName=tbVoornaam}" Content="Voornaam:" Grid.Column="0" Grid.Row="1"/>
             <TextBox Style="{StaticResource Validation}" x:Name="tbVoornaam" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Voornaam,
-                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150"/>
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150" TextChanged="tbVoornaam_TextChanged"/>
 
             <Label Target="{Binding ElementName=tbFamilienaam}" Content="Familienaam:" Grid.Column="3" Grid.Row="1"/>
             <TextBox Style="{StaticResource Validation}" x:Name="tbFamilienaam" Grid.Row="1" Grid.Column="4" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Familienaam,
-                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150"/>
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150" Margin="0,0,0,20" VerticalAlignment="Stretch" TextChanged="tbFamilienaam_TextChanged"/>
 
             <Label Target="{Binding ElementName=tbStraat}" Content="Straat:" Grid.Column="0" Grid.Row="2"/>
             <TextBox Style="{StaticResource Validation}" x:Name="tbStraat" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Validation.Error="Validation_Error"

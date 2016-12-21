@@ -22,21 +22,22 @@ namespace FacturatieKunstenboetiek
     /// </summary>
     public partial class KlantWindow : Window
     {
-        private int _noOfErrorsOnScreen = 0;
-        private Klant _klant;
+        private int _noOfErrorsOnScreen = 0;//declare int to keep track of errors on screen
+        private Klant _klant;//declare klant to work with
+        private int klantNr;//declare klantNr to work with
         public KlantWindow()
         {
             InitializeComponent();
-            startUp();
+            resetKlant();
             fillLandCombobox();
         }
-        public void startUp()
+        //clear grid and add new klant to it datacontext
+        public void resetKlant()
         {
             _klant = new Klant();
             grid.DataContext = _klant;
-            setId();
-            Overal.Openen = null;
-            tbVoornaam.Focus();
+            resetId(); //set next first empty id
+            tbVoornaam.Focus(); //focus on voornaam to start validation
         }
         private void Validation_Error(object sender, ValidationErrorEventArgs e)
         {
@@ -56,7 +57,7 @@ namespace FacturatieKunstenboetiek
         {
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                var k = dbEntities.Klanten.Find(int.Parse(textBlockKlantNr.Text));
+                var k = dbEntities.Klanten.Find(klantNr);
                 if (k == null)
                 {
                     if (MessageBox.Show("Ben je zeker dat je de klant wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
@@ -65,7 +66,7 @@ namespace FacturatieKunstenboetiek
                         dbEntities.Klanten.Add(klant);
                         dbEntities.SaveChanges();
 
-                        startUp();
+                        resetKlant();
                     }
                 }
                 else
@@ -84,7 +85,7 @@ namespace FacturatieKunstenboetiek
                         k.BtwNr = tbBtwNr.Text;
                         dbEntities.SaveChanges();
 
-                        startUp();
+                        resetKlant();
                     }
                 }
             }
@@ -100,24 +101,23 @@ namespace FacturatieKunstenboetiek
         {
             if (MessageBox.Show("Ben je zeker dat je een nieuwe klant wilt starten?", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
-                startUp();
+                resetKlant();
             }
         }
 
-        private void setId()
+        private void resetId()
         {
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                int maxKlantId;
                 if (dbEntities.Klanten.Any())
                 {
-                    maxKlantId = Convert.ToInt32(dbEntities.Database.SqlQuery<decimal>("Select IDENT_CURRENT ('Klanten')", new object[0]).FirstOrDefault());
+                    klantNr = dbEntities.Klanten.Max(k => k.KlantNr) + 1;
                 }
                 else
                 {
-                    maxKlantId = 0;
+                    klantNr = 1;
                 }
-                textBlockKlantNr.Text = (maxKlantId + 1).ToString().PadLeft(Overal.padLeft, '0');
+                textBlockKlantNr.Text = (klantNr).ToString().PadLeft(Overal.padLeft, '0');
             }
         }
 
@@ -171,9 +171,10 @@ namespace FacturatieKunstenboetiek
             if (Overal.Openen == true)
             {
                 _klant = Overal.teOpenenKlant;
+                klantNr = Overal.teOpenenKlant.KlantNr;
 
                 grid.DataContext = _klant;
-                textBlockKlantNr.Text = _klant.KlantNr.ToString().PadLeft(Overal.padLeft, '0');
+                textBlockKlantNr.Text = (klantNr).ToString().PadLeft(Overal.padLeft, '0');
             }
 
 
@@ -189,10 +190,25 @@ namespace FacturatieKunstenboetiek
         }
         private void Window_Closed(object sender, EventArgs e)
         {
-            Overal.teOpenenKlant = null;
-            Overal.Openen = null;
             Window main = new MainWindow();
             main.Show();
+        }
+
+        //update tbfamilienaam
+        private void tbVoornaam_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbFamilienaam.Text == string.Empty)
+            {
+                tbFamilienaam.Text = "";
+            }
+        }
+        //update tbvoornaam
+        private void tbFamilienaam_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbVoornaam.Text == string.Empty)
+            {
+                tbVoornaam.Text = "";
+            }
         }
     }
 }
