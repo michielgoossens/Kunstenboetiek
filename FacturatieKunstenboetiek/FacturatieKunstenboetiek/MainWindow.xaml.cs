@@ -21,44 +21,27 @@ namespace FacturatieKunstenboetiek
     /// </summary>
     public partial class MainWindow : Window
     {
-        OverzichtWindow window = new OverzichtWindow();
+        OverzichtWindow window;
         public MainWindow()
         {
             InitializeComponent();
-            Initialize();
-            window.Show();
+            CheckDatabase();
         }
 
-        public void Initialize()
+        public void CheckDatabase()
         {
-            if (!CheckForInternetConnection())
+            using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                if (MessageBox.Show("Gelieve te verbinden met het internet.", "Kunstenboetiek", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK)
+                if (!dbEntities.Database.Exists())
                 {
-                    Initialize();
+                    MessageBox.Show("De database word niet gevonden. (extra info als database online is)", "Database", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close();
                 }
                 else
                 {
-                    this.Close();
+                    window = new OverzichtWindow();
+                    window.Show();
                 }
-            }
-        }
-
-        public bool CheckForInternetConnection()
-        {
-            try
-            {
-                using (var client = new WebClient())
-                {
-                    using (var stream = client.OpenRead("http://www.google.com"))
-                    {
-                        return true;
-                    }
-                }
-            }
-            catch
-            {
-                return false;
             }
         }
 
