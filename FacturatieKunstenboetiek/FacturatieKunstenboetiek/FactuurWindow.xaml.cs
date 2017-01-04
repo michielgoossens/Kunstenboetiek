@@ -21,6 +21,9 @@ namespace FacturatieKunstenboetiek
     {
         private int _noOfErrorsOnScreen = 0;
         private Factuur _factuur;
+        private int factuurNr;
+        private List<FactuurRegel> _factuurregels;
+        private List<int> frNr;
         private double totaalExclBtw;
         private double totaalInclBtw;
         private bool opgeslagen;
@@ -28,7 +31,7 @@ namespace FacturatieKunstenboetiek
         public FactuurWindow()
         {
             InitializeComponent();
-            startUp();
+            resetFactuur();
             fillKlantAutoCompleteBox();
             fillArtikelAutoCompleteBox();
         }
@@ -69,35 +72,35 @@ namespace FacturatieKunstenboetiek
             else
                 _noOfErrorsOnScreen--;
         }
-        private void startUp()
+        private void resetFactuur()
         {
             _factuur = new Factuur();
+            _factuurregels = new List<FactuurRegel>();
+            frNr = new List<int>();
             grid.DataContext = _factuur;
-            setId();
+            resetId();
             tbKlant.Text = string.Empty;
             tbFactuurRegels.Items.Clear();
             totaalExclBtw = 0;
             totaalInclBtw = 0;
             labelExclBtw.Content = totaalExclBtw + " €";
             labelInclBtw.Content = totaalInclBtw + " €";
-            Overal.Openen = null;
             opgeslagen = false;
             tbKlant.Focus();
         }
-        private void setId()
+        private void resetId()
         {
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                int maxFactuurId;
                 if (dbEntities.Facturen.Any())
                 {
-                    maxFactuurId = Convert.ToInt32(dbEntities.Database.SqlQuery<decimal>("Select IDENT_CURRENT ('Facturen')", new object[0]).FirstOrDefault());
+                    factuurNr = dbEntities.Facturen.Max(f => f.FactuurNr) + 1; ;
                 }
                 else
                 {
-                    maxFactuurId = 0;
+                    factuurNr = 1;
                 }
-                textBlockFactuurNr.Text = (maxFactuurId + 1).ToString().PadLeft(Overal.padLeft, '0');
+                textBlockFactuurNr.Text = factuurNr.ToString().PadLeft(Overal.padLeft, '0');
             }
         }
 
@@ -265,7 +268,7 @@ namespace FacturatieKunstenboetiek
         {
             if (MessageBox.Show("Ben je zeker dat je een nieuw formuleer wilt starten?", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
-                startUp();
+                resetFactuur();
             }
         }
 

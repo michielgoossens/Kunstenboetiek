@@ -65,6 +65,7 @@ namespace FacturatieKunstenboetiek
                         Klant klant = grid.DataContext as Klant;
                         dbEntities.Klanten.Add(klant);
                         dbEntities.SaveChanges();
+                        MessageBox.Show("De klant is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
 
                         resetKlant();
                     }
@@ -84,6 +85,7 @@ namespace FacturatieKunstenboetiek
                         k.Email = tbEmail.Text;
                         k.BtwNr = tbBtwNr.Text;
                         dbEntities.SaveChanges();
+                        MessageBox.Show("Het klant is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
 
                         resetKlant();
                     }

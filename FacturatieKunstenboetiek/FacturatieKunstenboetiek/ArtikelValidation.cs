@@ -39,8 +39,8 @@ namespace FacturatieKunstenboetiek
                 {
                     if (!string.IsNullOrEmpty(Kleur))
                     {
-                        if (Kleur.Length > 25)
-                            result = "Max. 25 tekens.";
+                        if (Kleur.Length > 50)
+                            result = "Max. 50 tekens.";
                     }
                 }
                 //Prijs moet een positief getal zijn en is verplicht
@@ -50,9 +50,9 @@ namespace FacturatieKunstenboetiek
                         result = "Prijs is verplicht!";
                     else
                     {
-                        if (Prijs <= 0)
+                        if (Prijs < 0)
                         {
-                            result = "Prijs moet een positief getal zijn";
+                            result = "Prijs mag niet kleiner dan nul zijn.";
                         }
                     }
                 }

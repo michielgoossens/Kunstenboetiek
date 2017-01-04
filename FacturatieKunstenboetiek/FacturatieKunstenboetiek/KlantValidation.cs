@@ -27,16 +27,16 @@ namespace FacturatieKunstenboetiek
                         result = "Voornaam of familienaam is verplicht!";
                     else
                     {
-                        if (Voornaam.Length > 40)
-                            result = "Max. 40 tekens.";
+                        if (Voornaam.Length > 50)
+                            result = "Max. 50 tekens.";
                     }
                 }
                 if (columnName == "Familienaam")
                 {
                     if (!string.IsNullOrEmpty(Familienaam))
                     {
-                        if (Familienaam.Length > 40)
-                            result = "Max. 40 tekens.";
+                        if (Familienaam.Length > 50)
+                            result = "Max. 50 tekens.";
                     }
                 }
                 if (columnName == "Straat")
@@ -51,16 +51,16 @@ namespace FacturatieKunstenboetiek
                 {
                     if (!string.IsNullOrEmpty(HuisNr))
                     {
-                        if (HuisNr.Length > 5)
-                            result = "Max. 5 tekens.";
+                        if (HuisNr.Length > 10)
+                            result = "Max. 10 tekens.";
                     }
                 }
                 if (columnName == "Postcode")
                 {
                     if (!string.IsNullOrEmpty(Postcode))
                     {
-                        if (Postcode.Length > 10)
-                            result = "Max. 10 tekens";
+                        if (Postcode.Length > 15)
+                            result = "Max. 15 tekens";
                     }
                 }
                 if (columnName == "Gemeente")

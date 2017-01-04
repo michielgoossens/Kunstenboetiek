@@ -126,6 +126,8 @@ namespace FacturatieKunstenboetiek
                         Artikel artikel = grid.DataContext as Artikel;
                         dbEntities.Artikels.Add(artikel);
                         dbEntities.SaveChanges();
+                        MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
+
                         resetArtikel();
                     }
                 }
@@ -138,6 +140,8 @@ namespace FacturatieKunstenboetiek
                         a.Soort = tbSoort.Text;
                         a.Prijs = double.Parse(tbPrijs.Text);
                         dbEntities.SaveChanges();
+                        MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
+
                         resetArtikel();
                     }
                 }

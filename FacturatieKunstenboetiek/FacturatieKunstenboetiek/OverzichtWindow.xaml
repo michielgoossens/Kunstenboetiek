@@ -100,12 +100,12 @@
                             <DockPanel LastChildFill="True">
                                 <Grid DockPanel.Dock="Top" Height="30" ShowGridLines="True">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"></ColumnDefinition>
-                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                        <ColumnDefinition Width="80"></ColumnDefinition>
+                                        <ColumnDefinition Width="320"></ColumnDefinition>
                                         <ColumnDefinition Width="100"></ColumnDefinition>
                                         <ColumnDefinition Width="100"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0">Nr</Label>
+                                    <Label Grid.Column="0">Factuur Nr</Label>
                                     <Label Grid.Column="1">Klant</Label>
                                     <Label Grid.Column="2">Prijs Excl BTW</Label>
                                     <Label Grid.Column="3">Prijs incl BTW</Label>
@@ -120,8 +120,8 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"></ColumnDefinition>
-                                    <ColumnDefinition Width="350"></ColumnDefinition>
+                                    <ColumnDefinition Width="80"></ColumnDefinition>
+                                    <ColumnDefinition Width="320"></ColumnDefinition>
                                     <ColumnDefinition Width="100"></ColumnDefinition>
                                     <ColumnDefinition Width="100"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
