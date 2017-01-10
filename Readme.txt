@@ -8,4 +8,4 @@ Database server setup
 
 4)Open visual studio project
 
-5)Pas de connection string aan in App.config
+5)Pas de connection string aan in App.config (username & password)

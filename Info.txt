@@ -1,0 +1,20 @@
+Facturatie Kunstenboetiek
+
+Deze applicatie maak ik voor het bedrijf Kunstenboetiek. het een bedrijf die handeld in unieke urnen gemaakt door Veerle Buytaert.
+De persoon die dit bedrijf runt heeft niet de logica om met ingewikkelde programma's te werken. Daarom probeer ik een zo eenvoudig mogelijke applicatie te maken.
+
+Ook de website voor het bedrijf word door mij ontwikkeld. (http://www.kunstenboetiek.be)
+
+Facturatie applicatie
+-----------------------------------------------------------
+Met deze applicatie kan je klanten & artikels toevoegen aan de database.
+Met de gegevens uit de database kan je dan een factuur opstellen en laten afdrukken.
+
+Bij artikels kan je ook afbeeldingen toevoegen, deze worden dan geupload op de ftp server van de website
+
+
+Website
+-----------------------------------------------------------
+Op de website komt een galerij van alle werken. Deze word aan de hand van gegevens uit de database opgebouwd.
+Ook kan je informatie over het bedrijf 'Kunstenboetiek' terug vinden.
+Het is ook mogelijk om contact op te nemen voor een eventuele bestelling etc.
