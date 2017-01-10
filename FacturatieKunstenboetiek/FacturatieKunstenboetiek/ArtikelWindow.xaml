@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="Kunstenboetiek - Artikels" Height="350" Width="320" Closed="Window_Closed" Closing="Window_Closing">
+        Title="Kunstenboetiek - Artikels" Height="330" Width="630" Closed="Window_Closed" Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="{x:Type Label}">
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -37,48 +37,58 @@
             <MenuItem Name="menuItemOpen" Header="Open" Click="menuItemOpen_Click"/>
             <MenuItem Name="menuItemOpslaan" Header="Opslaan" Command="Save"/>
         </Menu>
-        <Grid x:Name="grid" Margin="25">
-            <Grid.CommandBindings>
-                <CommandBinding Command="New" CanExecute="NewArtikel_CanExecute" Executed="NewArtikel_Executed"/>
-                <CommandBinding Command="Save" CanExecute="AddArtikel_CanExecute" Executed="AddArtikel_Executed"/>
-            </Grid.CommandBindings>
+        <StackPanel Orientation="Horizontal">
+            <Grid x:Name="grid" Margin="25 25 12 25">
+                <Grid.CommandBindings>
+                    <CommandBinding Command="New" CanExecute="NewArtikel_CanExecute" Executed="NewArtikel_Executed"/>
+                    <CommandBinding Command="Save" CanExecute="AddArtikel_CanExecute" Executed="AddArtikel_Executed"/>
+                </Grid.CommandBindings>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="160"/>
-                <ColumnDefinition Width="150"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="160"/>
 
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Label Name="labelArtikelNr" Grid.Column="0" Grid.Row="0">Artikel nr.:</Label>
 
-            <TextBlock Name="textBlockArtikelNr" Padding="5" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Name="labelArtikelNr" Grid.Column="0" Grid.Row="0">Artikel nr.:</Label>
 
-            <Label Target="{Binding ElementName=tbNaam}" Content="Naam:" Grid.Column="0" Grid.Row="1"/>
-            <TextBox Style="{StaticResource Validation}" x:Name="tbNaam" Validation.Error="Validation_Error"
+                <TextBlock Name="textBlockArtikelNr" Padding="5" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                <Label Target="{Binding ElementName=tbNaam}" Content="Naam:" Grid.Column="0" Grid.Row="1"/>
+                <TextBox Style="{StaticResource Validation}" x:Name="tbNaam" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Naam,
                         ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Grid.Row="1" Grid.Column="1" Width="150"/>
 
-            <Label Target="{Binding ElementName=tbKleur}" Content="Kleur:" Grid.Column="0" Grid.Row="2"/>
-            <TextBox Style="{StaticResource Validation}" x:Name="tbKleur" Grid.Row="2" Grid.Column="1" Validation.Error="Validation_Error"
+                <Label Target="{Binding ElementName=tbKleur}" Content="Kleur:" Grid.Column="0" Grid.Row="2"/>
+                <TextBox Style="{StaticResource Validation}" x:Name="tbKleur" Grid.Row="2" Grid.Column="1" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Kleur,
                         ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150"/>
 
-            <Label Target="{Binding ElementName=tbSoort}" Content="Soort:" Grid.Column="0" Grid.Row="3"/>
-            <ComboBox Style="{StaticResource Validation}" x:Name="tbSoort" Grid.Row="3" Grid.Column="1" Validation.Error="Validation_Error" 
+                <Label Target="{Binding ElementName=tbSoort}" Content="Soort:" Grid.Column="0" Grid.Row="3"/>
+                <ComboBox Style="{StaticResource Validation}" x:Name="tbSoort" Grid.Row="3" Grid.Column="1" Validation.Error="Validation_Error" 
                       Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Soort,
                         ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="150"/>
 
-            <Label Target="{Binding ElementName=tbPrijs}" Content="Prijs excl BTW:" Grid.Column="0" Grid.Row="4"/>
-            <TextBox Style="{StaticResource Validation}" x:Name="tbPrijs" Grid.Row="4" Grid.Column="1" Validation.Error="Validation_Error"
+                <Label Target="{Binding ElementName=tbPrijs}" Content="Prijs excl BTW:" Grid.Column="0" Grid.Row="4"/>
+                <TextBox Style="{StaticResource Validation}" x:Name="tbPrijs" Grid.Row="4" Grid.Column="1" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Prijs,
                         ValidatesOnDataErrors=true, NotifyOnValidationError=true, StringFormat=c, ConverterCulture=be-BE}" Width="150" TextChanged="tbPrijs_TextChanged"/>
-        </Grid>
+            </Grid>
+            <StackPanel Orientation="Vertical" Margin="12 25 25 25">
+                <Label>Afbeeldingen:</Label>
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="25" Padding="5">...</Button>
+                    <TextBox Width="250"></TextBox>
+                </StackPanel>
+                <ListBox Width="275" Height="152"></ListBox>
+            </StackPanel>
+        </StackPanel>
     </DockPanel>
 </Window>

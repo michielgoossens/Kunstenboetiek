@@ -26,6 +26,7 @@ namespace FacturatieKunstenboetiek
         public double Prijs { get; set; }
         public string Soort { get; set; }
         public string Kleur { get; set; }
+        public Nullable<bool> Verkocht { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArtikelAfbeelding> ArtikelAfbeeldingen { get; set; }

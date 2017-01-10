@@ -124,6 +124,7 @@ namespace FacturatieKunstenboetiek
                     if (MessageBox.Show("Ben je zeker dat je het artikel wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {
                         Artikel artikel = grid.DataContext as Artikel;
+                        artikel.Verkocht = false;
                         dbEntities.Artikels.Add(artikel);
                         dbEntities.SaveChanges();
                         MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -138,7 +139,12 @@ namespace FacturatieKunstenboetiek
                         a.Naam = tbNaam.Text;
                         a.Kleur = tbKleur.Text;
                         a.Soort = tbSoort.Text;
-                        a.Prijs = double.Parse(tbPrijs.Text);
+                        int indexOfEuro = tbPrijs.Text.IndexOf('€');
+                        a.Prijs = double.Parse(tbPrijs.Text.Substring(0, indexOfEuro));
+                        if (a.Verkocht != true)
+                        {
+                            a.Verkocht = false;
+                        }
                         dbEntities.SaveChanges();
                         MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
 

@@ -1,0 +1,13 @@
+﻿@model List<WebsiteKunstenboetiek.Models.Artikel>
+
+@{
+    ViewBag.Title = "Kunstenboetiek - Mini urnen";
+}
+
+<h2>Mini urnen</h2>
+<ul>
+    @foreach (var artikel in Model)
+    {
+        <li>@artikel.Verkocht</li>
+    }
+</ul>

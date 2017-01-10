@@ -1,0 +1,13 @@
+﻿@model List<WebsiteKunstenboetiek.Models.Artikel>
+
+@{
+    ViewBag.Title = "Kunstenboetiek - Andere werken";
+}
+
+<h2>Andere werken</h2>
+<ul>
+    @foreach (var artikel in Model)
+    {
+        <li>@artikel.Naam</li>
+    }
+</ul>

@@ -9,6 +9,7 @@
           <ScalarProperty Name="Prijs" ColumnName="Prijs" />
           <ScalarProperty Name="Soort" ColumnName="Soort" />
           <ScalarProperty Name="Kleur" ColumnName="Kleur" />
+          <ScalarProperty Name="Verkocht" ColumnName="Verkocht" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

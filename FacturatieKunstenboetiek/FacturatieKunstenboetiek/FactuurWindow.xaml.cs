@@ -225,7 +225,9 @@ namespace FacturatieKunstenboetiek
                         {
                             FactuurRegel r = new FactuurRegel();
                             Artikel a = artikel as Artikel;
-                            r.ArtikelNr = a.ArtikelNr;
+                            Artikel ar = dbEntities.Artikels.Find(a.ArtikelNr);
+                            ar.Verkocht = true;
+                            r.ArtikelNr = ar.ArtikelNr;
                             factuur.FactuurRegels.Add(r);
                         }
                         dbEntities.SaveChanges();
@@ -245,7 +247,9 @@ namespace FacturatieKunstenboetiek
                         {
                             FactuurRegel r = new FactuurRegel();
                             Artikel a = artikel as Artikel;
-                            r.ArtikelNr = a.ArtikelNr;
+                            Artikel ar = dbEntities.Artikels.Find(a.ArtikelNr);
+                            ar.Verkocht = true;
+                            r.ArtikelNr = ar.ArtikelNr;
                             f.FactuurRegels.Add(r);
                         }
                         dbEntities.Facturen.Add(f);
