@@ -106,6 +106,7 @@
     <Compile Include="ArtikelAfbeelding.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
+    <Compile Include="ArtikelAfbeeldingUitbreiding.cs" />
     <Compile Include="ArtikelUitbreiding.cs" />
     <Compile Include="ArtikelValidation.cs" />
     <Compile Include="ArtikelWindow.xaml.cs">
@@ -122,6 +123,7 @@
     <Compile Include="FactuurWindow.xaml.cs">
       <DependentUpon>FactuurWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ftp.cs" />
     <Compile Include="Klant.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>

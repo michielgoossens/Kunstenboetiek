@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="Kunstenboetiek - Artikels" Height="330" Width="630" Closed="Window_Closed" Closing="Window_Closing">
+        Title="Kunstenboetiek - Artikels" Height="330" Width="800" Closed="Window_Closed" Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="{x:Type Label}">
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -37,8 +37,7 @@
             <MenuItem Name="menuItemOpen" Header="Open" Click="menuItemOpen_Click"/>
             <MenuItem Name="menuItemOpslaan" Header="Opslaan" Command="Save"/>
         </Menu>
-        <StackPanel Orientation="Horizontal">
-            <Grid x:Name="grid" Margin="25 25 12 25">
+        <Grid x:Name="grid" Margin="25 25 12 25">
                 <Grid.CommandBindings>
                     <CommandBinding Command="New" CanExecute="NewArtikel_CanExecute" Executed="NewArtikel_Executed"/>
                     <CommandBinding Command="Save" CanExecute="AddArtikel_CanExecute" Executed="AddArtikel_Executed"/>
@@ -47,6 +46,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90"/>
                     <ColumnDefinition Width="160"/>
+                    <ColumnDefinition/>
 
 
                 </Grid.ColumnDefinitions>
@@ -80,15 +80,45 @@
                 <TextBox Style="{StaticResource Validation}" x:Name="tbPrijs" Grid.Row="4" Grid.Column="1" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Prijs,
                         ValidatesOnDataErrors=true, NotifyOnValidationError=true, StringFormat=c, ConverterCulture=be-BE}" Width="150" TextChanged="tbPrijs_TextChanged"/>
-            </Grid>
-            <StackPanel Orientation="Vertical" Margin="12 25 25 25">
-                <Label>Afbeeldingen:</Label>
-                <StackPanel Orientation="Horizontal">
-                    <Button Width="25" Padding="5">...</Button>
-                    <TextBox Width="250"></TextBox>
+
+        <StackPanel Orientation="Vertical" Margin="12 25 25 25" Grid.Column="2" Grid.RowSpan="5">
+            <Label Margin="80 0 0 0">Afbeeldingen:</Label>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <Button Name="buttonAfbeeldingToevoegen" Padding="5" Margin="5 5 5 0" Click="buttonAfbeeldingToevoegen_Click">Toevoegen</Button>
+                    <Button Name="buttonAfbeeldingVerwijderen" Padding="5" Margin="5" Click="buttonAfbeeldingVerwijderen_Click">Verwijderen</Button>
                 </StackPanel>
-                <ListBox Width="275" Height="152"></ListBox>
+                <ListBox x:Name="listBoxAfbeeldingen" Height="180">
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <DockPanel LastChildFill="True">
+                                <Grid DockPanel.Dock="Top" Height="30" ShowGridLines="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"></ColumnDefinition>
+                                        <ColumnDefinition Width="250"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0">File</Label>
+                                    <Label Grid.Column="1">Path</Label>
+                                </Grid>
+                                <ItemsPresenter></ItemsPresenter>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="145"></ColumnDefinition>
+                                    <ColumnDefinition Width="250"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding File}" Grid.Column="0"></TextBlock>
+                                <TextBlock Text="{Binding AfbeeldingLink}" Grid.Column="1" TextTrimming="CharacterEllipsis" Padding="5 0 0 0"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
         </StackPanel>
+        </Grid>
     </DockPanel>
 </Window>

@@ -311,12 +311,12 @@ namespace FacturatieKunstenboetiek
                 tbFactuurRegels.Items.Clear();
                 totaalExclBtw = 0;
                 totaalInclBtw = 0;
-                textBlockFactuurNr.Text = _factuur.FactuurNr.ToString().PadLeft(Overal.padLeft, '0');
+                textBlockFactuurNr.Text = factuurNr.ToString().PadLeft(Overal.padLeft, '0');
                 using (var dbEntities = new KunstenboetiekDbEntities())
                 {
                     Artikel artikel = new Artikel();
                     List<FactuurRegel> factuurregels = (from regel in dbEntities.FactuurRegels
-                                                        where regel.FactuurNr == _factuur.FactuurNr
+                                                        where regel.FactuurNr == factuurNr
                                                         select regel).ToList();
                     foreach (var regel in factuurregels)
                     {

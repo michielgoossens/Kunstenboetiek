@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Interop;
+using Microsoft.Win32;
 
 namespace FacturatieKunstenboetiek
 {
@@ -45,6 +46,7 @@ namespace FacturatieKunstenboetiek
             _artikel = new Artikel();
             grid.DataContext = _artikel; //fill grid with new artikel
             resetId(); //reset id with next AI
+            listBoxAfbeeldingen.Items.Clear();
             tbNaam.Focus(); //focus textblock naam to start validation
         }
 
@@ -94,7 +96,7 @@ namespace FacturatieKunstenboetiek
 
         //check if possible to start new artikel
         private void NewArtikel_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        { 
+        {
             e.CanExecute = tbNaam.Text != "" || tbKleur.Text != "" || tbSoort.SelectedValue != null || double.Parse(tbPrijs.Text.Substring(0, tbPrijs.Text.Length - 2)) > 0;
             e.Handled = true;
         }
@@ -125,6 +127,25 @@ namespace FacturatieKunstenboetiek
                     {
                         Artikel artikel = grid.DataContext as Artikel;
                         artikel.Verkocht = false;
+
+                        Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be/test/", "kunstenboetiek.be", "m.b.v.");
+                        int count = 0;
+                        foreach (var afbeelding in listBoxAfbeeldingen.Items)
+                        {
+                            count += 1;
+                            ArtikelAfbeelding aA = afbeelding as ArtikelAfbeelding;
+                            string remote;
+                            string local;
+                            if (aA.AfbeeldingLink.Substring(0, 7) != "http://")
+                            {
+                                remote = a.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
+                                local = aA.AfbeeldingLink;
+                                ftpClient.upload(remote, local);
+                                aA.AfbeeldingLink = "http://www.kunstenboetiek.be/test/" + remote;
+                            }
+                            aA.ArtikelNr = artikelNr;
+                            dbEntities.ArtikelsAfbeeldingen.Add(aA);
+                        }
                         dbEntities.Artikels.Add(artikel);
                         dbEntities.SaveChanges();
                         MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -144,6 +165,32 @@ namespace FacturatieKunstenboetiek
                         if (a.Verkocht != true)
                         {
                             a.Verkocht = false;
+                        }
+                        List<ArtikelAfbeelding> artikelAfbeeldingen = (from ab in dbEntities.ArtikelsAfbeeldingen
+                                                                       where ab.ArtikelNr == artikelNr
+                                                                       select ab).ToList();
+
+                        foreach (var afbeelding in artikelAfbeeldingen)
+                        {
+                            dbEntities.ArtikelsAfbeeldingen.Remove(afbeelding);
+                        }
+                        Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be/test/", "kunstenboetiek.be", "m.b.v.");
+                        int count = 0;
+                        foreach (var afbeelding in listBoxAfbeeldingen.Items)
+                        {
+                            count += 1;
+                            ArtikelAfbeelding aA = afbeelding as ArtikelAfbeelding;
+                            string remote;
+                            string local;
+                            if (aA.AfbeeldingLink.Substring(0, 7) != "http://")
+                            {
+                                remote = a.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
+                                local = aA.AfbeeldingLink;
+                                ftpClient.upload(remote, local);
+                                aA.AfbeeldingLink = "http://www.kunstenboetiek.be/test/" + remote;
+                            }
+                            aA.ArtikelNr = artikelNr;
+                            dbEntities.ArtikelsAfbeeldingen.Add(aA);
                         }
                         dbEntities.SaveChanges();
                         MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -165,10 +212,21 @@ namespace FacturatieKunstenboetiek
                 artikelNr = Overal.teOpenenArtikel.ArtikelNr;
                 grid.DataContext = _artikel;
                 textBlockArtikelNr.Text = artikelNr.ToString().PadLeft(Overal.padLeft, '0');
+                using (var dbEntities = new KunstenboetiekDbEntities())
+                {
+                    Artikel artikel = new Artikel();
+                    List<ArtikelAfbeelding> artikelAfbeeldingen = (from aA in dbEntities.ArtikelsAfbeeldingen
+                                                        where aA.ArtikelNr == artikelNr
+                                                        select aA).ToList();
+                    foreach (var aA in artikelAfbeeldingen)
+                    {
+                        listBoxAfbeeldingen.Items.Add(aA);
+                    }
+                }
             }
 
             Overal.teOpenenArtikel = null;
-            Overal.Openen = null; 
+            Overal.Openen = null;
         }
         //ask if its ok to close the window
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -183,6 +241,33 @@ namespace FacturatieKunstenboetiek
         {
             Window main = new MainWindow();
             main.Show();
+        }
+
+        private void buttonAfbeeldingToevoegen_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.FileName = "Afbeelding";
+                dlg.DefaultExt = ".jpg";
+                dlg.Filter = "JPEG afbeelding |*.jpg";
+                if (dlg.ShowDialog() == true)
+                {
+                    ArtikelAfbeelding artikelAfbeelding = new ArtikelAfbeelding { AfbeeldingLink = dlg.FileName, ArtikelNr = artikelNr };
+                    listBoxAfbeeldingen.Items.Add(artikelAfbeelding);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("openen mislukt : " + ex.Message);
+            }
+            tbNaam.Focus();
+        }
+
+        private void buttonAfbeeldingVerwijderen_Click(object sender, RoutedEventArgs e)
+        {
+            listBoxAfbeeldingen.Items.Remove(listBoxAfbeeldingen.SelectedItem);
+            tbNaam.Focus();
         }
     }
 }
