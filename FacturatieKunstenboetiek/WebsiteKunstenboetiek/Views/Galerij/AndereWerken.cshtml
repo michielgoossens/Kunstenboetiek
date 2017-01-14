@@ -3,11 +3,16 @@
 @{
     ViewBag.Title = "Kunstenboetiek - Andere werken";
 }
-
-<h2>Andere werken</h2>
-<ul>
-    @foreach (var artikel in Model)
-    {
-        <li>@artikel.Naam</li>
-    }
-</ul>
+<article>
+    <h2>Andere werken</h2>
+    <ul>
+        @foreach (var artikel in Model)
+        {
+            <li>
+                <img width="100" src="@artikel.ArtikelAfbeeldingen.FirstOrDefault().AfbeeldingLink" alt="@artikel.Naam voorbeeldafbeelding"/>
+                @artikel.Naam
+                @artikel.Prijs
+            </li>
+        }
+    </ul>
+    </article>

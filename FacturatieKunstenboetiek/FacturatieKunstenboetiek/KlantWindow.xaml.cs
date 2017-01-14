@@ -172,6 +172,7 @@ namespace FacturatieKunstenboetiek
 
             if (Overal.Openen == true)
             {
+                resetKlant();
                 _klant = Overal.teOpenenKlant;
                 klantNr = Overal.teOpenenKlant.KlantNr;
 

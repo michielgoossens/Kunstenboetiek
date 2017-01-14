@@ -4,17 +4,19 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KunstenboetiekModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KunstenboetiekModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Artikels">
           <Key>
             <PropertyRef Name="ArtikelNr" />
           </Key>
           <Property Name="ArtikelNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Naam" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Prijs" Type="float" Nullable="false" />
+          <Property Name="Info" Type="varchar" MaxLength="300" />
           <Property Name="Soort" Type="varchar" MaxLength="13" />
           <Property Name="Kleur" Type="varchar" MaxLength="50" />
+          <Property Name="Prijs" Type="float" Nullable="false" />
           <Property Name="Verkocht" Type="bit" />
+          <Property Name="Datum" Type="date" />
         </EntityType>
         <EntityType Name="ArtikelsAfbeeldingen">
           <Key>
@@ -127,8 +129,7 @@
             <End Role="FactuurRegels" EntitySet="FactuurRegels" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KunstenboetiekModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -138,12 +139,14 @@
           </Key>
           <Property Name="ArtikelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Prijs" Type="Double" Nullable="false" />
+          <Property Name="Info" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Soort" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="Kleur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Prijs" Type="Double" Nullable="false" />
           <Property Name="Verkocht" Type="Boolean" />
           <NavigationProperty Name="ArtikelAfbeeldingen" Relationship="Self.FK_ArtikelsAfbeeldingen_Artikels" FromRole="Artikels" ToRole="ArtikelsAfbeeldingen" />
           <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="Artikels" ToRole="FactuurRegels" />
+          <Property Name="Datum" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="ArtikelAfbeelding">
           <Key>
@@ -271,11 +274,13 @@
           <EntitySetMapping Name="Artikels">
             <EntityTypeMapping TypeName="KunstenboetiekModel.Artikel">
               <MappingFragment StoreEntitySet="Artikels">
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
                 <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
                 <ScalarProperty Name="Naam" ColumnName="Naam" />
-                <ScalarProperty Name="Prijs" ColumnName="Prijs" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
                 <ScalarProperty Name="Soort" ColumnName="Soort" />
                 <ScalarProperty Name="Kleur" ColumnName="Kleur" />
+                <ScalarProperty Name="Prijs" ColumnName="Prijs" />
                 <ScalarProperty Name="Verkocht" ColumnName="Verkocht" />
               </MappingFragment>
             </EntityTypeMapping>

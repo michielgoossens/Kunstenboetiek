@@ -54,3 +54,4 @@ D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\WebsiteKunstenb
 D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\WebsiteKunstenboetiek\bin\Newtonsoft.Json.xml
 D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\WebsiteKunstenboetiek\obj\Debug\WebsiteKunstenboetiek.dll
 D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\WebsiteKunstenboetiek\obj\Debug\WebsiteKunstenboetiek.pdb
+D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\WebsiteKunstenboetiek\obj\Debug\WebsiteKunstenboetiek.csprojResolveAssemblyReference.cache

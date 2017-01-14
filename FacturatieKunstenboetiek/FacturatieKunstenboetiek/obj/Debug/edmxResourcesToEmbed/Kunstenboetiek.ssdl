@@ -6,10 +6,12 @@
     </Key>
     <Property Name="ArtikelNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Naam" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="Prijs" Type="float" Nullable="false" />
+    <Property Name="Info" Type="varchar" MaxLength="300" />
     <Property Name="Soort" Type="varchar" MaxLength="13" />
     <Property Name="Kleur" Type="varchar" MaxLength="50" />
+    <Property Name="Prijs" Type="float" Nullable="false" />
     <Property Name="Verkocht" Type="bit" />
+    <Property Name="Datum" Type="date" />
   </EntityType>
   <EntityType Name="ArtikelsAfbeeldingen">
     <Key>

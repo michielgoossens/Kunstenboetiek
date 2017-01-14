@@ -147,6 +147,10 @@ namespace FacturatieKunstenboetiek
 
                 opgeslagen = false;
             }
+            else
+            {
+                MessageBox.Show("Gelieve eerst in de tabel te selecteren welk artikel je wilt verwijderen.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
         public DataTemplate klantLayout()
         {
@@ -306,11 +310,10 @@ namespace FacturatieKunstenboetiek
 
             if (Overal.Openen == true)
             {
+                resetFactuur();
                 _factuur = Overal.teOpenenFactuur;
+                factuurNr = Overal.teOpenenFactuur.FactuurNr;
                 grid.DataContext = _factuur;
-                tbFactuurRegels.Items.Clear();
-                totaalExclBtw = 0;
-                totaalInclBtw = 0;
                 textBlockFactuurNr.Text = factuurNr.ToString().PadLeft(Overal.padLeft, '0');
                 using (var dbEntities = new KunstenboetiekDbEntities())
                 {

@@ -3,11 +3,12 @@
 @{
     ViewBag.Title = "Kunstenboetiek - Mini urnen";
 }
-
-<h2>Mini urnen</h2>
-<ul>
-    @foreach (var artikel in Model)
-    {
-        <li>@artikel.Verkocht</li>
-    }
-</ul>
+<article>
+    <h2>Mini urnen</h2>
+    <ul>
+        @foreach (var artikel in Model)
+        {
+            <li>@artikel.Verkocht</li>
+        }
+    </ul>
+</article>

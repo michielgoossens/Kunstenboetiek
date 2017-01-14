@@ -4,11 +4,13 @@
     <EntitySetMapping Name="Artikels">
       <EntityTypeMapping TypeName="KunstenboetiekModel.Artikel">
         <MappingFragment StoreEntitySet="Artikels">
+          <ScalarProperty Name="Datum" ColumnName="Datum" />
           <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
           <ScalarProperty Name="Naam" ColumnName="Naam" />
-          <ScalarProperty Name="Prijs" ColumnName="Prijs" />
+          <ScalarProperty Name="Info" ColumnName="Info" />
           <ScalarProperty Name="Soort" ColumnName="Soort" />
           <ScalarProperty Name="Kleur" ColumnName="Kleur" />
+          <ScalarProperty Name="Prijs" ColumnName="Prijs" />
           <ScalarProperty Name="Verkocht" ColumnName="Verkocht" />
         </MappingFragment>
       </EntityTypeMapping>

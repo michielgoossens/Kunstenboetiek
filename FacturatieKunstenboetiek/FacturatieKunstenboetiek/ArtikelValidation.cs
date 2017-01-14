@@ -56,6 +56,15 @@ namespace FacturatieKunstenboetiek
                         }
                     }
                 }
+                //Info kan max 300 tekens zijn
+                if (columnName == "Info")
+                {
+                    if (!string.IsNullOrEmpty(Info))
+                    {
+                        if (Info.Length > 300)
+                            result = "Max. 300 tekens.";
+                    }
+                }
                 return result;
             }
         }

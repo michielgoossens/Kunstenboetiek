@@ -138,7 +138,7 @@ namespace FacturatieKunstenboetiek
                             string local;
                             if (aA.AfbeeldingLink.Substring(0, 7) != "http://")
                             {
-                                remote = a.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
+                                remote = artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
                                 local = aA.AfbeeldingLink;
                                 ftpClient.upload(remote, local);
                                 aA.AfbeeldingLink = "http://www.kunstenboetiek.be/test/" + remote;
@@ -146,6 +146,7 @@ namespace FacturatieKunstenboetiek
                             aA.ArtikelNr = artikelNr;
                             dbEntities.ArtikelsAfbeeldingen.Add(aA);
                         }
+                        artikel.Datum = DateTime.Now;
                         dbEntities.Artikels.Add(artikel);
                         dbEntities.SaveChanges();
                         MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -188,10 +189,11 @@ namespace FacturatieKunstenboetiek
                                 local = aA.AfbeeldingLink;
                                 ftpClient.upload(remote, local);
                                 aA.AfbeeldingLink = "http://www.kunstenboetiek.be/test/" + remote;
-                            }
+                            } 
                             aA.ArtikelNr = artikelNr;
                             dbEntities.ArtikelsAfbeeldingen.Add(aA);
                         }
+                        a.Info = tbInfo.Text;
                         dbEntities.SaveChanges();
                         MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -208,6 +210,7 @@ namespace FacturatieKunstenboetiek
 
             if (Overal.Openen == true)
             {
+                resetArtikel();
                 _artikel = Overal.teOpenenArtikel;
                 artikelNr = Overal.teOpenenArtikel.ArtikelNr;
                 grid.DataContext = _artikel;
@@ -266,7 +269,14 @@ namespace FacturatieKunstenboetiek
 
         private void buttonAfbeeldingVerwijderen_Click(object sender, RoutedEventArgs e)
         {
-            listBoxAfbeeldingen.Items.Remove(listBoxAfbeeldingen.SelectedItem);
+            if (listBoxAfbeeldingen.SelectedItem == null)
+            {
+                MessageBox.Show("Gelieve eerst in de tabel te selecteren welke afbeelding je wilt verwijderen.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                listBoxAfbeeldingen.Items.Remove(listBoxAfbeeldingen.SelectedItem);
+            }
             tbNaam.Focus();
         }
     }

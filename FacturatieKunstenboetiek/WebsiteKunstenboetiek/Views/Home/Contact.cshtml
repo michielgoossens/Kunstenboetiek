@@ -1,7 +1,63 @@
-﻿
+﻿@model WebsiteKunstenboetiek.Models.EmailForm
 @{
     ViewBag.Title = "Kunstenboetiek - Contact";
 }
+<article>
+    <h2>Contact</h2>
 
-<h2>Contact</h2>
+    <p>Urnen kunnen besteld worden via mail, gsm &amp; het contact-formulier.</p>
 
+    <p>Ook via de volgende begrafenisondernemers worden mijn urnen aangeboden:</p>
+
+    <p>
+        Van Dael<br />
+        <a href="http://www.van-dael.be/">www.van-dael.be</a>
+    </p>
+    <p>
+        Uitvaartcentrum 'De Singel'<br />
+        <a href="mailto:uitvaart@wasebegrafenissen.be">uitvaart@wasebegrafenissen.be</a><br />
+        Singel 13<br />
+        9100 St-Niklaas
+    </p>
+
+    <p>Sculpturen en keramische beelden kan men steeds in mijn atelier bekijken na afspraak.</p>
+
+    <p>
+        Canadalaan 9<br />
+        9140 Temse<br />
+        0486 34 87 86
+    </p>
+
+</article>
+
+<article>
+    <h2>Contact-formulier</h2>
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.LabelFor(m => m.Voornaam)
+            @Html.TextBoxFor(m => m.Voornaam)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Familienaam)
+            @Html.TextBoxFor(m => m.Familienaam)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.TelNr)
+            @Html.TextBoxFor(m => m.TelNr)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Onderwerp)
+            @Html.TextBoxFor(m => m.Onderwerp)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Bericht)
+            @Html.TextAreaFor(m => m.Bericht)
+        </div>
+        <input class="button" type="submit" value="Bericht sturen" />
+    }
+</article>

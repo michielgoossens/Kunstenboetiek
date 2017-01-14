@@ -15,8 +15,8 @@ namespace WebsiteKunstenboetiek.Controllers
             var urnen = new List<Artikel>();
             using (var db = new KunstenboetiekDbEntities())
             {
-                urnen = (from a in db.Artikels
-                         where a.Soort == "Urne"
+                urnen = (from a in db.Artikels.Include("ArtikelAfbeeldingen")
+                         where a.Soort == "Urne" && a.ArtikelAfbeeldingen.Count > 0 && a.Verkocht == false
                          select a).ToList();
             }
             return View(urnen);
@@ -26,9 +26,9 @@ namespace WebsiteKunstenboetiek.Controllers
             var miniUrnen = new List<Artikel>();
             using (var db = new KunstenboetiekDbEntities())
             {
-                miniUrnen = (from a in db.Artikels
-                         where a.Soort == "Mini urne"
-                         select a).ToList();
+                miniUrnen = (from a in db.Artikels.Include("ArtikelAfbeeldingen")
+                             where a.Soort == "Mini urne" && a.ArtikelAfbeeldingen.Count > 0 && a.Verkocht == false
+                             select a).ToList();
             }
             return View(miniUrnen);
         }
@@ -37,9 +37,9 @@ namespace WebsiteKunstenboetiek.Controllers
             var dierenUrnen = new List<Artikel>();
             using (var db = new KunstenboetiekDbEntities())
             {
-                dierenUrnen = (from a in db.Artikels
-                         where a.Soort == "Dieren urne"
-                         select a).ToList();
+                dierenUrnen = (from a in db.Artikels.Include("ArtikelAfbeeldingen")
+                               where a.Soort == "Dieren urne" && a.ArtikelAfbeeldingen.Count > 0 && a.Verkocht == false
+                               select a).ToList();
             }
             return View(dierenUrnen);
         }
@@ -48,9 +48,9 @@ namespace WebsiteKunstenboetiek.Controllers
             var andereWerken = new List<Artikel>();
             using (var db = new KunstenboetiekDbEntities())
             {
-                andereWerken = (from a in db.Artikels
-                               where a.Soort == "Andere werken"
-                               select a).ToList();
+                andereWerken = (from a in db.Artikels.Include("ArtikelAfbeeldingen")
+                                where a.Soort == "Andere werken" && a.ArtikelAfbeeldingen.Count > 0 && a.Verkocht == false
+                                select a).ToList();
             }
             return View(andereWerken);
         }

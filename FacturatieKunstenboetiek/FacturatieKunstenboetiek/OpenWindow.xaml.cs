@@ -27,6 +27,7 @@ namespace FacturatieKunstenboetiek
             TeOpenen = teOpenen;
             textBlockTeOpenen.Text = TeOpenen;
             fillAutoCompleteBox();
+            autoCompleteBox.Focus();
         }
 
         public void fillAutoCompleteBox()
