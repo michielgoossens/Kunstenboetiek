@@ -61,8 +61,8 @@ namespace FacturatieKunstenboetiek
                 {
                     if (!string.IsNullOrEmpty(Info))
                     {
-                        if (Info.Length > 300)
-                            result = "Max. 300 tekens.";
+                        if (Info.Length > 500)
+                            result = "Max. 500 tekens.";
                     }
                 }
                 return result;

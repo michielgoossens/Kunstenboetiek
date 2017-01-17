@@ -224,6 +224,8 @@ namespace FacturatieKunstenboetiek
                         foreach (var regel in factuurRegels)
                         {
                             dbEntities.FactuurRegels.Remove(regel);
+                            Artikel artikel = dbEntities.Artikels.Find(regel.ArtikelNr);
+                            artikel.Verkocht = false;
                         }
                         foreach (var artikel in tbFactuurRegels.Items)
                         {

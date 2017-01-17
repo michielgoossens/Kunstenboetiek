@@ -7,6 +7,7 @@ using WebsiteKunstenboetiek.Models;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Web.UI;
 
 namespace WebsiteKunstenboetiek.Controllers
 {
@@ -24,11 +25,15 @@ namespace WebsiteKunstenboetiek.Controllers
         public  ActionResult Contact()
         {
             EmailForm emailForm = new EmailForm();
+            if (TempData["shortMessage"] != null)
+            ViewBag.Message = TempData["shortMessage"].ToString();
             return View(emailForm);
         }
         [HttpPost]
         public ActionResult Contact(EmailForm emailForm)
         {
+            if (this.ModelState.IsValid)
+            {
                 MailMessage mail = new MailMessage();
                 SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
 
@@ -44,7 +49,15 @@ namespace WebsiteKunstenboetiek.Controllers
                 smtpServer.EnableSsl = true;
 
                 smtpServer.Send(mail);
+
+                TempData["shortMessage"] = "Het formulier is goed verzonden. U krijgt zo spoedig mogelijk antwoord.";
+
+                return RedirectToAction("Contact");
+            }
+            else
+            {
                 return View();
+            }
         }
     }
 }

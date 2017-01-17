@@ -100,6 +100,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AfbeeldingWindow.xaml.cs">
+      <DependentUpon>AfbeeldingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Artikel.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
@@ -145,6 +148,10 @@
       <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
     </Compile>
     <Compile Include="Overal.cs" />
+    <Page Include="AfbeeldingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ArtikelWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -5,10 +5,21 @@
 }
 <article>
     <h2>Dieren urnen</h2>
+@if (Model.Any())
+{
     <ul>
         @foreach (var artikel in Model)
         {
-            <li>@artikel.Naam</li>
+            <li>
+                <img src="@artikel.ArtikelAfbeeldingen.FirstOrDefault().AfbeeldingLink" alt="@artikel.Naam voorbeeldafbeelding" />
+                <label>@artikel.Naam</label>
+                <span>@artikel.Prijs €</span>
+            </li>
         }
     </ul>
+}
+else
+{
+    <p>Er zijn nog geen dieren urnen toegevoegd.</p>
+}
     </article>

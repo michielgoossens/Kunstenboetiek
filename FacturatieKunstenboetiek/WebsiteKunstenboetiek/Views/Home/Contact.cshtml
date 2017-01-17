@@ -32,11 +32,13 @@
 
 <article>
     <h2>Contact-formulier</h2>
+    <p id="message">@ViewBag.Message</p>
     @using (Html.BeginForm())
     {
         <div>
             @Html.LabelFor(m => m.Voornaam)
             @Html.TextBoxFor(m => m.Voornaam)
+            @Html.ValidationMessageFor(m => m.Voornaam)
         </div>
         <div>
             @Html.LabelFor(m => m.Familienaam)
@@ -45,6 +47,7 @@
         <div>
             @Html.LabelFor(m => m.Email)
             @Html.TextBoxFor(m => m.Email)
+            @Html.ValidationMessageFor(m => m.Email)
         </div>
         <div>
             @Html.LabelFor(m => m.TelNr)
@@ -53,11 +56,13 @@
         <div>
             @Html.LabelFor(m => m.Onderwerp)
             @Html.TextBoxFor(m => m.Onderwerp)
+            @Html.ValidationMessageFor(m => m.Onderwerp)
         </div>
         <div>
             @Html.LabelFor(m => m.Bericht)
             @Html.TextAreaFor(m => m.Bericht)
+            @Html.ValidationMessageFor(m => m.Bericht)
         </div>
-        <input class="button" type="submit" value="Bericht sturen" />
+        <input class="button" type="submit" value="Bericht sturen"  />
     }
 </article>

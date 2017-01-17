@@ -116,3 +116,5 @@ D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunst
 D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.Properties.Resources.resources
 D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csproj.GenerateResource.Cache
 D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csprojResolveAssemblyReference.cache
+D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\AfbeeldingWindow.g.cs
+D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\AfbeeldingWindow.baml

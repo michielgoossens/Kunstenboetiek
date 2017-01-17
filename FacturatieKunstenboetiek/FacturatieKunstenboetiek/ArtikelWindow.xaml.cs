@@ -173,6 +173,7 @@ namespace FacturatieKunstenboetiek
 
                         foreach (var afbeelding in artikelAfbeeldingen)
                         {
+      
                             dbEntities.ArtikelsAfbeeldingen.Remove(afbeelding);
                         }
                         Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be/test/", "kunstenboetiek.be", "m.b.v.");
@@ -278,6 +279,15 @@ namespace FacturatieKunstenboetiek
                 listBoxAfbeeldingen.Items.Remove(listBoxAfbeeldingen.SelectedItem);
             }
             tbNaam.Focus();
+        }
+
+        private void listBoxAfbeeldingen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listBoxAfbeeldingen.SelectedItem != null)
+            {
+                AfbeeldingWindow window = new AfbeeldingWindow((listBoxAfbeeldingen.SelectedItem as ArtikelAfbeelding).AfbeeldingLink);
+                window.Show();
+            }
         }
     }
 }
