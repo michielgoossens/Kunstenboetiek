@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         mc:Ignorable="d"
         Title="OverzichtWindow" Height="450" Width="625" WindowStartupLocation="Manual" Left="25" Top="25" WindowStyle="None">
-    <Grid>
+    <Grid DockPanel.Dock="Top">
         <TabControl>
             <TabItem Header="Klanten">
                 <ListBox x:Name="tbKlanten" Width="600">
@@ -135,6 +135,5 @@
                 </ListBox>
             </TabItem>
         </TabControl>
-
     </Grid>
 </Window>

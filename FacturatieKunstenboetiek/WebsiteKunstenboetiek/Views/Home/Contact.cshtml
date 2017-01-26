@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Kunstenboetiek - Contact";
 }
-<article>
+<article class="nonMinHeight">
     <h2>Contact</h2>
 
     <p>Urnen kunnen besteld worden via mail, gsm &amp; het contact-formulier.</p>
@@ -25,12 +25,13 @@
     <p>
         Canadalaan 9<br />
         9140 Temse<br />
-        0486 34 87 86
-    </p>
+        0486 34 87 86<br />
+        <a href="mailto:kunstenboetiek@hotmail.com">kunstenboetiek@hotmail.com</a>
+</p>
 
 </article>
 
-<article>
+<article class="nonMinHeight">
     <h2>Contact-formulier</h2>
     <p id="message">@ViewBag.Message</p>
     @using (Html.BeginForm())

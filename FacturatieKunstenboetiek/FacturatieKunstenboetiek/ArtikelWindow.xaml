@@ -120,7 +120,7 @@
             </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Target="{Binding ElementName=tbInfo}" Content="Info:" Grid.Column="0" Grid.Row="4"  Width="80"/>
-                    <TextBox Style="{StaticResource Validation}" AcceptsReturn="True" TextWrapping="Wrap" x:Name="tbInfo" Grid.Row="4" Grid.Column="1" Validation.Error="Validation_Error"
+                    <TextBox Style="{StaticResource Validation}" TextWrapping="Wrap" x:Name="tbInfo" Grid.Row="4" Grid.Column="1" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Info,
                         ValidatesOnDataErrors=true, NotifyOnValidationError=true, StringFormat=c, ConverterCulture=be-BE}" Width="350" Height="70"/>
                 </StackPanel>

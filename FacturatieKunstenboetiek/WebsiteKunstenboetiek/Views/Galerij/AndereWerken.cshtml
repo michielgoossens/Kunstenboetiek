@@ -11,15 +11,20 @@
         @foreach (var artikel in Model)
         {
             <li>
-                <img src="@artikel.ArtikelAfbeeldingen.FirstOrDefault().AfbeeldingLink" alt="@artikel.Naam voorbeeldafbeelding" />
-                <label>@artikel.Naam</label>
-                <span>@artikel.Prijs €</span>
+                <a href="Artikel?artikelNr=@artikel.ArtikelNr">
+                    <img src="@artikel.ArtikelAfbeeldingen.LastOrDefault().AfbeeldingLink" alt="@artikel.Naam voorbeeldafbeelding" />
+                    <p>@artikel.Naam</p>
+                    @if (artikel.Prijs > 0)
+                    {
+                        <span>@(artikel.Prijs * 1.06) €</span>
+                    }
+                </a>
             </li>
         }
     </ul>
 }
 else
 {
-    <p>Er zijn nog geen andere werken toegevoegd.</p>
+    <p>Er zijn nog geen nieuwe andere werken toegevoegd.</p>
 }
     </article>

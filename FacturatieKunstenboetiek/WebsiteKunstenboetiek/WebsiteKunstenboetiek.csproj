@@ -202,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\reset.css" />
+    <Content Include="Content\responsive.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -241,6 +242,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sss.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -260,6 +262,8 @@
     <Content Include="Views\Galerij\AndereWerken.cshtml" />
     <Content Include="Views\Home\Info.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Galerij\Artikel.cshtml" />
+    <Content Include="Views\Galerij\Geschiedenis.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

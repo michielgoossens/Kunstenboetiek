@@ -6,7 +6,7 @@
     </Key>
     <Property Name="ArtikelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Info" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="Info" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="Soort" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="Kleur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Prijs" Type="Double" Nullable="false" />

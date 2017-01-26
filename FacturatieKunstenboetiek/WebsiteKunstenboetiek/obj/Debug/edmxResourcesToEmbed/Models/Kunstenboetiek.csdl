@@ -12,7 +12,7 @@
     <Property Name="Verkocht" Type="Boolean" />
     <NavigationProperty Name="ArtikelAfbeeldingen" Relationship="Self.FK_ArtikelsAfbeeldingen_Artikels" FromRole="Artikels" ToRole="ArtikelsAfbeeldingen" />
     <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="Artikels" ToRole="FactuurRegels" />
-    <Property Name="Info" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="Info" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="Datum" Type="DateTime" Precision="0" />
   </EntityType>
   <EntityType Name="ArtikelAfbeelding">

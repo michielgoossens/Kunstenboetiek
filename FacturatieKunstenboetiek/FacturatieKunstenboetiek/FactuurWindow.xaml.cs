@@ -57,7 +57,10 @@ namespace FacturatieKunstenboetiek
                 List<Artikel> autoCompleteArtikel = new List<Artikel>();
                 foreach (var a in dbEntities.Artikels)
                 {
-                    autoCompleteArtikel.Add(a);
+                    if (a.Verkocht != true)
+                    {
+                        autoCompleteArtikel.Add(a);
+                    }
                 }
                 tbArtikel.ItemsSource = autoCompleteArtikel;
                 tbArtikel.ValueMemberPath = "zoekArtikel";

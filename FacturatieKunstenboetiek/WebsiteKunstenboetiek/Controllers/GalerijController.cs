@@ -54,5 +54,45 @@ namespace WebsiteKunstenboetiek.Controllers
             }
             return View(andereWerken);
         }
+        public ActionResult Geschiedenis()
+        {
+            DateTime oneYearAgo = DateTime.Now.AddYears(-1);
+            var geschiedenis = new List<Artikel>();
+            using (var db = new KunstenboetiekDbEntities())
+            {
+                geschiedenis = (from a in db.Artikels.Include("ArtikelAfbeeldingen")
+                                where a.ArtikelAfbeeldingen.Count > 0 && a.Verkocht == true && a.Datum > oneYearAgo
+                                select a).ToList();
+            }
+            return View(geschiedenis);
+        }
+        public ActionResult Artikel(int artikelNr)
+        {
+            Artikel artikel;
+            using (var db = new KunstenboetiekDbEntities())
+            {
+                artikel = (from a in db.Artikels.Include("ArtikelAfbeeldingen")
+                           where a.ArtikelNr == artikelNr
+                           select a).FirstOrDefault();
+            }
+            string[] words = artikel.Soort.Split(' ');
+            foreach (string word in words)
+            {
+                string deel = word;
+                if (artikel.Verkocht == false)
+                { 
+                if (deel.ToLower() == "urne")
+                {
+                    deel += "n";
+                }
+                ViewBag.Link += deel.First().ToString().ToUpper() + deel.Substring(1);
+                }
+                else
+                {
+                    ViewBag.Link = "Geschiedenis";
+                }
+            }
+            return View(artikel);
+        }
     }
 }

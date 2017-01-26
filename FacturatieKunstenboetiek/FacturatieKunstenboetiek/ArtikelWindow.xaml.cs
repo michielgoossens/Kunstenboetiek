@@ -26,6 +26,7 @@ namespace FacturatieKunstenboetiek
         private int artikelNr;//declare int for artikelNr
         public ArtikelWindow()
         {
+            Overal.teOpenenArtikel = null;
             InitializeComponent();
             resetArtikel(); //clear grid with new artikel
             fillSoortCombobox(); //fill combobox with all possible types
@@ -106,6 +107,7 @@ namespace FacturatieKunstenboetiek
         {
             if (MessageBox.Show("Ben je zeker dat je een nieuw artikel wilt starten?", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
+                Overal.teOpenenArtikel = null;
                 resetArtikel();
             }
         }
@@ -195,6 +197,7 @@ namespace FacturatieKunstenboetiek
                             dbEntities.ArtikelsAfbeeldingen.Add(aA);
                         }
                         a.Info = tbInfo.Text;
+                        a.Datum = DateTime.Now;
                         dbEntities.SaveChanges();
                         MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -228,8 +231,6 @@ namespace FacturatieKunstenboetiek
                     }
                 }
             }
-
-            Overal.teOpenenArtikel = null;
             Overal.Openen = null;
         }
         //ask if its ok to close the window

@@ -15,7 +15,13 @@ namespace WebsiteKunstenboetiek.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<Artikel> newArticles;
+            using (var db = new KunstenboetiekDbEntities())
+            {
+                newArticles = (db.Artikels.Include("ArtikelAfbeeldingen").Where(a => a.ArtikelAfbeeldingen.Count > 0 && a.Verkocht == false).OrderByDescending(a => a.Datum)).ToList();
+                newArticles = newArticles.Take(5);
+            }
+                return View(newArticles);
         }
         public ActionResult Info()
         {
