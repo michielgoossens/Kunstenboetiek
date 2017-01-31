@@ -209,6 +209,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\background\header.jpg" />
     <Content Include="Images\background\logo.png" />
+    <Content Include="Images\Buttons\menu-button-icon.png" />
+    <Content Include="Images\Buttons\menu-button-icon-hover.png" />
     <Content Include="Models\Kunstenboetiek.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Kunstenboetiek.edmx</DependentUpon>

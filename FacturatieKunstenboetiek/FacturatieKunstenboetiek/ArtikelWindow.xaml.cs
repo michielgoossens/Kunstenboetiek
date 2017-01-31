@@ -21,18 +21,30 @@ namespace FacturatieKunstenboetiek
     /// </summary>
     public partial class ArtikelWindow : Window
     {
-        private int _noOfErrorsOnScreen = 0; //declare count of errors on screen
-        private Artikel _artikel;//declare object for artikel
-        private int artikelNr;//declare int for artikelNr
+        private int _noOfErrorsOnScreen = 0;//declare int to keep track of errors on screen
+        private Artikel artikel;
+        private int artikelNr;
+        int count;
+        private List<ArtikelAfbeelding> toegevoegdeAfbeeldingen;
+        private List<ArtikelAfbeelding> verwijderdeAfbeeldingen;
+
         public ArtikelWindow()
         {
-            Overal.teOpenenArtikel = null;
             InitializeComponent();
-            resetArtikel(); //clear grid with new artikel
-            fillSoortCombobox(); //fill combobox with all possible types
+            resetArtikel();
+            fillSoortCombobox();
         }
-
-        //Count errors on screen
+        public void resetArtikel()
+        {
+            artikel = new Artikel();
+            count = 0;
+            toegevoegdeAfbeeldingen = new List<ArtikelAfbeelding>();
+            verwijderdeAfbeeldingen = new List<ArtikelAfbeelding>();
+            listBoxAfbeeldingen.Items.Clear();
+            grid.DataContext = artikel;
+            resetId(); //set next first empty id
+            tbNaam.Focus(); //focus on naam to start validation
+        }
         private void Validation_Error(object sender, ValidationErrorEventArgs e)
         {
             if (e.Action == ValidationErrorEventAction.Added)
@@ -40,119 +52,48 @@ namespace FacturatieKunstenboetiek
             else
                 _noOfErrorsOnScreen--;
         }
-
-        //new empty artikel to fill grid
-        private void resetArtikel()
-        {
-            _artikel = new Artikel();
-            grid.DataContext = _artikel; //fill grid with new artikel
-            resetId(); //reset id with next AI
-            listBoxAfbeeldingen.Items.Clear();
-            tbNaam.Focus(); //focus textblock naam to start validation
-        }
-
-        //reset textblock for id
-        private void resetId()
-        {
-            using (var dbEntities = new KunstenboetiekDbEntities())
-            {
-                //if allready artikels in db use the next AI for artikelNr
-                if (dbEntities.Artikels.Any())
-                {
-                    artikelNr = dbEntities.Artikels.Max(a => a.ArtikelNr) + 1;
-                }
-                //else use 1 as artikelNr
-                else
-                {
-                    artikelNr = 1;
-                }
-                textBlockArtikelNr.Text = artikelNr.ToString().PadLeft(Overal.padLeft, '0');
-
-            }
-        }
-
-        //fill combobox with all posible types
-        private void fillSoortCombobox()
-        {
-            List<string> Soorten = new List<string>()
-            {
-                "Urne",
-                "Mini urne",
-                "Dieren urne",
-                "Andere werken"
-            };
-
-            foreach (var soort in Soorten)
-            {
-                tbSoort.Items.Add(soort);
-            }
-        }
-
-        //if text in tb prijs changes to "", reset the tb
-        private void tbPrijs_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (tbPrijs.Text == "")
-                tbPrijs.Text = null;
-        }
-
-        //check if possible to start new artikel
-        private void NewArtikel_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = tbNaam.Text != "" || tbKleur.Text != "" || tbSoort.SelectedValue != null || double.Parse(tbPrijs.Text.Substring(0, tbPrijs.Text.Length - 2)) > 0;
-            e.Handled = true;
-        }
-
-        //start new artikel
-        private void NewArtikel_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (MessageBox.Show("Ben je zeker dat je een nieuw artikel wilt starten?", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
-            {
-                Overal.teOpenenArtikel = null;
-                resetArtikel();
-            }
-        }
-        //check if it is possible to save artikel
         private void AddArtikel_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = _noOfErrorsOnScreen == 0;
             e.Handled = true;
         }
-        //save the artikel
         private void AddArtikel_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            string remote;
+            string local;
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                var a = dbEntities.Artikels.Find(artikelNr);
-                if (a == null)
+                artikel = (from a in dbEntities.Artikels.Include("artikelAfbeeldingen")
+                                   where a.ArtikelNr == artikelNr
+                                   select a).FirstOrDefault();
+                if (artikel == null)
                 {
                     if (MessageBox.Show("Ben je zeker dat je het artikel wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {
-                        Artikel artikel = grid.DataContext as Artikel;
-                        artikel.Verkocht = false;
+                        artikel = grid.DataContext as Artikel;
 
                         Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be/test/", "kunstenboetiek.be", "m.b.v.");
-                        int count = 0;
-                        foreach (var afbeelding in listBoxAfbeeldingen.Items)
+                        foreach (ArtikelAfbeelding afbeelding in listBoxAfbeeldingen.Items)
                         {
                             count += 1;
-                            ArtikelAfbeelding aA = afbeelding as ArtikelAfbeelding;
-                            string remote;
-                            string local;
-                            if (aA.AfbeeldingLink.Substring(0, 7) != "http://")
-                            {
-                                remote = artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
-                                local = aA.AfbeeldingLink;
-                                ftpClient.upload(remote, local);
-                                aA.AfbeeldingLink = "http://www.kunstenboetiek.be/test/" + remote;
-                            }
-                            aA.ArtikelNr = artikelNr;
-                            dbEntities.ArtikelsAfbeeldingen.Add(aA);
+                            remote = artikel.ArtikelNr + artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
+                            local = afbeelding.AfbeeldingLink;
+                            ftpClient.upload(remote, local);
+                            afbeelding.AfbeeldingLink = "http://www.kunstenboetiek.be/test/" + remote;
+
+                            afbeelding.ArtikelNr = artikelNr;
+                            dbEntities.ArtikelsAfbeeldingen.Add(afbeelding);
                         }
+
+                        artikel.Verkocht = false;
                         artikel.Datum = DateTime.Now;
                         dbEntities.Artikels.Add(artikel);
+
                         dbEntities.SaveChanges();
                         MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                        Overal.overzichtWindow.setUpArtikels();
+                        Overal.overzichtWindow.tabControlOverzicht.SelectedIndex = 2;
                         resetArtikel();
                     }
                 }
@@ -160,94 +101,124 @@ namespace FacturatieKunstenboetiek
                 {
                     if (MessageBox.Show("Ben je zeker dat je het artikel wilt overschrijven?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {
-                        a.Naam = tbNaam.Text;
-                        a.Kleur = tbKleur.Text;
-                        a.Soort = tbSoort.Text;
+                        artikel.Naam = tbNaam.Text;
+                        artikel.Kleur = tbKleur.Text;
+                        artikel.Soort = tbSoort.Text;
+                        artikel.Info = tbInfo.Text;
                         int indexOfEuro = tbPrijs.Text.IndexOf('€');
-                        a.Prijs = double.Parse(tbPrijs.Text.Substring(0, indexOfEuro));
-                        if (a.Verkocht != true)
-                        {
-                            a.Verkocht = false;
-                        }
-                        List<ArtikelAfbeelding> artikelAfbeeldingen = (from ab in dbEntities.ArtikelsAfbeeldingen
-                                                                       where ab.ArtikelNr == artikelNr
-                                                                       select ab).ToList();
+                        artikel.Prijs = double.Parse(tbPrijs.Text.Substring(0, indexOfEuro));
 
-                        foreach (var afbeelding in artikelAfbeeldingen)
-                        {
-      
-                            dbEntities.ArtikelsAfbeeldingen.Remove(afbeelding);
-                        }
                         Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be/test/", "kunstenboetiek.be", "m.b.v.");
-                        int count = 0;
-                        foreach (var afbeelding in listBoxAfbeeldingen.Items)
+                        foreach (ArtikelAfbeelding afbeelding in verwijderdeAfbeeldingen)
+                        {
+                            ArtikelAfbeelding aA = dbEntities.ArtikelsAfbeeldingen.Find(afbeelding.AfbeeldingNr);
+                            if (aA != null)
+                            {
+                                count -= 1;
+                                dbEntities.ArtikelsAfbeeldingen.Remove(aA);
+                            }
+                        }
+                        foreach (ArtikelAfbeelding afbeelding in toegevoegdeAfbeeldingen)
                         {
                             count += 1;
-                            ArtikelAfbeelding aA = afbeelding as ArtikelAfbeelding;
-                            string remote;
-                            string local;
-                            if (aA.AfbeeldingLink.Substring(0, 7) != "http://")
-                            {
-                                remote = a.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
-                                local = aA.AfbeeldingLink;
-                                ftpClient.upload(remote, local);
-                                aA.AfbeeldingLink = "http://www.kunstenboetiek.be/test/" + remote;
-                            } 
-                            aA.ArtikelNr = artikelNr;
-                            dbEntities.ArtikelsAfbeeldingen.Add(aA);
+                            remote = artikel.ArtikelNr + artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
+                            local = afbeelding.AfbeeldingLink;
+                            ftpClient.upload(remote, local);
+                            afbeelding.AfbeeldingLink = "http://www.kunstenboetiek.be/test/" + remote;
+
+
+                            afbeelding.ArtikelNr = artikelNr;
+                            dbEntities.ArtikelsAfbeeldingen.Add(afbeelding);
                         }
-                        a.Info = tbInfo.Text;
-                        a.Datum = DateTime.Now;
+
+                        artikel.Datum = DateTime.Now;
+
                         dbEntities.SaveChanges();
                         MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                        Overal.overzichtWindow.setUpArtikels();
+                        Overal.overzichtWindow.tabControlOverzicht.SelectedIndex = 2;
                         resetArtikel();
                     }
                 }
             }
         }
-        //open an existing artikel
+        //check if possible to start new artikel
+        private void NewArtikel_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = tbNaam.Text != "" || tbKleur.Text != "" || tbSoort.SelectedValue != null || double.Parse(tbPrijs.Text.Substring(0, tbPrijs.Text.Length - 2)) > 0 || listBoxAfbeeldingen.Items.Count > 0;
+            e.Handled = true;
+        }
+
+        //start new artikel
+        private void NewArtikel_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+            if (MessageBox.Show("Ben je zeker dat je een nieuw artikel wilt starten? Het huidige artikel word niet opgeslagen.", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                resetArtikel();
+            }
+        }
+        private void resetId()
+        {
+            using (var dbEntities = new KunstenboetiekDbEntities())
+            {
+                if (dbEntities.Artikels.Any())
+                {
+                    artikelNr = dbEntities.Artikels.Max(a => a.ArtikelNr) + 1;
+                }
+                else
+                {
+                    artikelNr = 1;
+                }
+                textBlockArtikelNr.Text = (artikelNr).ToString().PadLeft(Overal.padLeft, '0');
+            }
+        }
+        private void fillSoortCombobox()
+        {
+            List<string> soorten = new List<string>()
+            {
+                "Urne",
+                "Mini urne",
+                "Dieren urne",
+                "Andere werken"
+            };
+
+            foreach (var soort in soorten)
+            {
+                tbSoort.Items.Add(soort);
+            }
+        }
         private void menuItemOpen_Click(object sender, RoutedEventArgs e)
         {
-            OpenWindow window = new OpenWindow("artikel");
+            if (MessageBox.Show("Ben je zeker dat je een artikel wilt openen? Het huidige artikel word niet opgeslagen.", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            { 
+                OpenWindow window = new OpenWindow("artikel");
             window.ShowDialog();
 
             if (Overal.Openen == true)
             {
                 resetArtikel();
-                _artikel = Overal.teOpenenArtikel;
+                artikel = Overal.teOpenenArtikel;
                 artikelNr = Overal.teOpenenArtikel.ArtikelNr;
-                grid.DataContext = _artikel;
-                textBlockArtikelNr.Text = artikelNr.ToString().PadLeft(Overal.padLeft, '0');
-                using (var dbEntities = new KunstenboetiekDbEntities())
+                var sortedAfbeeldingen =
+                    from a in artikel.ArtikelAfbeeldingen
+                    orderby a.File
+                    select a;
+                foreach (var afbeelding in sortedAfbeeldingen)
                 {
-                    Artikel artikel = new Artikel();
-                    List<ArtikelAfbeelding> artikelAfbeeldingen = (from aA in dbEntities.ArtikelsAfbeeldingen
-                                                        where aA.ArtikelNr == artikelNr
-                                                        select aA).ToList();
-                    foreach (var aA in artikelAfbeeldingen)
-                    {
-                        listBoxAfbeeldingen.Items.Add(aA);
-                    }
+                    count += 1;
+                    listBoxAfbeeldingen.Items.Add(afbeelding);
                 }
+                grid.DataContext = artikel;
+                textBlockArtikelNr.Text = (artikelNr).ToString().PadLeft(Overal.padLeft, '0');
             }
-            Overal.Openen = null;
-        }
-        //ask if its ok to close the window
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (MessageBox.Show("Ben je zeker dat je het venster wilt sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
-            {
-                e.Cancel = true;
-            }
-        }
-        //close the window and open mainwindow
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            Window main = new MainWindow();
-            main.Show();
-        }
 
+
+            Overal.Openen = null;
+            Overal.teOpenenArtikel = null;
+            }
+        }
         private void buttonAfbeeldingToevoegen_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -258,8 +229,9 @@ namespace FacturatieKunstenboetiek
                 dlg.Filter = "JPEG afbeelding |*.jpg";
                 if (dlg.ShowDialog() == true)
                 {
-                    ArtikelAfbeelding artikelAfbeelding = new ArtikelAfbeelding { AfbeeldingLink = dlg.FileName, ArtikelNr = artikelNr };
-                    listBoxAfbeeldingen.Items.Add(artikelAfbeelding);
+                    ArtikelAfbeelding afbeelding = new ArtikelAfbeelding { AfbeeldingLink = dlg.FileName, ArtikelNr = artikelNr };
+                    toegevoegdeAfbeeldingen.Add(afbeelding);
+                    listBoxAfbeeldingen.Items.Add(afbeelding);
                 }
             }
             catch (Exception ex)
@@ -277,18 +249,24 @@ namespace FacturatieKunstenboetiek
             }
             else
             {
-                listBoxAfbeeldingen.Items.Remove(listBoxAfbeeldingen.SelectedItem);
+                ArtikelAfbeelding afbeelding = listBoxAfbeeldingen.SelectedItem as ArtikelAfbeelding;
+                toegevoegdeAfbeeldingen.Remove(afbeelding);
+                verwijderdeAfbeeldingen.Add(afbeelding);
+                listBoxAfbeeldingen.Items.Remove(afbeelding);
             }
             tbNaam.Focus();
         }
-
-        private void listBoxAfbeeldingen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (listBoxAfbeeldingen.SelectedItem != null)
+            if (MessageBox.Show("Ben je zeker dat je het venster wilt sluiten? Het huidige artikel word niet opgeslagen.", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
-                AfbeeldingWindow window = new AfbeeldingWindow((listBoxAfbeeldingen.SelectedItem as ArtikelAfbeelding).AfbeeldingLink);
-                window.Show();
+                e.Cancel = true;
             }
+        }
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Window main = new MainWindow();
+            main.Show();
         }
     }
 }

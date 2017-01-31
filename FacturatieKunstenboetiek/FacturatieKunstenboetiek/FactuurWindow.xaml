@@ -106,14 +106,14 @@
                         <Grid Margin="0,2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="30"></ColumnDefinition>
-                                <ColumnDefinition Width="205"></ColumnDefinition>
+                                <ColumnDefinition Width="190"></ColumnDefinition>
                                 <ColumnDefinition Width="85"></ColumnDefinition>
                                 <ColumnDefinition Width="80"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding ArtikelNr, StringFormat={}{0:000}}" Grid.Column="0"></TextBlock>
-                            <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis"></TextBlock>
-                            <TextBlock Text="{Binding Prijs, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2"></TextBlock>
-                            <TextBlock Text="{Binding prijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3"></TextBlock>
+                            <TextBlock Text="{Binding Artikel.Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis"></TextBlock>
+                            <TextBlock Text="{Binding Artikel.Prijs, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2"></TextBlock>
+                            <TextBlock Text="{Binding Artikel.prijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3"></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

@@ -11,30 +11,36 @@
 <body>
     <div class="wrapper">
         <header>
-            <a id="homeLink" href="~/Home/Index">
-                <img src="~/Images/background/logo.png" width="110" />
+            <a href="~/Home/Index">
+                <img src="~/Images/background/logo.png" width="130" />
+            </a>
+            <a href="~/Home/Index">
                 <h1>Kunstenboetiek</h1>
             </a>
-            <nav id="hideButton" onclick="hide_show()">
-                        <ul id="navMenu" class="hidden">
-                            <li onclick="hide()">@Html.MenuLink("Home", "Index", "Home")</li>
-                            <li onclick="hide()">@Html.MenuLink("Urnen", "Urnen", "Galerij")</li>
-                            <li onclick="hide()">@Html.MenuLink("Mini urnen", "MiniUrnen", "Galerij")</li>
-                            <li onclick="hide()">@Html.MenuLink("Dieren urnen", "DierenUrnen", "Galerij")</li>
-                            <li onclick="hide()">@Html.MenuLink("Andere werken", "AndereWerken", "Galerij")</li>
-                            <li onclick="hide()">@Html.MenuLink("Geschiedenis", "Geschiedenis", "Galerij")</li>
-                            <li onclick="hide()">@Html.MenuLink("Info", "Info", "Home")</li>
-                            <li onclick="hide()">@Html.MenuLink("Contact", "Contact", "Home")</li>
-                        </ul>
+
+            <nav onclick="hide_show()" onmouseover="imgMouserOver()" onmouseout="imgMouseOut()">
+                <img id="hideButtonTop" class="hideButton" src="~/Images/Buttons/menu-button-icon.png" alt="menu knop" />
+                <ul id="navMenu" class="hidden">
+                    <li>@Html.MenuLink("Home", "Index", "Home")</li>
+                    <li>@Html.MenuLink("Urnen", "Urnen", "Galerij")</li>
+                    <li>@Html.MenuLink("Mini urnen", "MiniUrnen", "Galerij")</li>
+                    <li>@Html.MenuLink("Dieren urnen", "DierenUrnen", "Galerij")</li>
+                    <li>@Html.MenuLink("Andere werken", "AndereWerken", "Galerij")</li>
+                    <li>@Html.MenuLink("Geschiedenis", "Geschiedenis", "Galerij")</li>
+                    <li>@Html.MenuLink("Info", "Info", "Home")</li>
+                    <li>@Html.MenuLink("Contact", "Contact", "Home")</li>
+  
+                </ul>
             </nav>
         </header>
-        <div class="content">
+        <div id="content">
             @RenderBody()
         </div>
     </div>
     <footer>
         <section>
             <p>
+                <img src="~/Images/background/logo.png" width="110" />
                 <em>Kunsteboetiek</em><br />
                 Veerle Buytaert<br />
                 Canadalaan 9<br />
@@ -45,7 +51,7 @@
         </section>
         <section>
             <p>
-                &copy; webdesign &amp; ontwikkeling<br />
+                webdesign &amp; ontwikkeling<br />
                 Michiel Goossens<br />
                 michielgoossens1409@gmail.com<br />
                 0484607082
@@ -55,12 +61,29 @@
 </body>
 </html>
 <script>
-    var navManu = document.getElementById("navMenu");
-    function hide_show()
-    {
-        if (navManu.classList.contains("hidden"))
-            navManu.classList.remove("hidden");
-        else
-            navManu.classList.add("hidden");
+    var navMenu = document.getElementById("navMenu");
+    var content = document.getElementById("content");
+    var hideButtonTop = document.getElementById('hideButtonTop');
+    function hide_show() {
+        if (navMenu.classList.contains("hidden")) {
+            navMenu.classList.remove("hidden");
+            navMenu.classList.add("open");
+        }
+        else {
+            navMenu.classList.add("hidden");
+            navMenu.classList.remove("open");
+        }
+        if (content.classList.contains("marginTop")) {
+            content.classList.remove("marginTop");
+        }
+        else {
+            content.classList.add("marginTop");
+        }
+    }
+    function imgMouserOver(){
+        hideButtonTop.src = '/Images/Buttons/menu-button-icon-hover.png';
+    }
+    function imgMouseOut(){
+        hideButtonTop.src = '/Images/Buttons/menu-button-icon.png';
     }
 </script>

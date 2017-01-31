@@ -50,7 +50,7 @@ namespace FacturatieKunstenboetiek
                 else if (TeOpenen == "artikel")
                 {
                     List<Artikel> autoCompleteArtikel = new List<Artikel>();
-                    foreach (var a in dbEntities.Artikels)
+                    foreach (var a in dbEntities.Artikels.Include("artikelAfbeeldingen"))
                     {
                         autoCompleteArtikel.Add(a);
                     }
@@ -62,10 +62,16 @@ namespace FacturatieKunstenboetiek
                 else if (TeOpenen == "factuur")
                 {
                     List<Factuur> autoCompleteFactuur = new List<Factuur>();
-                    foreach (var f in dbEntities.Facturen)
+                    foreach (var f in dbEntities.Facturen.Include("factuurRegels"))
                     {
+                        Artikel a;
                         Klant klant = dbEntities.Klanten.Find(f.KlantNr);
                         dbEntities.Klanten.Attach(klant);
+                        foreach (var r in f.FactuurRegels)
+                        {
+                            a = dbEntities.Artikels.Find(r.ArtikelNr);
+                            dbEntities.Artikels.Attach(a);
+                        }
                         autoCompleteFactuur.Add(f);
 
                     }

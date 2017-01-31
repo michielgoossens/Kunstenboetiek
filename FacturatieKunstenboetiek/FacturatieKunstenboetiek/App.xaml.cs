@@ -16,5 +16,18 @@ namespace FacturatieKunstenboetiek
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            MessageBoxManager.Yes = "Ja";
+            MessageBoxManager.No = "Nee";
+            MessageBoxManager.OK = "Oké";
+            MessageBoxManager.Cancel = "Annuleren";
+            MessageBoxManager.Register();
+
+            Overal.overzichtWindow.setUp();
+
+            MainWindow main = new MainWindow();
+            main.Show();
+        }
     }
 }

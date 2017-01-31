@@ -21,11 +21,12 @@ namespace FacturatieKunstenboetiek
     /// </summary>
     public partial class MainWindow : Window
     {
-        OverzichtWindow window;
+        bool isClosedByButton;
         public MainWindow()
         {
             InitializeComponent();
             CheckDatabase();
+            isClosedByButton = false;
         }
 
         public void CheckDatabase()
@@ -39,8 +40,7 @@ namespace FacturatieKunstenboetiek
                 }
                 else
                 {
-                    window = new OverzichtWindow();
-                    window.Show();
+                    Overal.overzichtWindow.Show();
                 }
             }
         }
@@ -49,6 +49,7 @@ namespace FacturatieKunstenboetiek
         {
             Window factuur = new FactuurWindow();
             factuur.Show();
+            isClosedByButton = true;
             this.Close();
         }
 
@@ -56,6 +57,7 @@ namespace FacturatieKunstenboetiek
         {
             Window klant = new KlantWindow();
             klant.Show();
+            isClosedByButton = true;
             this.Close();
         }
 
@@ -63,14 +65,19 @@ namespace FacturatieKunstenboetiek
         {
             Window artikel = new ArtikelWindow();
             artikel.Show();
+            isClosedByButton = true;
             this.Close();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            if (window != null)
+            if (Overal.overzichtWindow != null && isClosedByButton)
             {
-                window.Close();
+                Overal.overzichtWindow.Hide();
+            }
+            else
+            {
+                Overal.overzichtWindow.Close();
             }
         }
     }

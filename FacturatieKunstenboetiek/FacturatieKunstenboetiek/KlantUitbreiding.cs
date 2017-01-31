@@ -13,13 +13,18 @@ namespace FacturatieKunstenboetiek
         {
             get
             {
-                if (Familienaam != null)
+                if (Voornaam != "")
                 {
-                    return Voornaam + " " + Familienaam;
+                    string naam = Voornaam;
+                    if (Familienaam != "")
+                    {
+                        naam += " " + Familienaam;
+                    }
+                    return naam;
                 }
                 else
                 {
-                    return Voornaam;
+                    return Familienaam;
                 }
             }
         }

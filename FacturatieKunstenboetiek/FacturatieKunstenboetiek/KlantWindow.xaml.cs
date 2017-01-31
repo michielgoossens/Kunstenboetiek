@@ -23,7 +23,7 @@ namespace FacturatieKunstenboetiek
     public partial class KlantWindow : Window
     {
         private int _noOfErrorsOnScreen = 0;//declare int to keep track of errors on screen
-        private Klant _klant;//declare klant to work with
+        private Klant klant;//declare klant to work with
         private int klantNr;//declare klantNr to work with
         public KlantWindow()
         {
@@ -34,8 +34,8 @@ namespace FacturatieKunstenboetiek
         //clear grid and add new klant to it datacontext
         public void resetKlant()
         {
-            _klant = new Klant();
-            grid.DataContext = _klant;
+            klant = new Klant();
+            grid.DataContext = klant;
             resetId(); //set next first empty id
             tbVoornaam.Focus(); //focus on voornaam to start validation
         }
@@ -57,16 +57,18 @@ namespace FacturatieKunstenboetiek
         {
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                var k = dbEntities.Klanten.Find(klantNr);
-                if (k == null)
+                klant = dbEntities.Klanten.Find(klantNr);
+                if (klant == null)
                 {
                     if (MessageBox.Show("Ben je zeker dat je de klant wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {
-                        Klant klant = grid.DataContext as Klant;
+                        klant = grid.DataContext as Klant;
                         dbEntities.Klanten.Add(klant);
                         dbEntities.SaveChanges();
                         MessageBox.Show("De klant is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                        Overal.overzichtWindow.setUpKlanten();
+                        Overal.overzichtWindow.tabControlOverzicht.SelectedIndex = 1;
                         resetKlant();
                     }
                 }
@@ -74,19 +76,21 @@ namespace FacturatieKunstenboetiek
                 {
                     if (MessageBox.Show("Ben je zeker dat je de klant wilt overschrijven?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {
-                        k.Voornaam = tbVoornaam.Text;
-                        k.Familienaam = tbFamilienaam.Text;
-                        k.Straat = tbStraat.Text;
-                        k.HuisNr = tbHuisNr.Text;
-                        k.Postcode = tbPostcode.Text;
-                        k.Gemeente = tbGemeente.Text;
-                        k.Land = tbLand.Text;
-                        k.Telefoon = tbTelefoon.Text;
-                        k.Email = tbEmail.Text;
-                        k.BtwNr = tbBtwNr.Text;
+                        klant.Voornaam = tbVoornaam.Text;
+                        klant.Familienaam = tbFamilienaam.Text;
+                        klant.Straat = tbStraat.Text;
+                        klant.HuisNr = tbHuisNr.Text;
+                        klant.Postcode = tbPostcode.Text;
+                        klant.Gemeente = tbGemeente.Text;
+                        klant.Land = tbLand.Text;
+                        klant.Telefoon = tbTelefoon.Text;
+                        klant.Email = tbEmail.Text;
+                        klant.BtwNr = tbBtwNr.Text;
                         dbEntities.SaveChanges();
-                        MessageBox.Show("Het klant is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("De klant is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                        Overal.overzichtWindow.setUpKlanten();
+                        Overal.overzichtWindow.tabControlOverzicht.SelectedIndex = 1;
                         resetKlant();
                     }
                 }
@@ -101,7 +105,7 @@ namespace FacturatieKunstenboetiek
 
         private void NewKlant_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (MessageBox.Show("Ben je zeker dat je een nieuwe klant wilt starten?", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Ben je zeker dat je een nieuwe klant wilt starten? De huidige klant word niet opgeslagen.", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
                 resetKlant();
             }
@@ -167,26 +171,29 @@ namespace FacturatieKunstenboetiek
 
         private void menuItemOpen_Click(object sender, RoutedEventArgs e)
         {
-            OpenWindow window = new OpenWindow("klant");
+            if (MessageBox.Show("Ben je zeker dat je een klant wilt openen? De huidige klant word niet opgeslagen.", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                OpenWindow window = new OpenWindow("klant");
             window.ShowDialog();
 
             if (Overal.Openen == true)
             {
                 resetKlant();
-                _klant = Overal.teOpenenKlant;
+                klant = Overal.teOpenenKlant;
                 klantNr = Overal.teOpenenKlant.KlantNr;
 
-                grid.DataContext = _klant;
+                grid.DataContext = klant;
                 textBlockKlantNr.Text = (klantNr).ToString().PadLeft(Overal.padLeft, '0');
             }
 
 
             Overal.Openen = null;
             Overal.teOpenenKlant = null;
+            }
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Ben je zeker dat je het venster wilt sluiten?", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (MessageBox.Show("Ben je zeker dat je het venster wilt sluiten? De huidige klant word niet opgeslagen.", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 e.Cancel = true;
             }

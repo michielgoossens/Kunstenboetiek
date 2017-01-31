@@ -5,13 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="Kunstenboetiek" Height="170" Width="400" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
+        Title="Kunstenboetiek" Height="350" Width="550" Closed="Window_Closed" WindowStartupLocation="CenterScreen" Background="#edeed8">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#575b4f"/>
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Height" Value="90"/>
+            <Setter Property="Margin" Value="15 0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="./fonts/#Pompiere"/>
+            <Setter Property="FontSize" Value="35"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#b6b357"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Foreground" Value="#edeed8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <StackPanel Margin="10">
-        <TextBlock HorizontalAlignment="Center" Margin="10" FontSize="24">Kunstenboetiek</TextBlock>
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button Name="buttonFactuur" Width="100" Height="40" Margin="10" Click="buttonFactuur_Click">Factuur</Button>
-            <Button Name="buttonKlant" Width="100" Height="40" Margin="10" Click="buttonKlant_Click">Klant</Button>
-            <Button Name="buttonArtikel" Width="100" Height="40" Margin="10" Click="buttonArtikel_Click">Artikel</Button>
-    </StackPanel>
+        <TextBlock HorizontalAlignment="Center" Margin="0 40" FontSize="70" Foreground="#787c57" FontFamily="/fonts/#Pompiere">Kunstenboetiek</TextBlock>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Name="buttonFactuur" Click="buttonFactuur_Click" Content="Factuur"/>
+            <Button Name="buttonKlant" Click="buttonKlant_Click" Content="Klant"/>
+            <Button Name="buttonArtikel" Click="buttonArtikel_Click" Content="Artikel"/>
+        </StackPanel>
     </StackPanel>
 </Window>

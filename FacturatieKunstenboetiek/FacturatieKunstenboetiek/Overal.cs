@@ -19,6 +19,7 @@ namespace FacturatieKunstenboetiek
         public static Artikel teOpenenArtikel;
         public static Factuur teOpenenFactuur;
         public static int padLeft = 3;
+        public static OverzichtWindow overzichtWindow = new OverzichtWindow();
         public static DataTemplate ZoekLayout(string Nummer)
         {
             DataTemplate layout = new DataTemplate();

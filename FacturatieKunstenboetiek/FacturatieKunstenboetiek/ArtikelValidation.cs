@@ -32,23 +32,6 @@ namespace FacturatieKunstenboetiek
                     {
                         if (Naam.Length > 100)
                             result = "Max. 100 tekens.";
-                        using (var db = new KunstenboetiekDbEntities())
-                        {
-                            List<Artikel> artikels = db.Artikels.ToList();
-                            if (Overal.teOpenenArtikel != null)
-                            {
-                                Artikel artikel = db.Artikels.Find(Overal.teOpenenArtikel.ArtikelNr);
-                                artikels.Remove(artikel);
-                            }
-                            foreach (var a in artikels)
-                            {
-                                if (a.Naam == Naam)
-                                {
-                                    result = "De naam van het artikel moet uniek zijn.";
-                                }
-                            }
-                        }
-
                     }
                 }
                 //kleur kan max 25 tekens zijn

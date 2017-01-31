@@ -6,7 +6,7 @@
 <div class="slideshow-container">
     @foreach (var artikel in Model)
     {
-        <a id="linkNewArticle" href="Galerij/Artikel?artikelNr=@artikel.ArtikelNr">
+        <a id="linkNewArticle" href="/Galerij/Artikel?artikelNr=@artikel.ArtikelNr">
             <article id="newArticles" class="mySlides fade nonMinHeight">
                 <img src="@artikel.ArtikelAfbeeldingen.LastOrDefault().AfbeeldingLink" alt="@artikel.Naam voorbeeldafbeelding" />
                 <section>

@@ -1,0 +1,20 @@
+01/02/2017
+
+FacturatieKunstenboetiek:
+
+- back end afwerken verwijder button op overzichtWindow
+- front end OpenWindow, FacturatieWindow, KlantWindow & ArtikelWindow
+
+
+websiteKunstenboetiek:
+
+- opmaak footer afwerken
+
+
+
+Setup bij kunstenboetiek
+facturatie:
+- db ConnectionString aanpassen
+- FTP login & password aanpassen
+website:
+- contact form e-mail aanpassen

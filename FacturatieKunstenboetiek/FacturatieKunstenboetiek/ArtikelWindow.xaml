@@ -79,7 +79,7 @@
                 <Label Target="{Binding ElementName=tbPrijs}" Content="Prijs excl BTW:" Grid.Column="0" Grid.Row="4"/>
                 <TextBox Style="{StaticResource Validation}" x:Name="tbPrijs" Grid.Row="4" Grid.Column="1" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Prijs,
-                        ValidatesOnDataErrors=true, NotifyOnValidationError=true, StringFormat=c, ConverterCulture=be-BE}" Width="150" TextChanged="tbPrijs_TextChanged"/>
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true, StringFormat=c, ConverterCulture=be-BE}" Width="150"/>
 
         <StackPanel Orientation="Vertical" Margin="12 25 25 25" Grid.Column="2" Grid.RowSpan="5">
             <Label Margin="80 0 0 0">Afbeeldingen:</Label>
@@ -88,7 +88,7 @@
                     <Button Name="buttonAfbeeldingToevoegen" Padding="5" Margin="5 5 5 0" Click="buttonAfbeeldingToevoegen_Click" Width="75">Toevoegen</Button>
                         <Button Name="buttonAfbeeldingVerwijderen" Padding="5" Margin="5" Click="buttonAfbeeldingVerwijderen_Click" Width="75">Verwijderen</Button>
                 </StackPanel>
-                    <ListBox x:Name="listBoxAfbeeldingen" Height="140" SelectionChanged="listBoxAfbeeldingen_SelectionChanged">
+                    <ListBox x:Name="listBoxAfbeeldingen" Height="140">
                         <ListBox.Template>
                         <ControlTemplate>
                             <DockPanel LastChildFill="True">
@@ -107,12 +107,21 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                                 <Grid Margin="0,2" ShowGridLines="True">
-                                <Grid.ColumnDefinitions>
+                                    <Grid.ToolTip>
+                                        <ToolTip>
+                                            <ToolTip.Template>
+                                                <ControlTemplate TargetType="ToolTip">
+                                                    <Image Width="150" Source="{Binding AfbeeldingLink}"></Image>
+                                                </ControlTemplate>
+                                            </ToolTip.Template>
+                                        </ToolTip>
+                                    </Grid.ToolTip>
+                                    <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="145"></ColumnDefinition>
                                     <ColumnDefinition Width="250"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding File}" Grid.Column="0"></TextBlock>
-                                <TextBlock Text="{Binding AfbeeldingLink}" Grid.Column="1" TextTrimming="CharacterEllipsis" Padding="5 0 0 0"></TextBlock>
+                                    <TextBlock Text="{Binding File}" Grid.Column="0"></TextBlock>
+                                    <TextBlock Text="{Binding AfbeeldingLink}" Grid.Column="1" TextTrimming="CharacterEllipsis" Padding="5 0 0 0"></TextBlock>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

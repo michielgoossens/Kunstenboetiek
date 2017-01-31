@@ -4,136 +4,218 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="OverzichtWindow" Height="450" Width="625" WindowStartupLocation="Manual" Left="25" Top="25" WindowStyle="None">
-    <Grid DockPanel.Dock="Top">
-        <TabControl>
-            <TabItem Header="Klanten">
-                <ListBox x:Name="tbKlanten" Width="600">
-
-                    <ListBox.Template>
-                        <ControlTemplate>
-                            <DockPanel LastChildFill="True">
-                                <Grid DockPanel.Dock="Top" Height="30" ShowGridLines="True">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"></ColumnDefinition>
-                                        <ColumnDefinition Width="184"></ColumnDefinition>
-                                        <ColumnDefinition Width="183"></ColumnDefinition>
-                                        <ColumnDefinition Width="183"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0">Nr</Label>
-                                    <Label Grid.Column="1">Klant</Label>
-                                    <Label Grid.Column="2">Adres</Label>
-                                    <Label Grid.Column="3">Woonplaats</Label>
-                                </Grid>
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                                    <ItemsPresenter></ItemsPresenter>
-                                </ScrollViewer>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </ListBox.Template>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
+        Title="OverzichtWindow" Height="450" Width="625" Background="#edeed8" WindowStartupLocation="Manual" Left="25" Top="25" WindowStyle="None">
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontFamily" Value="./fonts/#Pompiere"/>
+            <Setter Property="Foreground" Value="#575b4f"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border x:Name="borderTab" Background="#b6b357" Margin="2" Padding="5">
+                            <ContentPresenter ContentSource="Header"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter TargetName="borderTab" Property="Margin"
+                                        Value="0" />
+                                <Setter Property="Foreground"
+                                        Value="#edeed8" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Foreground"
+                                        Value="#edeed8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Background" Value="#b6b357"/>
+            <Setter Property="Foreground" Value="#575b4f"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#575b4f"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="borderListBoxItem" Background="{TemplateBinding Background}" Padding="0 5">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="borderListBoxItem" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="borderListBoxItem" Property="BorderBrush" Value="#b6b357"/>
+                                <Setter Property="Background" Value="#d9d796"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#d9d796"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="10">
+        <TabControl Name="tabControlOverzicht">
+        <TabItem Name="tabItemFacturen" Header="Facturen">
+            <ListBox x:Name="tbFacturen">
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="True">
+                            <Grid DockPanel.Dock="Top" ShowGridLines="True" Width="568" HorizontalAlignment="Left">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"></ColumnDefinition>
-                                    <ColumnDefinition Width="184"></ColumnDefinition>
-                                    <ColumnDefinition Width="183"></ColumnDefinition>
-                                    <ColumnDefinition Width="183"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="9*"></ColumnDefinition>
+                                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                                    <ColumnDefinition Width="4*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding KlantNr, StringFormat={}{0:000}}" Grid.Column="0"></TextBlock>
-                                <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis"></TextBlock>
-                                <TextBlock Text="{Binding Adres}" Grid.Column="2"></TextBlock>
-                                <TextBlock Text="{Binding Woonplaats}" Grid.Column="3"></TextBlock>
+                                <Label Grid.Column="0">Factuur Nr</Label>
+                                <Label Grid.Column="1">Klant</Label>
+                                <Label Grid.Column="2">Prijs Excl BTW</Label>
+                                <Label Grid.Column="3">Prijs incl BTW</Label>
                             </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </TabItem>
-            <TabItem Header="Artikels">
-                <ListBox x:Name="tbArtikels" Width="600">
+                            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                                <ItemsPresenter></ItemsPresenter>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="568" Margin="5 0 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="9*"></ColumnDefinition>
+                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding FactuurNr, StringFormat={}{0:000}}" Grid.Column="0" FontFamily="Arial" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis" FontFamily="Arial" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding PrijsExclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2" FontFamily="Arial" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding PrijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3" FontFamily="Arial" FontSize="15"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </TabItem>
 
-                    <ListBox.Template>
-                        <ControlTemplate>
-                            <DockPanel LastChildFill="True">
-                                <Grid DockPanel.Dock="Top" Height="30" ShowGridLines="True">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"></ColumnDefinition>
-                                        <ColumnDefinition Width="350"></ColumnDefinition>
-                                        <ColumnDefinition Width="100"></ColumnDefinition>
-                                        <ColumnDefinition Width="100"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0">Nr</Label>
-                                    <Label Grid.Column="1">Klant</Label>
-                                    <Label Grid.Column="2">Prijs Excl BTW</Label>
-                                    <Label Grid.Column="3">Prijs incl BTW</Label>
-                                </Grid>
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                                    <ItemsPresenter></ItemsPresenter>
-                                </ScrollViewer>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </ListBox.Template>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"></ColumnDefinition>
-                                    <ColumnDefinition Width="350"></ColumnDefinition>
-                                    <ColumnDefinition Width="100"></ColumnDefinition>
-                                    <ColumnDefinition Width="100"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding ArtikelNr, StringFormat={}{0:000}}" Grid.Column="0"></TextBlock>
-                                <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis"></TextBlock>
-                                <TextBlock Text="{Binding Prijs, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2"></TextBlock>
-                                <TextBlock Text="{Binding prijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3"></TextBlock>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </TabItem>
-            <TabItem Header="Facturen">
-                <ListBox x:Name="tbFacturen" Width="600">
 
-                    <ListBox.Template>
-                        <ControlTemplate>
-                            <DockPanel LastChildFill="True">
-                                <Grid DockPanel.Dock="Top" Height="30" ShowGridLines="True">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80"></ColumnDefinition>
-                                        <ColumnDefinition Width="320"></ColumnDefinition>
-                                        <ColumnDefinition Width="100"></ColumnDefinition>
-                                        <ColumnDefinition Width="100"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0">Factuur Nr</Label>
-                                    <Label Grid.Column="1">Klant</Label>
-                                    <Label Grid.Column="2">Prijs Excl BTW</Label>
-                                    <Label Grid.Column="3">Prijs incl BTW</Label>
-                                </Grid>
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden">
-                                    <ItemsPresenter></ItemsPresenter>
-                                </ScrollViewer>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </ListBox.Template>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
+        <TabItem Name="tabItemKlanten" Header="Klanten">
+            <ListBox x:Name="tbKlanten">
+
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="True">
+                            <Grid DockPanel.Dock="Top" ShowGridLines="True"  Width="568" HorizontalAlignment="Left">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"></ColumnDefinition>
-                                    <ColumnDefinition Width="320"></ColumnDefinition>
-                                    <ColumnDefinition Width="100"></ColumnDefinition>
-                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                                    <ColumnDefinition Width="5*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding FactuurNr, StringFormat={}{0:000}}" Grid.Column="0"></TextBlock>
-                                <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis"></TextBlock>
-                                <TextBlock Text="{Binding PrijsExclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2"></TextBlock>
-                                <TextBlock Text="{Binding PrijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3"></TextBlock>
+                                <Label Grid.Column="0">Nr</Label>
+                                <Label Grid.Column="1">Klant</Label>
+                                <Label Grid.Column="2">Adres</Label>
+                                <Label Grid.Column="3">Woonplaats</Label>
                             </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </TabItem>
-        </TabControl>
+                            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                                <ItemsPresenter></ItemsPresenter>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="568" Margin="5 0 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="6*"></ColumnDefinition>
+                                <ColumnDefinition Width="6*"></ColumnDefinition>
+                                <ColumnDefinition Width="5*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding KlantNr, StringFormat={}{0:000}}" Grid.Column="0" FontFamily="Arial" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis" FontFamily="Arial" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding Adres}" Grid.Column="2" FontFamily="Arial" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding Woonplaats}" Grid.Column="3" FontFamily="Arial" FontSize="15"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </TabItem>
+        <TabItem Name="tabItemArtikels" Header="Artikels">
+            <ListBox x:Name="tbArtikels">
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="True">
+                            <Grid DockPanel.Dock="Top" ShowGridLines="True" Width="568" HorizontalAlignment="Left">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0">Nr</Label>
+                                <Label Grid.Column="1">Klant</Label>
+                                <Label Grid.Column="2">Prijs Excl BTW</Label>
+                                <Label Grid.Column="3">Prijs incl BTW</Label>
+                            </Grid>
+                            <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                                <ItemsPresenter></ItemsPresenter>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="568" Margin="5 0 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="5*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding ArtikelNr, StringFormat={}{0:000}}" Grid.Column="0" FontFamily="Arial" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis" FontFamily="Arial" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding Prijs, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2" FontFamily="Arial" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding prijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3" FontFamily="Arial" FontSize="15"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </TabItem>
+    </TabControl>
+    <Button Content="Verwijderen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" Width="120" Height="38" BorderBrush="{x:Null}" FontSize="25" FontFamily="./fonts/#Pompiere" Click="Button_Click">
+        <Button.Style>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#b6b357"/>
+                <Setter Property="Foreground" Value="#575b4f"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="#edeed8"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Button.Style>
+    </Button>
     </Grid>
 </Window>

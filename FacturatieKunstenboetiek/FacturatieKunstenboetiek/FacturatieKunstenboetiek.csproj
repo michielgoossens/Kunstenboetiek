@@ -147,6 +147,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MessageBoxManager.cs" />
     <Compile Include="Overal.cs" />
     <Page Include="AfbeeldingWindow.xaml">
       <SubType>Designer</SubType>
@@ -199,6 +200,7 @@
     <Compile Include="OverzichtWindow.xaml.cs">
       <DependentUpon>OverzichtWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Print.cs" />
     <Compile Include="PrintWindow.xaml.cs">
       <DependentUpon>PrintWindow.xaml</DependentUpon>
     </Compile>
@@ -223,6 +225,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Kunstenboetiek.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Resource Include="Fonts\Pompiere-Regular.ttf" />
     <None Include="Kunstenboetiek.edmx.diagram">
       <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
     </None>
@@ -252,6 +255,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <SplashScreen Include="Images\loading-screen.jpg" />
     <Content Include="Kunstenboetiek.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Kunstenboetiek.edmx</DependentUpon>

@@ -22,7 +22,6 @@ namespace FacturatieKunstenboetiek
         public OverzichtWindow()
         {
             InitializeComponent();
-            setUp();
         }
 
         public void setUp()
@@ -33,17 +32,19 @@ namespace FacturatieKunstenboetiek
         }
         public void setUpFacturen()
         {
+            tbFacturen.Items.Clear();
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                foreach (var f in dbEntities.Facturen)
+                foreach (var f in dbEntities.Facturen.Include("klant"))
                 {
-                    dbEntities.Klanten.Attach(f.Klant);
                     tbFacturen.Items.Add(f);
                 }
             }
+            
         }
         public void setUpArtikels()
         {
+            tbArtikels.Items.Clear();
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
                 foreach (var a in dbEntities.Artikels)
@@ -54,11 +55,57 @@ namespace FacturatieKunstenboetiek
         }
         public void setUpKlanten()
         {
+            tbKlanten.Items.Clear();
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
                 foreach (var k in dbEntities.Klanten)
                 {
                     tbKlanten.Items.Add(k);
+                }
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            for (int i = 2; i == 0; i--)
+            {
+                tabControlOverzicht.SelectedIndex = i;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabControlOverzicht.SelectedIndex == 0)
+            {
+                if (tbFacturen.SelectedItem == null)
+                {
+                    MessageBox.Show("Je moet eerst de factuur die je wilt verwijderen selecteren.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    //factuur verwijderen
+                }
+            }
+            if (tabControlOverzicht.SelectedIndex == 1)
+            {
+                if (tbKlanten.SelectedItem == null)
+                {
+                    MessageBox.Show("Je moet eerst de klant die je wilt verwijderen selecteren.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    //klant verwijderen
+                }
+            }
+            if (tabControlOverzicht.SelectedIndex == 2)
+            {
+                if (tbFacturen.SelectedItem == null)
+                {
+                    MessageBox.Show("Je moet eerst het artikel dat je wilt verwijderen selecteren.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    //artikel verwijderen
                 }
             }
         }

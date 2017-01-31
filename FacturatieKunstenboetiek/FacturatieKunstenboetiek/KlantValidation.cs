@@ -22,10 +22,15 @@ namespace FacturatieKunstenboetiek
             {
                 string result = null;
                 if (columnName == "Voornaam" || columnName == "Familienaam")
-                {
+                { 
                     if (string.IsNullOrEmpty(Voornaam) && string.IsNullOrEmpty(Familienaam))
+                    {
                         result = "Voornaam of familienaam is verplicht!";
-                    else
+                    }
+                }
+                if (columnName == "Voornaam")
+                {
+                    if (!string.IsNullOrEmpty(Voornaam))
                     {
                         if (Voornaam.Length > 50)
                             result = "Max. 50 tekens.";
@@ -39,7 +44,8 @@ namespace FacturatieKunstenboetiek
                             result = "Max. 50 tekens.";
                     }
                 }
-                if (columnName == "Straat")
+
+                    if (columnName == "Straat")
                 {
                     if (!string.IsNullOrEmpty(Straat))
                     {

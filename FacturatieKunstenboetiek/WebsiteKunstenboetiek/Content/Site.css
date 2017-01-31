@@ -6,7 +6,7 @@
 
 .wrapper {
     max-width: 1100px;
-    min-width: 450px;
+    min-width: 503px;
     margin: 0 auto;
     position: relative;
 }
@@ -30,12 +30,13 @@ header {
         header a h1 {
             font-family: 'Pompiere', cursive;
             font-weight: 400;
-            font-size: 4em;
+            font-size: 5em;
             color: #575b4f;
             text-decoration: none;
             position: relative;
             top: 50px;
-            right: 10px;
+            right: 0px;
+            width: 530px;
         }
 
     /*header nav*/
@@ -55,8 +56,8 @@ header {
                 -o-transition: all .1s ease-in;
                 -webkit-transition: all .1s ease-in;
                 transition: all .1s ease-in;
-                padding: 10px 25px;
-                font-size: 1.3em;
+                padding: 10px 23px;
+                font-size: 1.34em;
                 background-color: #b6b357;
                 font-family: 'Pompiere', cursive;
             }
@@ -68,49 +69,54 @@ header {
                 header nav ul li a.selected {
                     color: #edeed8;
                 }
-
-/*content*/
-.content {
-    clear: left;
+.hideButton {
+    display: none;
 }
 
-    .content a {
+/*content*/
+#content {
+    clear: left;
+    margin-top: 0;
+}
+
+    #content a {
         color: black;
+        margin-top: 0;
     }
 
     /*content article*/
-    .content article {
+    #content article {
         background-color: white;
         padding: 35px 12%;
         width: 76%;
-        border: 5px solid white;
+        border: 0px solid white;
         margin-top: 15px;
         overflow: auto;
         min-height: 450px;
         border-radius: 15px;
     }
 
-    .content article:last-child {
+    #content article:last-child {
         border-radius: 15px 15px 0 0;
     }
 
-        .content article h2 {
+        #content article h2 {
             font-size: 2.5em;
             font-family: 'Pompiere', cursive;
             margin-bottom: 25px;
         }
 
-        .content article p {
+        #content article p {
             margin-bottom: 12px;
             line-height: 1.1;
             font-size: 1em;
         }
 
-        .content article a:visited {
+        #content article a:visited {
             color: black;
         }
 
-        .content article a:hover {
+        #content article a:hover {
             color: black;
         }
 
@@ -176,7 +182,7 @@ header {
     }
 }
 
-.content #newArticles {
+#content #newArticles {
     padding: 0;
     width: 100%;
     height: 200px;
@@ -184,23 +190,23 @@ header {
     border-radius: 15px;
 }
 
-.content #newArticles h2 {
+#content #newArticles h2 {
     margin-bottom: 14px;
 }
 
-    .content #newArticles img {
+    #content #newArticles img {
         height: 100%;
         float: left;
     }
 
-    .content #newArticles section {
+    #content #newArticles section {
         position: relative;
         left: 20px;
         width: 90%;
         margin-top: 20px;
     }
 
-    .content #newArticles #prijs {
+    #content #newArticles #prijs {
         position: absolute;
         right: 15px;
         top: 15px;
@@ -214,20 +220,20 @@ header {
     }
 
 
-.content a#linkNewArticle {
+#content a#linkNewArticle {
     text-decoration: none;
 }
 
-.content #newArticles #artikelLinkInfo {
+#content #newArticles #artikelLinkInfo {
     text-decoration: underline;
 }
 
 /*Gallerij*/
-.content ul {
+#content ul {
     position: relative;
     right: 15px;
 }
-.content ul li {
+#content ul li {
     position: relative;
     width: 29%;
     float: left;
@@ -235,13 +241,13 @@ header {
     box-shadow: 3px 3px 10px #787c57;
 }
 
-    .content ul li img {
+    #content ul li img {
         border: 1px solid black;
         width: 94%;
         margin: 3%;
     }
 
-    .content ul li a {
+    #content ul li a {
         -moz-transition: all .2s ease-in;
         -o-transition: all .2s ease-in;
         -webkit-transition: all .2s ease-in;
@@ -255,19 +261,19 @@ header {
 
 
 
-        .content ul li a:hover {
+        #content ul li a:hover {
             background-color: #b6b357;
             color: #edeed8;
         }
 
-    .content ul li p {
+    #content ul li p {
         width: 100%;
         text-align: center;
         font-size: 1.2em;
         margin-bottom: 10px;
     }
 
-    .content ul li span {
+    #content ul li span {
         -moz-transition: all .15s ease-in;
         -o-transition: all .15s ease-in;
         -webkit-transition: all .15s ease-in;
@@ -286,42 +292,41 @@ header {
         box-shadow: 3px 3px 10px #787c57;
     }
 
-    .content ul li a:hover span {
+    #content ul li a:hover span {
         background-color: #b6b357;
     }
 
 
 /*Galerij artikel*/
 
-.content #linkTerug {
-    display: inline-block;
-    margin-top: 20px;
-    margin-left: 10px;
+#content #linkTerug {
+    display: block;
+    margin-bottom: 60px;
 }
-.content .gallery {
+#content .gallery {
     float: left;
     width: 243px;
 }
-.content .gallery img {
+#content .gallery img {
     border: 1px solid black;
     width: 238px;
     margin: 1px;
 }
-.content .gallery .thumbnails img {
+#content .gallery .thumbnails img {
     width: 73px;
     margin: 1px;
     vertical-align: top;
     cursor: pointer;
     cursor: hand;
 }
-.content #artikelInfo {
+#content #artikelInfo {
     margin-left: 265px;
     position: relative;
 }
-.content #artikelInfo p {
+#content #artikelInfo p {
     margin-bottom: 30px;
 }
-.content #artikelInfo #prijs {
+#content #artikelInfo #prijs {
         margin-top: 22px;
         margin-bottom: 0;
     width: 55px;
@@ -331,79 +336,79 @@ header {
     line-height:2.5;
     text-align: center;
 }
-.content ol li {
+#content ol li {
     margin-bottom: 10px;
 }
 
-.content ol li:nth-child(5)
+#content ol li:nth-child(5)
 {
     margin-top: 25px;
 }
-    .content ol li:nth-child(odd)
+    #content ol li:nth-child(odd)
     {
         float: left;
         width: 100px;
     }
-        .content ol li:nth-child(even)
+    #content ol li:nth-child(even)
     {
         margin-left: 100px;
     }
 
 /*Email form*/
-.content #message {
+#content #message {
     margin-bottom: 20px;
     font-weight: bold;
 }
 
-.content form {
+#content form {
     height: 400px;
     width: 800px;
     position: relative;
 }
 
-    .content form div {
+    #content form div {
         height: 50px;
         position: relative;
     }
 
-        .content form div label {
+        #content form div label {
             display: inline-block;
             width: 150px;
             vertical-align: top;
         }
 
-        .content form div:first-child {
+        #content form div:first-child {
             float: left;
             margin-right: 50px;
             z-index: 1;
         }
 
-        .content form div:nth-child(1) input {
+        #content form div:nth-child(1) input {
             width: 210px;
         }
 
-        .content form div:nth-child(2) input {
+        #content form div:nth-child(2) input {
             width: 210px;
         }
 
-        .content form div:nth-child(3) input {
-            width: 260px;
+        #content form div:nth-child(3) input {
+            width: 40%;
         }
 
-        .content form div:nth-child(4) input {
-            width: 260px;
+        #content form div:nth-child(4) input {
+            width: 40%;
         }
 
-        .content form div:nth-child(5) input {
-            width: 420px;
+        #content form div:nth-child(5) input {
+            width: 60%;
         }
 
-        .content form div:nth-child(6) textarea {
-            width: 635px;
+        #content form div:nth-child(6) textarea {
+            width: 79%;
             height: 150px;
         }
 
-    .content form input.button {
+    #content form input.button {
         position: absolute;
         bottom: -10px;
         right: 0;
@@ -452,10 +457,16 @@ footer section em {
 footer section p {
     line-height: 1.2;
 }
-.content .nonMinHeight {
+footer section p img {
+    display: none;
+}
+footer section:last-child p {
+    text-align: right;
+}
+#content .nonMinHeight {
     min-height: unset;
 }
 
-.content .nonRadiusBottom {
+#content .nonRadiusBottom {
     border-radius: 15px 15px 0 0;
 }

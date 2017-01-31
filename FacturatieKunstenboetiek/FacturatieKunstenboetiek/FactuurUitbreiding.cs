@@ -10,15 +10,22 @@ namespace FacturatieKunstenboetiek
     {
         public string zoekFactuur { get { return Naam + " " + FactuurNr.ToString().PadLeft(Overal.padLeft, '0'); } }
 
-        public string Naam { get
+        public string Naam
+        {
+            get
             {
-                if (Klant.Familienaam != null)
+                if (Klant.Voornaam != "")
                 {
-                    return Klant.Voornaam + " " + Klant.Familienaam;
+                    string naam = Klant.Voornaam;
+                    if (Klant.Familienaam != "")
+                    {
+                        naam+= " " + Klant.Familienaam;
+                    }
+                    return naam;
                 }
                 else
                 {
-                    return Klant.Voornaam;
+                    return Klant.Familienaam;
                 }
             }
         }

@@ -3,26 +3,28 @@
 @{
     ViewBag.Title = "Kunstenboetiek - " + Model.Naam;
 }
-<a id="linkTerug" href="/Galerij/@ViewBag.Link">Naar @{
-    string naar;
-    if (Model.Verkocht == false)
-    {
-        if (Model.Soort.Substring(Model.Soort.Length - 4).ToLower() == "urne")
-        {
-            naar = Model.Soort.ToLower() + 'n';
-        }
-        else
-        {
-            naar = Model.Soort.ToLower();
-        }
-    }
-    else
-    {
-        naar = "Geschiedenis";
-    }
-    @naar;
-}</a>
 <article>
+    <a id="linkTerug" href="/Galerij/@ViewBag.Link">
+        Naar @{
+            string naar;
+            if (Model.Verkocht == false)
+            {
+                if (Model.Soort.Substring(Model.Soort.Length - 4).ToLower() == "urne")
+                {
+                    naar = Model.Soort.ToLower() + 'n';
+                }
+                else
+                {
+                    naar = Model.Soort.ToLower();
+                }
+            }
+            else
+            {
+                naar = "Geschiedenis";
+            }
+            @naar;
+        }
+    </a>
     <div class="gallery">
         <img id="preview" src="@Model.ArtikelAfbeeldingen.LastOrDefault().AfbeeldingLink" alt="@Model.Naam voorbeeld" />
         <aside class="thumbnails">
