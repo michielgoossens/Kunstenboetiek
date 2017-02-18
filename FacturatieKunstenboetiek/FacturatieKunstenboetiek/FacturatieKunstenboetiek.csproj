@@ -100,19 +100,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AfbeeldingWindow.xaml.cs">
-      <DependentUpon>AfbeeldingWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Artikel.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
     <Compile Include="ArtikelAfbeelding.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
-    <Compile Include="ArtikelAfbeeldingUitbreiding.cs" />
-    <Compile Include="ArtikelUitbreiding.cs" />
-    <Compile Include="ArtikelValidation.cs" />
-    <Compile Include="ArtikelWindow.xaml.cs">
+    <Compile Include="Artikel\ArtikelAfbeeldingUitbreiding.cs" />
+    <Compile Include="Artikel\ArtikelUitbreiding.cs" />
+    <Compile Include="Artikel\ArtikelValidation.cs" />
+    <Compile Include="Artikel\ArtikelWindow.xaml.cs">
       <DependentUpon>ArtikelWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Factuur.cs">
@@ -121,17 +118,17 @@
     <Compile Include="FactuurRegel.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
-    <Compile Include="FactuurUitbreiding.cs" />
-    <Compile Include="FactuurValidation.cs" />
-    <Compile Include="FactuurWindow.xaml.cs">
+    <Compile Include="Factuur\FactuurUitbreiding.cs" />
+    <Compile Include="Factuur\FactuurValidation.cs" />
+    <Compile Include="Factuur\FactuurWindow.xaml.cs">
       <DependentUpon>FactuurWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Ftp.cs" />
+    <Compile Include="Resources\Ftp.cs" />
     <Compile Include="Klant.cs">
       <DependentUpon>Kunstenboetiek.tt</DependentUpon>
     </Compile>
-    <Compile Include="KlantUitbreiding.cs" />
-    <Compile Include="KlantValidation.cs" />
+    <Compile Include="Klant\KlantUitbreiding.cs" />
+    <Compile Include="Klant\KlantValidation.cs" />
     <Compile Include="Kunstenboetiek.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -147,21 +144,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
     </Compile>
-    <Compile Include="MessageBoxManager.cs" />
-    <Compile Include="Overal.cs" />
-    <Page Include="AfbeeldingWindow.xaml">
+    <Compile Include="Resources\MessageBoxManager.cs" />
+    <Compile Include="Resources\Overal.cs" />
+    <Page Include="Artikel\ArtikelWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ArtikelWindow.xaml">
+    <Page Include="Factuur\FactuurWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FactuurWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="KlantWindow.xaml">
+    <Page Include="Klant\KlantWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,7 +166,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="KlantWindow.xaml.cs">
+    <Compile Include="Klant\KlantWindow.xaml.cs">
       <DependentUpon>KlantWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
@@ -192,6 +185,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\StandaardStijlen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OpenWindow.xaml.cs">
@@ -200,7 +197,7 @@
     <Compile Include="OverzichtWindow.xaml.cs">
       <DependentUpon>OverzichtWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Print.cs" />
+    <Compile Include="Resources\Print.cs" />
     <Compile Include="PrintWindow.xaml.cs">
       <DependentUpon>PrintWindow.xaml</DependentUpon>
     </Compile>

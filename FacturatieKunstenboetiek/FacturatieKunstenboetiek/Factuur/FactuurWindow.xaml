@@ -7,31 +7,6 @@
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         mc:Ignorable="d" ResizeMode="NoResize"
         Title="FactuurWindow" Height="500" Width="560" Closed="Window_Closed" Closing="Window_Closing">
-    <Window.Resources>
-        <Style TargetType="{x:Type Label}">
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-        </Style>
-        <Style x:Key="Validation" TargetType="{x:Type Control}">
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="Validation.ErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <DockPanel>
-                            <StackPanel DockPanel.Dock="Top">
-                                <TextBlock Foreground="Red" Text="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" HorizontalAlignment="Right" Margin="-85 0 0 2"></TextBlock>
-                            </StackPanel>
-                            <AdornedElementPlaceholder Name="customAdorner">
-                                <Border BorderBrush="Red" BorderThickness="1" Width="{Binding ElementName=customAdorner, Mode=OneWay, Path=AdornedElement.ActualWidth}" HorizontalAlignment="Left"/>
-                            </AdornedElementPlaceholder>
-                        </DockPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
     <DockPanel>
         <Menu Name="menuHoofdmenu" DockPanel.Dock="Top">
             <MenuItem Name="menuItemNieuw" Header="Nieuw" Command="New"/>

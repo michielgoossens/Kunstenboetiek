@@ -73,7 +73,7 @@ namespace FacturatieKunstenboetiek
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonVerwijderen_Click(object sender, RoutedEventArgs e)
         {
             if (tabControlOverzicht.SelectedIndex == 0)
             {

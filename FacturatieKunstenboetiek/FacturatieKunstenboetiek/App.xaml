@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:FacturatieKunstenboetiek"
              Startup="Application_Startup">
     <Application.Resources>
-         
+        <ResourceDictionary Source="Resources/StandaardStijlen.xaml"/>
     </Application.Resources>
 </Application>

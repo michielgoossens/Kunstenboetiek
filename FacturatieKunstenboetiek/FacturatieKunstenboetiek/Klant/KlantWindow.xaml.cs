@@ -171,7 +171,7 @@ namespace FacturatieKunstenboetiek
 
         private void menuItemOpen_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Ben je zeker dat je een klant wilt openen? De huidige klant word niet opgeslagen.", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (MessageBox.Show("Ben je zeker dat je een klant wilt openen? De huidige klant word niet opgeslagen.", "Close Application", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 OpenWindow window = new OpenWindow("klant");
             window.ShowDialog();

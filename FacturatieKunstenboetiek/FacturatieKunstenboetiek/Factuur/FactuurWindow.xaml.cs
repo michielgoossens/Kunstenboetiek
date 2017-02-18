@@ -212,10 +212,10 @@ namespace FacturatieKunstenboetiek
                 {
                     Open();
                 }
-                else if (MessageBox.Show("Ben je zeker dat je een factuur wilt openen? De huidige factuur is nog niet opgeslagen.", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
-                {
-                    Open();
-                }
+            }
+            else if (MessageBox.Show("Ben je zeker dat je een factuur wilt openen? De huidige factuur is nog niet opgeslagen.", "Nieuw", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                Open();
             }
         }
         private void Open()

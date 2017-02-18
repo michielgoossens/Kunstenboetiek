@@ -6,66 +6,7 @@
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="OverzichtWindow" Height="450" Width="625" Background="#edeed8" WindowStartupLocation="Manual" Left="25" Top="25" WindowStyle="None">
-    <Window.Resources>
-        <Style TargetType="{x:Type TabItem}">
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="FontFamily" Value="./fonts/#Pompiere"/>
-            <Setter Property="Foreground" Value="#575b4f"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Border x:Name="borderTab" Background="#b6b357" Margin="2" Padding="5">
-                            <ContentPresenter ContentSource="Header"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected"
-                                     Value="True">
-                                <Setter TargetName="borderTab" Property="Margin"
-                                        Value="0" />
-                                <Setter Property="Foreground"
-                                        Value="#edeed8" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-                                <Setter Property="Foreground"
-                                        Value="#edeed8" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="{x:Type Label}">
-            <Setter Property="Background" Value="#b6b357"/>
-            <Setter Property="Foreground" Value="#575b4f"/>
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="15"/>
-        </Style>
-        <Style TargetType="{x:Type ListBoxItem}">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="#575b4f"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border x:Name="borderListBoxItem" Background="{TemplateBinding Background}" Padding="0 5">
-                            <ContentPresenter/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="borderListBoxItem" Property="BorderThickness" Value="2"/>
-                                <Setter TargetName="borderListBoxItem" Property="BorderBrush" Value="#b6b357"/>
-                                <Setter Property="Background" Value="#d9d796"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#d9d796"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
+        Title="OverzichtWindow" Height="450" Width="625" WindowStartupLocation="Manual" Left="25" Top="25" WindowStyle="None">
     <Grid Margin="10">
         <TabControl Name="tabControlOverzicht">
         <TabItem Name="tabItemFacturen" Header="Facturen">
@@ -195,27 +136,7 @@
             </ListBox>
         </TabItem>
     </TabControl>
-    <Button Content="Verwijderen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" Width="120" Height="38" BorderBrush="{x:Null}" FontSize="25" FontFamily="./fonts/#Pompiere" Click="Button_Click">
-        <Button.Style>
-            <Style TargetType="{x:Type Button}">
-                <Setter Property="Background" Value="#b6b357"/>
-                <Setter Property="Foreground" Value="#575b4f"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Border Background="{TemplateBinding Background}">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Foreground" Value="#edeed8"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </Button.Style>
-    </Button>
+        <Button Content="Verwijderen" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ButtonVerwijderen_Click">
+        </Button>
     </Grid>
 </Window>

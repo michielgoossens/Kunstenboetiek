@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Users\Michiel\Dropbox\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\App.xaml
-8940107306
+8-24374436
 2-408570997
-35-312037469
+34464782263
 23-981509584
-AfbeeldingWindow.xaml;ArtikelWindow.xaml;FactuurWindow.xaml;KlantWindow.xaml;MainWindow.xaml;OpenWindow.xaml;OverzichtWindow.xaml;PrintWindow.xaml;
+Artikel\ArtikelWindow.xaml;Factuur\FactuurWindow.xaml;Klant\KlantWindow.xaml;MainWindow.xaml;OpenWindow.xaml;OverzichtWindow.xaml;PrintWindow.xaml;Resources\StandaardStijlen.xaml;
 images\loading-screen.jpg
-True
+False
 
