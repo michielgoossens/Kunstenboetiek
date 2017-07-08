@@ -56,12 +56,12 @@ namespace WebsiteKunstenboetiek.Controllers
         }
         public ActionResult Geschiedenis()
         {
-            DateTime oneYearAgo = DateTime.Now.AddYears(-1);
             var geschiedenis = new List<Artikel>();
             using (var db = new KunstenboetiekDbEntities())
             {
+                DateTime HalfYearAgo = DateTime.Now.AddMonths(-6);
                 geschiedenis = (from a in db.Artikels.Include("ArtikelAfbeeldingen")
-                                where a.ArtikelAfbeeldingen.Count > 0 && a.Verkocht == true && a.Datum > oneYearAgo
+                                where a.ArtikelAfbeeldingen.Count > 0 && a.Verkocht == true && a.Datum > HalfYearAgo
                                 select a).ToList();
             }
             return View(geschiedenis);
@@ -75,21 +75,24 @@ namespace WebsiteKunstenboetiek.Controllers
                            where a.ArtikelNr == artikelNr
                            select a).FirstOrDefault();
             }
-            string[] words = artikel.Soort.Split(' ');
-            foreach (string word in words)
+            if (artikel.Soort != null)
             {
-                string deel = word;
-                if (artikel.Verkocht == false)
-                { 
-                if (deel.ToLower() == "urne")
+                string[] words = artikel.Soort.Split(' ');
+                foreach (string word in words)
                 {
-                    deel += "n";
-                }
-                ViewBag.Link += deel.First().ToString().ToUpper() + deel.Substring(1);
-                }
-                else
-                {
-                    ViewBag.Link = "Geschiedenis";
+                    string deel = word;
+                    if (artikel.Verkocht == false)
+                    { 
+                    if (deel.ToLower() == "urne")
+                    {
+                        deel += "n";
+                    }
+                    ViewBag.Link += deel.First().ToString().ToUpper() + deel.Substring(1);
+                    }
+                    else
+                    {
+                        ViewBag.Link = "Geschiedenis";
+                    }
                 }
             }
             return View(artikel);

@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="OverzichtWindow" Height="450" Width="625" WindowStartupLocation="Manual" Left="25" Top="25" WindowStyle="None">
+        Title="OverzichtWindow" Height="450" Width="625" WindowStartupLocation="Manual" Left="25" Top="25" WindowStyle="None" Background="#edeed8">
     <Grid Margin="10">
-        <TabControl Name="tabControlOverzicht">
-        <TabItem Name="tabItemFacturen" Header="Facturen">
+        <TabControl Name="tabControlOverzicht" >
+        <TabItem Name="tabItemFacturen" Header="Facturen" Height="22" VerticalAlignment="Top">
             <ListBox x:Name="tbFacturen">
                 <ListBox.Template>
                     <ControlTemplate>
@@ -136,7 +136,5 @@
             </ListBox>
         </TabItem>
     </TabControl>
-        <Button Content="Verwijderen" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ButtonVerwijderen_Click">
-        </Button>
     </Grid>
 </Window>

@@ -5,15 +5,15 @@
       <PropertyRef Name="ArtikelNr" />
     </Key>
     <Property Name="ArtikelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Info" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="Soort" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="Kleur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Prijs" Type="Double" Nullable="false" />
     <Property Name="Verkocht" Type="Boolean" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="ArtikelAfbeeldingen" Relationship="Self.FK_ArtikelsAfbeeldingen_Artikels" FromRole="Artikels" ToRole="ArtikelsAfbeeldingen" />
     <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="Artikels" ToRole="FactuurRegels" />
-    <Property Name="Datum" Type="DateTime" Precision="0" />
   </EntityType>
   <EntityType Name="ArtikelAfbeelding">
     <Key>
@@ -21,7 +21,7 @@
     </Key>
     <Property Name="AfbeeldingNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ArtikelNr" Type="Int32" Nullable="false" />
-    <Property Name="AfbeeldingLink" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AfbeeldingLink" Type="String" MaxLength="150" FixedLength="true" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Artikel" Relationship="Self.FK_ArtikelsAfbeeldingen_Artikels" FromRole="ArtikelsAfbeeldingen" ToRole="Artikels" />
   </EntityType>
   <EntityType Name="Factuur">
@@ -30,7 +30,7 @@
     </Key>
     <Property Name="FactuurNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="KlantNr" Type="Int32" Nullable="false" />
-    <Property Name="Datum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Datum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Klant" Relationship="Self.FK_Facturen_Klanten" FromRole="Facturen" ToRole="Klanten" />
     <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Facturen" FromRole="Facturen" ToRole="FactuurRegels" />
   </EntityType>
@@ -56,8 +56,8 @@
     <Property Name="Postcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <Property Name="Gemeente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Land" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="Email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
     <Property Name="Telefoon" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
     <Property Name="BtwNr" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Facturen" Relationship="Self.FK_Facturen_Klanten" FromRole="Klanten" ToRole="Facturen" />
   </EntityType>

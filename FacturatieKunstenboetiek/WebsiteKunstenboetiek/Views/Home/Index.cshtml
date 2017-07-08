@@ -12,17 +12,19 @@
                 <section>
                     <h2>@artikel.Naam</h2>
                     @{ 
-                        int lengte;
-                        if (artikel.Info.Length >= 250)
+                        if (artikel.Info != null)
                         {
-                            lengte = 250;
+                            int lengte;
+                            if (artikel.Info.Length >= 250)
+                            {
+                                lengte = 250;
+                            }
+                            else
+                            {
+                                lengte = artikel.Info.Length;
+                            }
+                            <p>@artikel.Info.Substring(0, lengte)...</p>
                         }
-                        else
-                        {
-                            lengte = artikel.Info.Length;
-                        }
-                    
-                    <p>@artikel.Info.Substring(0, lengte)...</p>
                     <p id="artikelLinkInfo">Meer informatie hier</p>
                     }
                 </section>
@@ -37,7 +39,7 @@
     <a class="next" onclick="plusSlides(1)">&#10095;</a>
 </div>
 
-<article class="nonMinHeight nonMinHeight nonRadiusBottom">
+<article class="nonMinHeight nonRadiusBottom">
     <h2>Welkom</h2>
 
     <p>Altijd al heeft de mens kunstwerken gemaakt. Ze geven een meerwaarde aan het leven. Creatief zijn is ook voor mij een drijfveer. Ik maak mijn beelden in klei en zoek mijn inspiratie in de natuur.</p>

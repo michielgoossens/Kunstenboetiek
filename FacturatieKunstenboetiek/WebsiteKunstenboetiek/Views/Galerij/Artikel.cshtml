@@ -9,13 +9,20 @@
             string naar;
             if (Model.Verkocht == false)
             {
-                if (Model.Soort.Substring(Model.Soort.Length - 4).ToLower() == "urne")
+                if (Model.Soort != null)
                 {
-                    naar = Model.Soort.ToLower() + 'n';
+                    if (Model.Soort.Substring(Model.Soort.Length - 4).ToLower() == "urne")
+                    {
+                        naar = Model.Soort.ToLower() + 'n';
+                    }
+                    else
+                    {
+                        naar = Model.Soort.ToLower();
+                    }
                 }
                 else
                 {
-                    naar = Model.Soort.ToLower();
+                    naar = "Andere Werken";
                 }
             }
             else
@@ -39,16 +46,36 @@
     </div>
     <section id="artikelInfo">
         <h2>@Model.Naam</h2>
-        <p>@Model.Info</p>
+        @if (Model.Info != null)
+        { 
+            <p>@Model.Info</p>
+        }
+        else
+        {
+            <p>Er is geen info beschikbaar.</p>
+        }
         <ol>
+   
             <li>Soort:</li>
-            <li>@{
-                if (Model.Soort.Length > 12 && Model.Soort.Substring(0, 12) == "Geschiedenis")
-                {
-                    Model.Soort = Model.Soort.Substring(13);
+            <li>
+                @{
+                    if (Model.Soort != null)
+                    {
+                        if (Model.Soort.Length > 12 && Model.Soort.Substring(0, 12) == "Geschiedenis")
+                        {
+                            Model.Soort = Model.Soort.Substring(13);
+                        }
+                        @Model.Soort
+
+                    }
+                    else
+                    {
+                        string geenSoort = "Er is geen soort beschikbaar.";
+                        @geenSoort
+                    }
                 }
-                @Model.Soort;
-            }</li>
+            </li>
+
             <li>Kleur:</li>
             <li>
                 @{

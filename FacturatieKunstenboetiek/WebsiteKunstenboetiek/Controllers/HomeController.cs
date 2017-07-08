@@ -23,7 +23,7 @@ namespace WebsiteKunstenboetiek.Controllers
             }
                 return View(newArticles);
         }
-        public ActionResult Info()
+        public ActionResult Nieuws()
         {
             return View();
         }
@@ -43,15 +43,15 @@ namespace WebsiteKunstenboetiek.Controllers
                 MailMessage mail = new MailMessage();
                 SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
 
-                mail.From = new MailAddress("michielgoossens1409@gmail.com");
-                mail.To.Add("michielgoossens1409@gmail.com");
+                mail.From = new MailAddress("contactkunstenboetiek@gmail.com", "Contact - Kunstenboetiek");
+                mail.To.Add("kunstenboetiek@hotmail.com");
                 mail.Subject = emailForm.Onderwerp;
 
                 string body = emailForm.Voornaam + " " + emailForm.Familienaam + "\n" + emailForm.Email + "\n" + emailForm.TelNr + "\n\n" + "Bericht:\n" + emailForm.Bericht;
                 mail.Body = body;
 
                 smtpServer.Port = 587;
-                smtpServer.Credentials = new System.Net.NetworkCredential("michielgoossens1409@gmail.com", "wim123hlG000");
+                smtpServer.Credentials = new System.Net.NetworkCredential("contactkunstenboetiek@gmail.com", "KunstenBoetiek..123");
                 smtpServer.EnableSsl = true;
 
                 smtpServer.Send(mail);

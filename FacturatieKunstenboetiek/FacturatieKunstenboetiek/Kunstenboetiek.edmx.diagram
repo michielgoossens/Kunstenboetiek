@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bfe223a9db7d4f97b22e5f84177db83b" Name="Diagram1">
-        <EntityTypeShape EntityType="KunstenboetiekModel.Artikel" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+      <Diagram DiagramId="5b5f179b3f264f10ac32d3c5e987cce4" Name="Diagram1">
+        <EntityTypeShape EntityType="KunstenboetiekModel.Artikel" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="KunstenboetiekModel.ArtikelAfbeelding" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KunstenboetiekModel.Factuur" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KunstenboetiekModel.Factuur" Width="1.5" PointX="6.875" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="KunstenboetiekModel.FactuurRegel" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KunstenboetiekModel.Klant" Width="1.5" PointX="1.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KunstenboetiekModel.Klant" Width="1.5" PointX="9" PointY="2.375" IsExpanded="true" />
         <AssociationConnector Association="KunstenboetiekModel.FK_ArtikelsAfbeeldingen_Artikels" ManuallyRouted="false" />
         <AssociationConnector Association="KunstenboetiekModel.FK_FactuurRegels_Artikels" ManuallyRouted="false" />
         <AssociationConnector Association="KunstenboetiekModel.FK_Facturen_Klanten" ManuallyRouted="false" />

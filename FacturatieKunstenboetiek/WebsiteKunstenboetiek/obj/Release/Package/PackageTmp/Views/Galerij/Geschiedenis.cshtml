@@ -1,0 +1,27 @@
+﻿@model List<WebsiteKunstenboetiek.Models.Artikel>
+
+@{
+    ViewBag.Title = "Geschiedenis";
+}
+
+<article>
+    <h2>Geschiedenis</h2>
+    @if (Model.Any())
+    {
+        <ul>
+            @foreach (var artikel in Model)
+            {
+                <li>
+                    <a href="Artikel?artikelNr=@artikel.ArtikelNr">
+                        <img src="@artikel.ArtikelAfbeeldingen.LastOrDefault().AfbeeldingLink" alt="@artikel.Naam voorbeeldafbeelding" />
+                        <p>@artikel.Naam</p>
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Er zijn geen recent verkochte werken.</p>
+    }
+</article>

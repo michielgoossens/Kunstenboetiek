@@ -1,0 +1,86 @@
+﻿@model IEnumerable<WebsiteKunstenboetiek.Models.Artikel>
+@{
+    ViewBag.Title = "Kunstenboetiek - Home pagina";
+}
+
+<div class="slideshow-container">
+    @foreach (var artikel in Model)
+    {
+        <a id="linkNewArticle" href="/Galerij/Artikel?artikelNr=@artikel.ArtikelNr">
+            <article id="newArticles" class="mySlides fade nonMinHeight">
+                <img src="@artikel.ArtikelAfbeeldingen.LastOrDefault().AfbeeldingLink" alt="@artikel.Naam voorbeeldafbeelding" />
+                <section>
+                    <h2>@artikel.Naam</h2>
+                    @{ 
+                        if (artikel.Info != null)
+                        {
+                            int lengte;
+                            if (artikel.Info.Length >= 250)
+                            {
+                                lengte = 250;
+                            }
+                            else
+                            {
+                                lengte = artikel.Info.Length;
+                            }
+                            <p>@artikel.Info.Substring(0, lengte)...</p>
+                        }
+                    <p id="artikelLinkInfo">Meer informatie hier</p>
+                    }
+                </section>
+                @if (artikel.Prijs > 0)
+                {
+                    <span id="prijs">@(artikel.Prijs * 1.06) €</span>
+                }
+            </article>
+        </a>
+    }
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+
+<article class="nonMinHeight nonRadiusBottom">
+    <h2>Welkom</h2>
+
+    <p>Altijd al heeft de mens kunstwerken gemaakt. Ze geven een meerwaarde aan het leven. Creatief zijn is ook voor mij een drijfveer. Ik maak mijn beelden in klei en zoek mijn inspiratie in de natuur.</p>
+
+    <p>Uit deze werken is mijn 'Kunstenboetiek' ontstaan. Hierin bied ik mijn creaties aan omdat het voor mij belangrijk is deze gave te kunnen delen met anderen.</p>
+
+    <p>Mijn oeuvre bevat sculpturen met een karakteristieke vormgeving. ze hebben een uitgesproken expressiviteit met dikwijls een poëtische inslag. Er zijn de decoratieve werken voor zowel binnen als buiten.</p>
+
+    <p>Een belangrijke kunstvorm waarop ik mij toeleg zijn de unieke urnen. Deze zijn steeds héél persoonlijk, met een diepere betekenis, gebaseerd op het leven van de overledene. Ook voor dieren maak ik gepaste urnen naar wens van het baasje.</p>
+</article>
+<script>
+    var slideIndex = 0;
+    var clicked = false;
+    showSlides();
+    function plusSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex += n;
+        if (slideIndex < 1) { slideIndex = slides.length }
+        if (slideIndex > slides.length) { slideIndex = 1 }
+        slides[slideIndex - 1].style.display = "block";
+        clicked = true;
+    }
+    function showSlides() {
+        if (clicked) {
+            clicked = false;
+            setTimeout(showSlides, 5000);
+        }
+        else {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 5000);
+        }
+    }
+</script>
