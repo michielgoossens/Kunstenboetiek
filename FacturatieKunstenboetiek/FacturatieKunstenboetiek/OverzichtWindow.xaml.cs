@@ -72,42 +72,5 @@ namespace FacturatieKunstenboetiek
                 tabControlOverzicht.SelectedIndex = i;
             }
         }
-
-        private void ButtonVerwijderen_Click(object sender, RoutedEventArgs e)
-        {
-            if (tabControlOverzicht.SelectedIndex == 0)
-            {
-                if (tbFacturen.SelectedItem == null)
-                {
-                    MessageBox.Show("Je moet eerst de factuur die je wilt verwijderen selecteren.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    //factuur verwijderen
-                }
-            }
-            if (tabControlOverzicht.SelectedIndex == 1)
-            {
-                if (tbKlanten.SelectedItem == null)
-                {
-                    MessageBox.Show("Je moet eerst de klant die je wilt verwijderen selecteren.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    //klant verwijderen
-                }
-            }
-            if (tabControlOverzicht.SelectedIndex == 2)
-            {
-                if (tbFacturen.SelectedItem == null)
-                {
-                    MessageBox.Show("Je moet eerst het artikel dat je wilt verwijderen selecteren.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    //artikel verwijderen
-                }
-            }
-        }
     }
 }

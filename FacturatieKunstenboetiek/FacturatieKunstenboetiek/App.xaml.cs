@@ -26,8 +26,30 @@ namespace FacturatieKunstenboetiek
 
             Overal.overzichtWindow.setUp();
 
+            removeOldPictures();
+
             MainWindow main = new MainWindow();
             main.Show();
+        }
+
+        private void removeOldPictures()
+        {
+            /*
+            using (var dbEntities = new KunstenboetiekDbEntities())
+            {
+                foreach (Artikel a in dbEntities.Artikels.Include("artikelAfbeeldingen"))
+                {
+                    if (a.Datum < DateTime.Now.AddYears(-2))
+                    {
+                        foreach (ArtikelAfbeelding aA in a.ArtikelAfbeeldingen)
+                        {
+                            //copy pictures to other location and remove from db
+                        }
+                        
+                    }
+                }
+            }
+            */
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="Kunstenboetiek - Klanten" Height="450" Width="560" Closed="Window_Closed" Closing="Window_Closing">
+        Title="Kunstenboetiek - Klanten" Height="450" Width="560" Closed="Window_Closed" Closing="Window_Closing" Icon="..\Images\logo.ico">
     <DockPanel>
         <Menu Name="menuHoofdmenu" DockPanel.Dock="Top">
             <MenuItem Name="menuItemNieuw" Header="Nieuw" Command="New"/>

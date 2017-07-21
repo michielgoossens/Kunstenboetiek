@@ -12,7 +12,7 @@ using System.Windows.Media;
 
 namespace FacturatieKunstenboetiek
 {
-    public class Overal
+    public static class Overal
     {
         public static bool? Openen;
         public static Klant teOpenenKlant;

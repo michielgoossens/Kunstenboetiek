@@ -20,7 +20,7 @@
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\michielg\Downloads\KunstenboetiekFacturatie%28V1.0%29\</PublishUrl>
+    <PublishUrl>D:\Users\michg\Dropbox\Kunstenboetiek\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -30,6 +30,9 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>nl-BE</TargetCulture>
+    <ProductName>Kunstenboetiek</ProductName>
+    <PublisherName>MKG Development</PublisherName>
     <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
@@ -65,7 +68,14 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\program.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -199,8 +209,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\StandaardStijlen.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -270,6 +280,8 @@
     <SplashScreen Include="Images\loading-screen.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\logo.ico" />
+    <Resource Include="Images\program.ico" />
     <Content Include="Kunstenboetiek.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
