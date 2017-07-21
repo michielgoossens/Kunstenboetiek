@@ -23,12 +23,12 @@ namespace WebsiteKunstenboetiek.Models
     
         public int ArtikelNr { get; set; }
         public string Naam { get; set; }
-        public string Info { get; set; }
+        public double Prijs { get; set; }
         public string Soort { get; set; }
         public string Kleur { get; set; }
-        public double Prijs { get; set; }
         public Nullable<bool> Verkocht { get; set; }
-        public System.DateTime Datum { get; set; }
+        public string Info { get; set; }
+        public Nullable<System.DateTime> Datum { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArtikelAfbeelding> ArtikelAfbeeldingen { get; set; }

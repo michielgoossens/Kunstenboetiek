@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="FactuurWindow" Height="500" Width="560" Closed="Window_Closed" Closing="Window_Closing" Background="#edeed8">
+        Title="FactuurWindow" Height="500" Width="580" Closed="Window_Closed" Closing="Window_Closing">
     <DockPanel>
         <Menu Name="menuHoofdmenu" DockPanel.Dock="Top">
             <MenuItem Name="menuItemNieuw" Header="Nieuw" Command="New"/>
@@ -40,22 +40,22 @@
 
             <Label Target="{Binding ElementName=tbKlant}" Content="Klant:" Grid.Column="0" Grid.Row="1"/>
             <toolkit:AutoCompleteBox Style="{StaticResource Validation}" x:Name="tbKlant" Grid.Row="1" Grid.Column="1" Validation.Error="Validation_Error"
-                 SelectedItem="{Binding UpdateSourceTrigger=PropertyChanged, Path=Klant, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Width="190"/>
+                 SelectedItem="{Binding UpdateSourceTrigger=PropertyChanged, Path=Klant, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Width="190" TextChanged="tbKlant_TextChanged"/>
 
             <Label Target="{Binding ElementName=tbDatum}" Content="Datum:" Grid.Column="2" Grid.Row="1"/>
             <TextBox Style="{StaticResource Validation}" x:Name="tbDatum" Grid.Row="1" Grid.Column="3" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Datum,
-                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="100"/>
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="110" TextChanged="tbDatum_TextChanged"/>
 
             <Label Target="{Binding ElementName=tbArtikel}" Content="Artikel:" Grid.Column="0" Grid.Row="2"/>
             <toolkit:AutoCompleteBox Style="{StaticResource Validation}" x:Name="tbArtikel" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Artikel,
-                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="390"/>
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Width="400"/>
             <StackPanel Grid.Row="3" Grid.Column="0" Margin="0 25">
                 <Button x:Name="buttonToevoegen" Content="Toevoegen ->" Margin="5" Click="buttonToevoegen_Click" Padding="5"/>
                 <Button x:Name="buttonVerwijderen" Content="&lt;- Verwijderen" Margin="5" Click="buttonVerwijderen_Click" Padding="5"/>
             </StackPanel>
-            <ListBox x:Name="tbFactuurRegels" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Width="400" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1" Margin="5,0,0,0">
+            <ListBox x:Name="tbFactuurRegels" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Width="400" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,65" Grid.RowSpan="2">
 
                 <ListBox.Template>
                     <ControlTemplate>
@@ -63,16 +63,18 @@
                             <Grid DockPanel.Dock="Top" Height="30" ShowGridLines="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30"></ColumnDefinition>
-                                    <ColumnDefinition Width="190"></ColumnDefinition>
+                                    <ColumnDefinition Width="170"></ColumnDefinition>
                                     <ColumnDefinition Width="85"></ColumnDefinition>
-                                    <ColumnDefinition Width="80"></ColumnDefinition>
+                                    <ColumnDefinition Width="85"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0">Nr</Label>
                                 <Label Grid.Column="1">Naam</Label>
                                 <Label Grid.Column="2">Prijs Excl BTW</Label>
                                 <Label Grid.Column="3">Prijs incl BTW</Label>
                             </Grid>
-                            <ItemsPresenter></ItemsPresenter>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsPresenter></ItemsPresenter>
+                            </ScrollViewer>
                         </DockPanel>
                     </ControlTemplate>
                 </ListBox.Template>
@@ -81,9 +83,9 @@
                         <Grid Margin="0,2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="30"></ColumnDefinition>
-                                <ColumnDefinition Width="190"></ColumnDefinition>
+                                <ColumnDefinition Width="170"></ColumnDefinition>
                                 <ColumnDefinition Width="85"></ColumnDefinition>
-                                <ColumnDefinition Width="80"></ColumnDefinition>
+                                <ColumnDefinition Width="85"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding ArtikelNr, StringFormat={}{0:000}}" Grid.Column="0"></TextBlock>
                             <TextBlock Text="{Binding Artikel.Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis"></TextBlock>

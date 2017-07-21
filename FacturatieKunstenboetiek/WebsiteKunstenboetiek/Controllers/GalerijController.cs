@@ -56,12 +56,12 @@ namespace WebsiteKunstenboetiek.Controllers
         }
         public ActionResult Geschiedenis()
         {
+            DateTime oneYearAgo = DateTime.Now.AddYears(-1);
             var geschiedenis = new List<Artikel>();
             using (var db = new KunstenboetiekDbEntities())
             {
-                DateTime HalfYearAgo = DateTime.Now.AddMonths(-6);
                 geschiedenis = (from a in db.Artikels.Include("ArtikelAfbeeldingen")
-                                where a.ArtikelAfbeeldingen.Count > 0 && a.Verkocht == true && a.Datum > HalfYearAgo
+                                where a.ArtikelAfbeeldingen.Count > 0 && a.Verkocht == true && a.Datum > oneYearAgo
                                 select a).ToList();
             }
             return View(geschiedenis);
@@ -75,24 +75,21 @@ namespace WebsiteKunstenboetiek.Controllers
                            where a.ArtikelNr == artikelNr
                            select a).FirstOrDefault();
             }
-            if (artikel.Soort != null)
+            string[] words = artikel.Soort.Split(' ');
+            foreach (string word in words)
             {
-                string[] words = artikel.Soort.Split(' ');
-                foreach (string word in words)
+                string deel = word;
+                if (artikel.Verkocht == false)
+                { 
+                if (deel.ToLower() == "urne")
                 {
-                    string deel = word;
-                    if (artikel.Verkocht == false)
-                    { 
-                    if (deel.ToLower() == "urne")
-                    {
-                        deel += "n";
-                    }
-                    ViewBag.Link += deel.First().ToString().ToUpper() + deel.Substring(1);
-                    }
-                    else
-                    {
-                        ViewBag.Link = "Geschiedenis";
-                    }
+                    deel += "n";
+                }
+                ViewBag.Link += deel.First().ToString().ToUpper() + deel.Substring(1);
+                }
+                else
+                {
+                    ViewBag.Link = "Geschiedenis";
                 }
             }
             return View(artikel);

@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="Kunstenboetiek" Height="350" Width="550" Closed="Window_Closed" WindowStartupLocation="CenterScreen" Background="#edeed8">
+        Title="Kunstenboetiek" Height="350" Width="550" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
     <StackPanel Margin="10">
         <TextBlock HorizontalAlignment="Center" Margin="0 40" FontSize="70">Kunstenboetiek</TextBlock>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Name="buttonFactuur" Click="buttonFactuur_Click" Content="Factuur" Margin="10" Padding="10" FontSize="20" Width="100"/>
-            <Button Name="buttonKlant" Click="buttonKlant_Click" Content="Klant" Margin="10" Padding="10" FontSize="20" Width="100"/>
-            <Button Name="buttonArtikel" Click="buttonArtikel_Click" Content="Artikel" Margin="10" Padding="10" FontSize="20" Width="100"/>
+            <Button Name="buttonFactuur" Click="buttonFactuur_Click" Content="Factuur" FontSize="25" Padding="15" Margin="10" Width="120"/>
+            <Button Name="buttonKlant" Click="buttonKlant_Click" Content="Klant" FontSize="25" Padding="15" Margin="10" Width="120"/>
+            <Button Name="buttonArtikel" Click="buttonArtikel_Click" Content="Artikel" FontSize="25" Padding="15" Margin="10" Width="120"/>
         </StackPanel>
     </StackPanel>
 </Window>

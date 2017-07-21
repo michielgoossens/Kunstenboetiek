@@ -47,7 +47,7 @@ namespace FacturatieKunstenboetiek
             tbArtikels.Items.Clear();
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
-                foreach (var a in dbEntities.Artikels.Include("ArtikelAfbeeldingen"))
+                foreach (var a in dbEntities.Artikels)
                 {
                     tbArtikels.Items.Add(a);
                 }
@@ -70,6 +70,43 @@ namespace FacturatieKunstenboetiek
             for (int i = 2; i == 0; i--)
             {
                 tabControlOverzicht.SelectedIndex = i;
+            }
+        }
+
+        private void ButtonVerwijderen_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabControlOverzicht.SelectedIndex == 0)
+            {
+                if (tbFacturen.SelectedItem == null)
+                {
+                    MessageBox.Show("Je moet eerst de factuur die je wilt verwijderen selecteren.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    //factuur verwijderen
+                }
+            }
+            if (tabControlOverzicht.SelectedIndex == 1)
+            {
+                if (tbKlanten.SelectedItem == null)
+                {
+                    MessageBox.Show("Je moet eerst de klant die je wilt verwijderen selecteren.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    //klant verwijderen
+                }
+            }
+            if (tabControlOverzicht.SelectedIndex == 2)
+            {
+                if (tbFacturen.SelectedItem == null)
+                {
+                    MessageBox.Show("Je moet eerst het artikel dat je wilt verwijderen selecteren.", "Verwijderen", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    //artikel verwijderen
+                }
             }
         }
     }

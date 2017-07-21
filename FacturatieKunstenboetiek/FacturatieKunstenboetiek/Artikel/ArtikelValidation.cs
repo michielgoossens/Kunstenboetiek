@@ -47,7 +47,7 @@ namespace FacturatieKunstenboetiek
                 if (columnName == "Prijs")
                 {
                     if (string.IsNullOrEmpty(Prijs.ToString()))
-                        result = "Prijs is verplicht! (0 = nog geen prijs)";
+                        result = "Prijs is verplicht!";
                     else
                     {
                         if (Prijs < 0)

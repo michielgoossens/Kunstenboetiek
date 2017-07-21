@@ -28,8 +28,8 @@ namespace WebsiteKunstenboetiek.Models
         public string Postcode { get; set; }
         public string Gemeente { get; set; }
         public string Land { get; set; }
-        public string Telefoon { get; set; }
         public string Email { get; set; }
+        public string Telefoon { get; set; }
         public string BtwNr { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

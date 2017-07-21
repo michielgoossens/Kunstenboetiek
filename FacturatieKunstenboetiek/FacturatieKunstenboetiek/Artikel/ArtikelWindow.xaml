@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FacturatieKunstenboetiek"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="Kunstenboetiek - Artikels" Height="400" Width="800" Closed="Window_Closed" Closing="Window_Closing" Background="#edeed8">
+        Title="Kunstenboetiek - Artikels" Height="400" Width="800" Closed="Window_Closed" Closing="Window_Closing">
     <DockPanel>
         <Menu Name="menuHoofdmenu" DockPanel.Dock="Top">
             <MenuItem Name="menuItemNieuw" Header="Nieuw" Command="New"/>
@@ -56,7 +56,7 @@
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Prijs,
                         ValidatesOnDataErrors=true, NotifyOnValidationError=true, StringFormat=c, ConverterCulture=be-BE}" Width="150"/>
 
-        <StackPanel Orientation="Vertical" Margin="12 25 25 0" Grid.Column="2" Grid.RowSpan="5">
+        <StackPanel Orientation="Vertical" Margin="12 25 25 25" Grid.Column="2" Grid.RowSpan="5">
             <Label Margin="80 0 0 0">Afbeeldingen:</Label>
             <StackPanel Orientation="Horizontal">
                 <StackPanel Margin="0 25">
@@ -106,7 +106,7 @@
                     <Label Target="{Binding ElementName=tbInfo}" Content="Info:" Grid.Column="0" Grid.Row="4"  Width="80"/>
                     <TextBox Style="{StaticResource Validation}" TextWrapping="Wrap" x:Name="tbInfo" Grid.Row="4" Grid.Column="1" Validation.Error="Validation_Error"
                  Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Info,
-                        ValidatesOnDataErrors=true, NotifyOnValidationError=true, StringFormat=c, ConverterCulture=be-BE}" Width="380" Height="90"/>
+                        ValidatesOnDataErrors=true, NotifyOnValidationError=true, StringFormat=c, ConverterCulture=be-BE}" Width="350" Height="70"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

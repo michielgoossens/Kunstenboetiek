@@ -22,6 +22,11 @@ namespace FacturatieKunstenboetiek
 
         public FixedDocument Preview(Factuur factuur)
         {
+            Klant klant = new Klant();
+            using (var dbEntities = new KunstenboetiekDbEntities())
+            {
+                klant = dbEntities.Klanten.Find(factuur.KlantNr);
+            }
             Afstand = 0;
             FixedDocument document = new FixedDocument();
             document.DocumentPaginator.PageSize = new System.Windows.Size(A4breedte, A4hoogte);
@@ -37,19 +42,19 @@ namespace FacturatieKunstenboetiek
 
             page.Children.Add(Titel());
             Afstand += 60;
-            page.Children.Add(GegevensKunstenboetiek());
+            page.Children.Add(GegevensKunstenboetiek(klant));
             Afstand += 140;
             page.Children.Add(FactuurGegevens(factuur));
             Afstand += 60;
-            page.Children.Add(KlantGegevens(factuur.Klant));
+            page.Children.Add(KlantGegevens(klant));
             Afstand += 65;
             page.Children.Add(Artikels(factuur.FactuurRegels.ToList()));
             Afstand = 850;
             TextBlock infoBetaling = new TextBlock();
-            infoBetaling.Text = "Gelieve het bedrag inclusief BTW binnen 30 dagen te voldoen op het bovenstaande rekeningnummer, met mededeling: FACT" + factuur.FactuurNr + ".";
+            infoBetaling.Text = "Gelieve het bedrag inclusief BTW binnen 30 dagen te voldoen op het bovenstaande rekeningnummer, met mededeling: FACT" + factuur.FactuurNr.ToString().PadLeft(Overal.padLeft, '0') + ".";
             infoBetaling.Margin = new Thickness(0, Afstand, 0, 0);
             infoBetaling.TextWrapping = TextWrapping.Wrap;
-            infoBetaling.MaxWidth = 500;
+            infoBetaling.MaxWidth = 600;
             infoBetaling.FontFamily = font;
             page.Children.Add(infoBetaling);
 
@@ -81,7 +86,7 @@ namespace FacturatieKunstenboetiek
 
             return titel;
         }
-        private StackPanel GegevensKunstenboetiek()
+        private StackPanel GegevensKunstenboetiek(Klant klant)
         {
             StackPanel gegevens = new StackPanel();
             gegevens.Orientation = Orientation.Vertical;
@@ -96,6 +101,14 @@ namespace FacturatieKunstenboetiek
             gemeente.Text = "9140 Temse";
             gemeente.FontFamily = font;
             gegevens.Children.Add(gemeente);
+
+            if (klant.Land != "België")
+            {
+                TextBlock land = new TextBlock();
+                land.Text = "België";
+                land.FontFamily = font;
+                gegevens.Children.Add(land);
+            }
 
             TextBlock gsm = new TextBlock();
             gsm.Text = "0485 34 87 86";
@@ -123,7 +136,7 @@ namespace FacturatieKunstenboetiek
             gegevens.Margin = new Thickness(0, Afstand, 0, 0);
 
             TextBlock factuurNr = new TextBlock();
-            factuurNr.Text = "Factuurnummer: " + factuur.FactuurNr;
+            factuurNr.Text = "Factuurnummer: " + factuur.FactuurNr.ToString().PadLeft(Overal.padLeft, '0');
             factuurNr.FontFamily = font;
             gegevens.Children.Add(factuurNr);
 
@@ -141,7 +154,7 @@ namespace FacturatieKunstenboetiek
             gegevens.Margin = new Thickness(0, Afstand, 0, 0);
 
             TextBlock klantNr = new TextBlock();
-            klantNr.Text = "Klantnummer: " + klant.KlantNr;
+            klantNr.Text = "Klantnummer: " + klant.KlantNr.ToString().PadLeft(Overal.padLeft, '0');
             klantNr.FontFamily = font;
             klantNr.Margin = new Thickness(0, 0, 0, 18);
             gegevens.Children.Add(klantNr);
@@ -173,7 +186,7 @@ namespace FacturatieKunstenboetiek
                 Afstand += 15;
             }
 
-            if (klant.Land != null)
+            if (klant.Land != null && klant.Land != "België")
             {
                 TextBlock land = new TextBlock();
                 land.Text = klant.Land;

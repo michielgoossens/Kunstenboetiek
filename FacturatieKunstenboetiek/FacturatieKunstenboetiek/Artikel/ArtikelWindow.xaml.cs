@@ -72,14 +72,14 @@ namespace FacturatieKunstenboetiek
                     {
                         artikel = grid.DataContext as Artikel;
 
-                        Ftp ftpClient = new Ftp(@"ftp://kunstenboetiek.be", "ftpafbeeldingen", "KunstenBoetiek..123");
+                        Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be/", "ftpafbeeldingen", "KunstenBoetiek...123");
                         foreach (ArtikelAfbeelding afbeelding in listBoxAfbeeldingen.Items)
                         {
                             count += 1;
-                            remote = artikelNr + artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
+                            remote = (artikel.Soort.Replace(' ', '_') + "/") + artikel.ArtikelNr + artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
                             local = afbeelding.AfbeeldingLink;
                             ftpClient.upload(remote, local);
-                            afbeelding.AfbeeldingLink = "http://www.kunstenboetiek.be/Images/galerij/" + remote;
+                            afbeelding.AfbeeldingLink = "http://www.kunstenboetiek.be/Images/Galerij/" + remote;
 
                             afbeelding.ArtikelNr = artikelNr;
                             dbEntities.ArtikelsAfbeeldingen.Add(afbeelding);
@@ -108,7 +108,7 @@ namespace FacturatieKunstenboetiek
                         int indexOfEuro = tbPrijs.Text.IndexOf('€');
                         artikel.Prijs = double.Parse(tbPrijs.Text.Substring(0, indexOfEuro));
 
-                        Ftp ftpClient = new Ftp(@"ftp://kunstenboetiek.be/", "ftpafbeeldingen", "KunstenBoetiek..123");
+                        Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be/", "ftpafbeeldingen", "KunstenBoetiek...123");
                         foreach (ArtikelAfbeelding afbeelding in verwijderdeAfbeeldingen)
                         {
                             ArtikelAfbeelding aA = dbEntities.ArtikelsAfbeeldingen.Find(afbeelding.AfbeeldingNr);
@@ -121,10 +121,10 @@ namespace FacturatieKunstenboetiek
                         foreach (ArtikelAfbeelding afbeelding in toegevoegdeAfbeeldingen)
                         {
                             count += 1;
-                            remote = artikel.ArtikelNr + artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
+                            remote = (artikel.Soort.Replace(' ', '_') + "/") + artikel.ArtikelNr + artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
                             local = afbeelding.AfbeeldingLink;
                             ftpClient.upload(remote, local);
-                            afbeelding.AfbeeldingLink = "http://www.kunstenboetiek.be/Images/galerij/" + remote;
+                            afbeelding.AfbeeldingLink = "http://www.kunstenboetiek.be/Images/Galerij/" + remote;
 
 
                             afbeelding.ArtikelNr = artikelNr;

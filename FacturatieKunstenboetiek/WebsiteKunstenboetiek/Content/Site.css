@@ -47,7 +47,7 @@ header {
     }
         header nav ul li {
             float: left;
-            padding: 4px;
+            padding: 5px;
             background-color: #787c57;
         }
 
@@ -56,7 +56,7 @@ header {
                 -o-transition: all .1s ease-in;
                 -webkit-transition: all .1s ease-in;
                 transition: all .1s ease-in;
-                padding: 10px 22px;
+                padding: 10px 23px;
                 font-size: 1.34em;
                 background-color: #b6b357;
                 font-family: 'Pompiere', cursive;

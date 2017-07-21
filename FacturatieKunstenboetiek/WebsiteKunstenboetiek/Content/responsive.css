@@ -2,7 +2,7 @@
     header nav ul li:nth-child(8) {
         position: absolute;
         bottom: 20px;
-        left: 866px;
+        left: 863px;
     }
 }
 
@@ -10,13 +10,13 @@
     header nav ul li:nth-child(7) {
         position: absolute;
         bottom: 20px;
-        left: 667px;
+        left: 702px;
     }
 
     header nav ul li:nth-child(8) {
         position: absolute;
         bottom: 20px;
-        left: 767px;
+        left: 782px;
     }
 }
 
@@ -225,14 +225,9 @@
           -o-transition: margin-top 0.25s linear;
              transition: margin-top 0.25s linear;
     }
-    footer {
-        font-size: 0.85em;
-    }
+
     footer section p img {
-        display: block;
-        float: left;
-        width: 45px;
-        margin: 0 10px;
+        display: inline;
     }
     .field-validation-error {
     top: 68px;

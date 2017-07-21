@@ -23,7 +23,6 @@ namespace FacturatieKunstenboetiek
         private List<FactuurRegel> verwijderdeRegels;
         private double totaalExclBtw;
         private double totaalInclBtw;
-        List<Artikel> autoCompleteArtikel = new List<Artikel>();
         private bool opgeslagen;
 
         public FactuurWindow()
@@ -189,6 +188,7 @@ namespace FacturatieKunstenboetiek
         }
         private void fillArtikelAutoCompleteBox()
         {
+            List<Artikel> autoCompleteArtikel = new List<Artikel>();
             using (var dbEntities = new KunstenboetiekDbEntities())
             {
                 foreach (var a in dbEntities.Artikels)
@@ -283,6 +283,8 @@ namespace FacturatieKunstenboetiek
                         labelExclBtw.Content = Math.Round(totaalExclBtw, 2).ToString() + " €";
                         labelInclBtw.Content = Math.Round(totaalInclBtw, 2).ToString() + " €";
                         tbArtikel.Text = string.Empty;
+                        opgeslagen = false;
+                        
                     }
                 }
             }
@@ -300,6 +302,7 @@ namespace FacturatieKunstenboetiek
                 tbFactuurRegels.Items.Remove(regel);
                 labelExclBtw.Content = Math.Round(totaalExclBtw, 2).ToString() + " €";
                 labelInclBtw.Content = Math.Round(totaalInclBtw, 2).ToString() + " €";
+                opgeslagen = false;
             }
             else
             {
@@ -349,6 +352,16 @@ namespace FacturatieKunstenboetiek
                     AddFactuur_Executed(sender, e);
                 }
             }
+        }
+
+        private void tbDatum_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            opgeslagen = false;
+        }
+
+        private void tbKlant_TextChanged(object sender, RoutedEventArgs e)
+        {
+            opgeslagen = false;
         }
     }
 }
