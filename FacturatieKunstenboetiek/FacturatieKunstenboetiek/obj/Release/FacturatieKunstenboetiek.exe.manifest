@@ -67,14 +67,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FacturatieKunstenboetiek.exe" size="230912">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FacturatieKunstenboetiek.exe" size="231904">
       <assemblyIdentity name="FacturatieKunstenboetiek" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>VXw2xJt4A2AeOf+yzJ+0Xyoi26YNB0GqBiP3CSRWxpQ=</dsig:DigestValue>
+        <dsig:DigestValue>1DMOuG4CdtasRTslKgm6Yz/TlEBnrQBJL7juunYQJ/c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -114,13 +114,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="FacturatieKunstenboetiek.exe.config" size="1033">
+  <file name="FacturatieKunstenboetiek.exe.config" size="1027">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>O1UFBprichdMQNeiCdEmlHuvLIpNGJpjGOQFLWvvddw=</dsig:DigestValue>
+      <dsig:DigestValue>9MyyQz/MhOyhESneY8VSC2bPPOWscMeUU0smCWtLDqc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Images\program.ico" size="15086">

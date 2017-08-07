@@ -197,3 +197,4 @@ D:\Users\michg\Dropbox\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\Fa
 D:\Users\michg\Dropbox\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csproj.GenerateResource.Cache
 D:\Users\michg\Dropbox\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.exe.manifest
 D:\Users\michg\Dropbox\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.application
+D:\Users\michg\Dropbox\Kunstenboetiek\Kunstenboetiek\FacturatieKunstenboetiek\FacturatieKunstenboetiek\obj\Debug\FacturatieKunstenboetiek.csprojResolveAssemblyReference.cache

@@ -10,11 +10,11 @@ Facturatie applicatie
 Met deze applicatie kan je klanten & artikels toevoegen aan de database.
 Met de gegevens uit de database kan je dan een factuur opstellen en laten afdrukken.
 
-Bij artikels kan je ook afbeeldingen toevoegen, deze worden dan geupload op de ftp server van de website
+Bij artikels kan je ook afbeeldingen toevoegen, deze worden dan geupload op de ftp server van de website (om te tonen op de galerij pagina van de website).
 
 
 Website
 -----------------------------------------------------------
-Op de website komt een galerij van alle werken. Deze word aan de hand van gegevens uit de database opgebouwd.
+Op de website komt een galerij van werken. Deze word aan de hand van gegevens uit de database opgebouwd.
 Ook kan je informatie over het bedrijf 'Kunstenboetiek' terug vinden.
-Het is ook mogelijk om contact op te nemen via een contact formulier.
+Het is ook mogelijk om contact op te nemen via een contact formulier. (under construction)

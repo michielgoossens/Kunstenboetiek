@@ -2,7 +2,7 @@
     header nav ul li:nth-child(8) {
         position: absolute;
         bottom: 20px;
-        left: 863px;
+        left: 867px;
     }
 }
 
@@ -10,13 +10,13 @@
     header nav ul li:nth-child(7) {
         position: absolute;
         bottom: 20px;
-        left: 702px;
+        left: 667px;
     }
 
     header nav ul li:nth-child(8) {
         position: absolute;
         bottom: 20px;
-        left: 782px;
+        left: 767px;
     }
 }
 
@@ -29,10 +29,14 @@
 
 
             header a h1 {
-                margin: auto;
-                width: 270px;
+                position:relative;
                 top: 18px;
-                right: 50px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 0 auto;
+                font-size: 4em;
+                width: 270px;
             }
 
             header a img {
@@ -112,7 +116,7 @@
         display: none;
     }
     #content article h2 {
-        font-size: 3.4em;
+        font-size: 2.7em;
         margin-bottom: 35px;
     }
     #content article {
@@ -225,10 +229,29 @@
           -o-transition: margin-top 0.25s linear;
              transition: margin-top 0.25s linear;
     }
-
+    footer {
+        padding: 20px 6%;
+}
     footer section p img {
-        display: inline;
+        display: inline-block;
+        float: left;
+        width: 15%;
+        margin-right: 20px;
     }
+    footer section p {
+        font-size: 0.9em;
+    }
+    footer section {
+        float: none;
+        width: 95%;
+    }
+    footer section:last-child {
+        clear: left;
+    }
+    footer section:last-child p {
+    text-align: center;
+    font-size: 0.6em;
+}
     .field-validation-error {
     top: 68px;
     left: 0px;
@@ -240,6 +263,7 @@
 }
 
 @media screen and (max-width: 725px) {
+
     #content ul li {
         width: 100%;
         margin-bottom: 40px;
@@ -275,4 +299,10 @@
         #content form div:nth-child(5) input {
         width: 100%;
     }
+            footer section p {
+        font-size: 0.8em;
+    }
+                footer section p img {
+                    width: 20%;
+                }
 }

@@ -4,19 +4,19 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KunstenboetiekModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BuytaertkunstenboetiekModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Artikels">
           <Key>
             <PropertyRef Name="ArtikelNr" />
           </Key>
           <Property Name="ArtikelNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Naam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Naam" Type="varchar" MaxLength="100" />
           <Property Name="Info" Type="varchar" MaxLength="500" />
           <Property Name="Soort" Type="varchar" MaxLength="13" />
           <Property Name="Kleur" Type="varchar" MaxLength="50" />
           <Property Name="Prijs" Type="float" Nullable="false" />
           <Property Name="Verkocht" Type="bit" />
-          <Property Name="Datum" Type="date" />
+          <Property Name="Datum" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ArtikelsAfbeeldingen">
           <Key>
@@ -24,7 +24,7 @@
           </Key>
           <Property Name="AfbeeldingNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ArtikelNr" Type="int" Nullable="false" />
-          <Property Name="AfbeeldingLink" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="AfbeeldingLink" Type="nchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Facturen">
           <Key>
@@ -32,7 +32,7 @@
           </Key>
           <Property Name="FactuurNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="KlantNr" Type="int" Nullable="false" />
-          <Property Name="Datum" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Datum" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="FactuurRegels">
           <Key>
@@ -54,8 +54,8 @@
           <Property Name="Postcode" Type="varchar" MaxLength="15" />
           <Property Name="Gemeente" Type="varchar" MaxLength="50" />
           <Property Name="Land" Type="varchar" MaxLength="20" />
-          <Property Name="Email" Type="varchar" MaxLength="254" />
           <Property Name="Telefoon" Type="varchar" MaxLength="30" />
+          <Property Name="Email" Type="varchar" MaxLength="254" />
           <Property Name="BtwNr" Type="varchar" MaxLength="17" />
         </EntityType>
         <Association Name="FK_ArtikelsAfbeeldingen_Artikels">
@@ -106,12 +106,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="KunstenboetiekModelStoreContainer">
-          <EntitySet Name="Artikels" EntityType="Self.Artikels" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ArtikelsAfbeeldingen" EntityType="Self.ArtikelsAfbeeldingen" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Facturen" EntityType="Self.Facturen" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FactuurRegels" EntityType="Self.FactuurRegels" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Klanten" EntityType="Self.Klanten" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="BuytaertkunstenboetiekModelStoreContainer">
+          <EntitySet Name="Artikels" EntityType="Self.Artikels" Schema="Buytaertadmin" store:Type="Tables" />
+          <EntitySet Name="ArtikelsAfbeeldingen" EntityType="Self.ArtikelsAfbeeldingen" Schema="Buytaertadmin" store:Type="Tables" />
+          <EntitySet Name="Facturen" EntityType="Self.Facturen" Schema="Buytaertadmin" store:Type="Tables" />
+          <EntitySet Name="FactuurRegels" EntityType="Self.FactuurRegels" Schema="Buytaertadmin" store:Type="Tables" />
+          <EntitySet Name="Klanten" EntityType="Self.Klanten" Schema="Buytaertadmin" store:Type="Tables" />
           <AssociationSet Name="FK_ArtikelsAfbeeldingen_Artikels" Association="Self.FK_ArtikelsAfbeeldingen_Artikels">
             <End Role="Artikels" EntitySet="Artikels" />
             <End Role="ArtikelsAfbeeldingen" EntitySet="ArtikelsAfbeeldingen" />
@@ -129,24 +129,25 @@
             <End Role="FactuurRegels" EntitySet="FactuurRegels" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="KunstenboetiekModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="BuytaertkunstenboetiekModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Artikel">
           <Key>
             <PropertyRef Name="ArtikelNr" />
           </Key>
           <Property Name="ArtikelNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Prijs" Type="Double" Nullable="false" />
+          <Property Name="Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Info" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Soort" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="Kleur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Prijs" Type="Double" Nullable="false" />
           <Property Name="Verkocht" Type="Boolean" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ArtikelAfbeeldingen" Relationship="Self.FK_ArtikelsAfbeeldingen_Artikels" FromRole="Artikels" ToRole="ArtikelsAfbeeldingen" />
           <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Artikels" FromRole="Artikels" ToRole="FactuurRegels" />
-          <Property Name="Info" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Datum" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="ArtikelAfbeelding">
           <Key>
@@ -154,7 +155,7 @@
           </Key>
           <Property Name="AfbeeldingNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ArtikelNr" Type="Int32" Nullable="false" />
-          <Property Name="AfbeeldingLink" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AfbeeldingLink" Type="String" MaxLength="150" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Artikel" Relationship="Self.FK_ArtikelsAfbeeldingen_Artikels" FromRole="ArtikelsAfbeeldingen" ToRole="Artikels" />
         </EntityType>
         <EntityType Name="Factuur">
@@ -163,7 +164,7 @@
           </Key>
           <Property Name="FactuurNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="KlantNr" Type="Int32" Nullable="false" />
-          <Property Name="Datum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Datum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Klant" Relationship="Self.FK_Facturen_Klanten" FromRole="Facturen" ToRole="Klanten" />
           <NavigationProperty Name="FactuurRegels" Relationship="Self.FK_FactuurRegels_Facturen" FromRole="Facturen" ToRole="FactuurRegels" />
         </EntityType>
@@ -189,14 +190,14 @@
           <Property Name="Postcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="Gemeente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Land" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
           <Property Name="Telefoon" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
           <Property Name="BtwNr" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Facturen" Relationship="Self.FK_Facturen_Klanten" FromRole="Klanten" ToRole="Facturen" />
         </EntityType>
         <Association Name="FK_ArtikelsAfbeeldingen_Artikels">
-          <End Role="Artikels" Type="KunstenboetiekModel.Artikel" Multiplicity="1" />
-          <End Role="ArtikelsAfbeeldingen" Type="KunstenboetiekModel.ArtikelAfbeelding" Multiplicity="*" />
+          <End Role="Artikels" Type="BuytaertkunstenboetiekModel.Artikel" Multiplicity="1" />
+          <End Role="ArtikelsAfbeeldingen" Type="BuytaertkunstenboetiekModel.ArtikelAfbeelding" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artikels">
               <PropertyRef Name="ArtikelNr" />
@@ -207,8 +208,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FactuurRegels_Artikels">
-          <End Role="Artikels" Type="KunstenboetiekModel.Artikel" Multiplicity="1" />
-          <End Role="FactuurRegels" Type="KunstenboetiekModel.FactuurRegel" Multiplicity="*" />
+          <End Role="Artikels" Type="BuytaertkunstenboetiekModel.Artikel" Multiplicity="1" />
+          <End Role="FactuurRegels" Type="BuytaertkunstenboetiekModel.FactuurRegel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artikels">
               <PropertyRef Name="ArtikelNr" />
@@ -219,8 +220,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Facturen_Klanten">
-          <End Role="Klanten" Type="KunstenboetiekModel.Klant" Multiplicity="1" />
-          <End Role="Facturen" Type="KunstenboetiekModel.Factuur" Multiplicity="*" />
+          <End Role="Klanten" Type="BuytaertkunstenboetiekModel.Klant" Multiplicity="1" />
+          <End Role="Facturen" Type="BuytaertkunstenboetiekModel.Factuur" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Klanten">
               <PropertyRef Name="KlantNr" />
@@ -231,8 +232,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FactuurRegels_Facturen">
-          <End Role="Facturen" Type="KunstenboetiekModel.Factuur" Multiplicity="1" />
-          <End Role="FactuurRegels" Type="KunstenboetiekModel.FactuurRegel" Multiplicity="*" />
+          <End Role="Facturen" Type="BuytaertkunstenboetiekModel.Factuur" Multiplicity="1" />
+          <End Role="FactuurRegels" Type="BuytaertkunstenboetiekModel.FactuurRegel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Facturen">
               <PropertyRef Name="FactuurNr" />
@@ -243,11 +244,11 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="KunstenboetiekDbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Artikels" EntityType="KunstenboetiekModel.Artikel" />
-          <EntitySet Name="ArtikelsAfbeeldingen" EntityType="KunstenboetiekModel.ArtikelAfbeelding" />
-          <EntitySet Name="Facturen" EntityType="KunstenboetiekModel.Factuur" />
-          <EntitySet Name="FactuurRegels" EntityType="KunstenboetiekModel.FactuurRegel" />
-          <EntitySet Name="Klanten" EntityType="KunstenboetiekModel.Klant" />
+          <EntitySet Name="Artikels" EntityType="BuytaertkunstenboetiekModel.Artikel" />
+          <EntitySet Name="ArtikelsAfbeeldingen" EntityType="BuytaertkunstenboetiekModel.ArtikelAfbeelding" />
+          <EntitySet Name="Facturen" EntityType="BuytaertkunstenboetiekModel.Factuur" />
+          <EntitySet Name="FactuurRegels" EntityType="BuytaertkunstenboetiekModel.FactuurRegel" />
+          <EntitySet Name="Klanten" EntityType="BuytaertkunstenboetiekModel.Klant" />
           <AssociationSet Name="FK_ArtikelsAfbeeldingen_Artikels" Association="Self.FK_ArtikelsAfbeeldingen_Artikels">
             <End Role="Artikels" EntitySet="Artikels" />
             <End Role="ArtikelsAfbeeldingen" EntitySet="ArtikelsAfbeeldingen" />
@@ -270,23 +271,23 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="KunstenboetiekModelStoreContainer" CdmEntityContainer="KunstenboetiekDbEntities">
+        <EntityContainerMapping StorageEntityContainer="BuytaertkunstenboetiekModelStoreContainer" CdmEntityContainer="KunstenboetiekDbEntities">
           <EntitySetMapping Name="Artikels">
-            <EntityTypeMapping TypeName="KunstenboetiekModel.Artikel">
+            <EntityTypeMapping TypeName="BuytaertkunstenboetiekModel.Artikel">
               <MappingFragment StoreEntitySet="Artikels">
-                <ScalarProperty Name="Datum" ColumnName="Datum" />
-                <ScalarProperty Name="Info" ColumnName="Info" />
                 <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
                 <ScalarProperty Name="Naam" ColumnName="Naam" />
-                <ScalarProperty Name="Prijs" ColumnName="Prijs" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
                 <ScalarProperty Name="Soort" ColumnName="Soort" />
                 <ScalarProperty Name="Kleur" ColumnName="Kleur" />
+                <ScalarProperty Name="Prijs" ColumnName="Prijs" />
                 <ScalarProperty Name="Verkocht" ColumnName="Verkocht" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ArtikelsAfbeeldingen">
-            <EntityTypeMapping TypeName="KunstenboetiekModel.ArtikelAfbeelding">
+            <EntityTypeMapping TypeName="BuytaertkunstenboetiekModel.ArtikelAfbeelding">
               <MappingFragment StoreEntitySet="ArtikelsAfbeeldingen">
                 <ScalarProperty Name="AfbeeldingNr" ColumnName="AfbeeldingNr" />
                 <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
@@ -295,7 +296,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Facturen">
-            <EntityTypeMapping TypeName="KunstenboetiekModel.Factuur">
+            <EntityTypeMapping TypeName="BuytaertkunstenboetiekModel.Factuur">
               <MappingFragment StoreEntitySet="Facturen">
                 <ScalarProperty Name="FactuurNr" ColumnName="FactuurNr" />
                 <ScalarProperty Name="KlantNr" ColumnName="KlantNr" />
@@ -304,7 +305,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FactuurRegels">
-            <EntityTypeMapping TypeName="KunstenboetiekModel.FactuurRegel">
+            <EntityTypeMapping TypeName="BuytaertkunstenboetiekModel.FactuurRegel">
               <MappingFragment StoreEntitySet="FactuurRegels">
                 <ScalarProperty Name="RegelNr" ColumnName="RegelNr" />
                 <ScalarProperty Name="FactuurNr" ColumnName="FactuurNr" />
@@ -313,7 +314,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Klanten">
-            <EntityTypeMapping TypeName="KunstenboetiekModel.Klant">
+            <EntityTypeMapping TypeName="BuytaertkunstenboetiekModel.Klant">
               <MappingFragment StoreEntitySet="Klanten">
                 <ScalarProperty Name="KlantNr" ColumnName="KlantNr" />
                 <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
@@ -323,8 +324,8 @@
                 <ScalarProperty Name="Postcode" ColumnName="Postcode" />
                 <ScalarProperty Name="Gemeente" ColumnName="Gemeente" />
                 <ScalarProperty Name="Land" ColumnName="Land" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Telefoon" ColumnName="Telefoon" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="BtwNr" ColumnName="BtwNr" />
               </MappingFragment>
             </EntityTypeMapping>

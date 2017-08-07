@@ -59,86 +59,93 @@ namespace FacturatieKunstenboetiek
         }
         private void AddArtikel_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            string remote;
-            string local;
-            using (var dbEntities = new KunstenboetiekDbEntities())
+            if (listBoxAfbeeldingen.Items.Count > 0 && tbSoort.SelectedItem == null)
             {
-                artikel = (from a in dbEntities.Artikels.Include("artikelAfbeeldingen")
-                                   where a.ArtikelNr == artikelNr
-                                   select a).FirstOrDefault();
-                if (artikel == null)
+                MessageBox.Show("Wanneer je afbeeldingen toevoegd moet je ook een soort aanduiden.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                string remote;
+                string local;
+                using (var dbEntities = new KunstenboetiekDbEntities())
                 {
-                    if (MessageBox.Show("Ben je zeker dat je het artikel wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                    artikel = (from a in dbEntities.Artikels.Include("artikelAfbeeldingen")
+                               where a.ArtikelNr == artikelNr
+                               select a).FirstOrDefault();
+                    if (artikel == null)
                     {
-                        artikel = grid.DataContext as Artikel;
-
-                        Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be/", "ftpafbeeldingen", "KunstenBoetiek...123");
-                        foreach (ArtikelAfbeelding afbeelding in listBoxAfbeeldingen.Items)
+                        if (MessageBox.Show("Ben je zeker dat je het artikel wilt opslaan?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                         {
-                            count += 1;
-                            remote = (artikel.Soort.Replace(' ', '_') + "/") + artikel.ArtikelNr + artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
-                            local = afbeelding.AfbeeldingLink;
-                            ftpClient.upload(remote, local);
-                            afbeelding.AfbeeldingLink = "http://www.kunstenboetiek.be/Images/Galerij/" + remote;
+                            artikel = grid.DataContext as Artikel;
 
-                            afbeelding.ArtikelNr = artikelNr;
-                            dbEntities.ArtikelsAfbeeldingen.Add(afbeelding);
-                        }
-
-                        artikel.Verkocht = false;
-                        artikel.Datum = DateTime.Now;
-                        dbEntities.Artikels.Add(artikel);
-
-                        dbEntities.SaveChanges();
-                        MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        Overal.overzichtWindow.setUpArtikels();
-                        Overal.overzichtWindow.tabControlOverzicht.SelectedIndex = 2;
-                        resetArtikel();
-                    }
-                }
-                else
-                {
-                    if (MessageBox.Show("Ben je zeker dat je het artikel wilt overschrijven?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
-                    {
-                        artikel.Naam = tbNaam.Text;
-                        artikel.Kleur = tbKleur.Text;
-                        artikel.Soort = tbSoort.Text;
-                        artikel.Info = tbInfo.Text;
-                        int indexOfEuro = tbPrijs.Text.IndexOf('€');
-                        artikel.Prijs = double.Parse(tbPrijs.Text.Substring(0, indexOfEuro));
-
-                        Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be/", "ftpafbeeldingen", "KunstenBoetiek...123");
-                        foreach (ArtikelAfbeelding afbeelding in verwijderdeAfbeeldingen)
-                        {
-                            ArtikelAfbeelding aA = dbEntities.ArtikelsAfbeeldingen.Find(afbeelding.AfbeeldingNr);
-                            if (aA != null)
+                            Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be", "ftpafbeeldingen", "KunstenBoetiek...123");
+                            foreach (ArtikelAfbeelding afbeelding in listBoxAfbeeldingen.Items)
                             {
-                                count -= 1;
-                                dbEntities.ArtikelsAfbeeldingen.Remove(aA);
+                                count += 1;
+                                remote = (artikel.Soort.Replace(' ', '_') + "/") + artikel.ArtikelNr + "_" + artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
+                                local = afbeelding.AfbeeldingLink;
+                                ftpClient.upload(remote, local);
+                                afbeelding.AfbeeldingLink = "http://www.kunstenboetiek.be/Images/Galerij/" + remote;
+
+                                afbeelding.ArtikelNr = artikelNr;
+                                dbEntities.ArtikelsAfbeeldingen.Add(afbeelding);
                             }
+
+                            artikel.Verkocht = false;
+                            artikel.Datum = DateTime.Now;
+                            dbEntities.Artikels.Add(artikel);
+
+                            dbEntities.SaveChanges();
+                            MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            Overal.overzichtWindow.setUpArtikels();
+                            Overal.overzichtWindow.tabControlOverzicht.SelectedIndex = 2;
+                            resetArtikel();
                         }
-                        foreach (ArtikelAfbeelding afbeelding in toegevoegdeAfbeeldingen)
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Ben je zeker dat je het artikel wilt overschrijven?", "Opslaan", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                         {
-                            count += 1;
-                            remote = (artikel.Soort.Replace(' ', '_') + "/") + artikel.ArtikelNr + artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
-                            local = afbeelding.AfbeeldingLink;
-                            ftpClient.upload(remote, local);
-                            afbeelding.AfbeeldingLink = "http://www.kunstenboetiek.be/Images/Galerij/" + remote;
+                            artikel.Naam = tbNaam.Text;
+                            artikel.Kleur = tbKleur.Text;
+                            artikel.Soort = tbSoort.Text;
+                            artikel.Info = tbInfo.Text;
+                            int indexOfEuro = tbPrijs.Text.IndexOf('€');
+                            artikel.Prijs = double.Parse(tbPrijs.Text.Substring(0, indexOfEuro));
+
+                            Ftp ftpClient = new Ftp(@"ftp://ftp.kunstenboetiek.be", "ftpafbeeldingen", "KunstenBoetiek...123");
+                            foreach (ArtikelAfbeelding afbeelding in verwijderdeAfbeeldingen)
+                            {
+                                ArtikelAfbeelding aA = dbEntities.ArtikelsAfbeeldingen.Find(afbeelding.AfbeeldingNr);
+                                if (aA != null)
+                                {
+                                    count -= 1;
+                                    dbEntities.ArtikelsAfbeeldingen.Remove(aA);
+                                }
+                            }
+                            foreach (ArtikelAfbeelding afbeelding in toegevoegdeAfbeeldingen)
+                            {
+                                count += 1;
+                                remote = (artikel.Soort.Replace(' ', '_') + "/") + artikelNr + "_" + artikel.Naam.Replace(' ', '_').ToLower() + count.ToString() + ".jpg";
+                                local = afbeelding.AfbeeldingLink;
+                                ftpClient.upload(remote, local);
+                                afbeelding.AfbeeldingLink = "http://www.kunstenboetiek.be/Images/Galerij/" + remote;
 
 
-                            afbeelding.ArtikelNr = artikelNr;
-                            dbEntities.ArtikelsAfbeeldingen.Add(afbeelding);
+                                afbeelding.ArtikelNr = artikelNr;
+                                dbEntities.ArtikelsAfbeeldingen.Add(afbeelding);
+                            }
+
+                            artikel.Datum = DateTime.Now;
+
+                            dbEntities.SaveChanges();
+                            MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            Overal.overzichtWindow.setUpArtikels();
+                            Overal.overzichtWindow.tabControlOverzicht.SelectedIndex = 2;
+                            resetArtikel();
                         }
-
-                        artikel.Datum = DateTime.Now;
-
-                        dbEntities.SaveChanges();
-                        MessageBox.Show("Het artikel is goed opgeslagen.", "Opslaan", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        Overal.overzichtWindow.setUpArtikels();
-                        Overal.overzichtWindow.tabControlOverzicht.SelectedIndex = 2;
-                        resetArtikel();
                     }
                 }
             }
