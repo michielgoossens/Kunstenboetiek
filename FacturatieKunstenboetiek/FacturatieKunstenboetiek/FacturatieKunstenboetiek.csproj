@@ -20,7 +20,7 @@
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>D:\Users\michg\Dropbox\Kunstenboetiek\Publish\</PublishUrl>
+    <PublishUrl>C:\Users\michg\Desktop\publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -33,7 +33,7 @@
     <TargetCulture>nl-BE</TargetCulture>
     <ProductName>Kunstenboetiek</ProductName>
     <PublisherName>MKG Development</PublisherName>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -61,11 +61,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>173B408B74F914544E62CE9728C188A372CD82E5</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>189F6CA77FEAE0AC182B890B3026C5796F09501A</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
+    <ManifestKeyFile>FacturatieKunstenboetiek_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -289,6 +288,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Kunstenboetiek.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="FacturatieKunstenboetiek_TemporaryKey.pfx" />
     <None Include="Kunstenboetiek.edmx.diagram">
       <DependentUpon>Kunstenboetiek.edmx</DependentUpon>
     </None>

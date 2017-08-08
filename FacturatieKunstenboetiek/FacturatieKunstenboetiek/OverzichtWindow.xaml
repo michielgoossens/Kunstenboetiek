@@ -43,8 +43,8 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding FactuurNr, StringFormat={}{0:000}}" Grid.Column="0" FontFamily="Arial" FontSize="15"></TextBlock>
                                 <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis" FontFamily="Arial" FontSize="15"></TextBlock>
-                                <TextBlock Text="{Binding PrijsExclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2" FontFamily="Arial" FontSize="15"></TextBlock>
-                                <TextBlock Text="{Binding PrijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3" FontFamily="Arial" FontSize="15"></TextBlock>
+                                <TextBlock Text="{Binding PrijsExclBtw, StringFormat='€ #,0.00'}" Grid.Column="2" FontFamily="Arial" FontSize="15"></TextBlock>
+                                <TextBlock Text="{Binding PrijsInclBtw, StringFormat='€ #,0.00'}" Grid.Column="3" FontFamily="Arial" FontSize="15"></TextBlock>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -128,8 +128,8 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding ArtikelNr, StringFormat={}{0:000}}" Grid.Column="0" FontFamily="Arial" FontSize="15"></TextBlock>
                                 <TextBlock Text="{Binding Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis" FontFamily="Arial" FontSize="15"></TextBlock>
-                                <TextBlock Text="{Binding Prijs, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2" FontFamily="Arial" FontSize="15"></TextBlock>
-                                <TextBlock Text="{Binding prijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3" FontFamily="Arial" FontSize="15"></TextBlock>
+                                <TextBlock Text="{Binding Prijs, StringFormat='€ #,0.00'}" Grid.Column="2" FontFamily="Arial" FontSize="15"></TextBlock>
+                                <TextBlock Text="{Binding prijsInclBtw, StringFormat='€ #,0.00'}" Grid.Column="3" FontFamily="Arial" FontSize="15"></TextBlock>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
