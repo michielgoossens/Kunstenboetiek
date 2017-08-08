@@ -89,8 +89,8 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding ArtikelNr, StringFormat={}{0:000}}" Grid.Column="0"></TextBlock>
                             <TextBlock Text="{Binding Artikel.Naam}" Grid.Column="1" TextTrimming="CharacterEllipsis"></TextBlock>
-                            <TextBlock Text="{Binding Artikel.Prijs, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="2"></TextBlock>
-                            <TextBlock Text="{Binding Artikel.prijsInclBtw, StringFormat=C, ConverterCulture=be-BE}" Grid.Column="3"></TextBlock>
+                            <TextBlock Text="{Binding Artikel.Prijs, StringFormat='€ #,0.00'}" Grid.Column="2"></TextBlock>
+                            <TextBlock Text="{Binding Artikel.prijsInclBtw, StringFormat='€ #,0.00'}" Grid.Column="3"></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -98,11 +98,11 @@
             <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal">
                 <Label Width="110" Content="Totaal Excl BTW:"/>
-                    <Label Name="labelExclBtw" Content="{Binding StringFormat=c, ConverterCulture=be-BE}"/>
+                    <Label Name="labelExclBtw" Content="{Binding StringFormat='€ #,0.00'}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Width="110" Content="Totaal Incl BTW:"/>
-                    <Label Name="labelInclBtw" Content="{Binding StringFormat=c, ConverterCulture=be-BE}"></Label>
+                    <Label Name="labelInclBtw" Content="{Binding StringFormat='€ #,0.00'}"></Label>
             </StackPanel>
             </StackPanel>
         </Grid>
